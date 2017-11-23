@@ -38,7 +38,7 @@ QPushButton#sybtn{
     }
 
 QLabel#aboutName{
-    color:#FF3366;
+    color:#404040;
     font:75 30pt "Microsoft YaHei";
     }
 
@@ -53,12 +53,10 @@ QLabel#syLabel{
     }
 
 QTreeWidget{
-    color:floralwhite;
+    color:#1F1F1F;
     border:none;
     font:75 16pt "Microsoft YaHei";
-    background-repeat: no-repeat;
-    background-position: center;
-    border-image: url(bg/bg.png);
+    background-color: rgba(255,0,51,50);
     }
 
 QTableWidget{
@@ -70,7 +68,7 @@ QTableWidget{
 
 QTextEdit#rightInfo{
     font:75 10pt "Microsoft YaHei";
-    background-color: rgba(255,0,0,20);
+    background-color: rgba(255,0,51,50);
     border:none
     }
 

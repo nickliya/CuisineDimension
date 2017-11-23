@@ -132,7 +132,6 @@ class Example(QtGui.QMainWindow):
         self.sygrid = QtGui.QGridLayout()
         self.sywiget.setLayout(self.sygrid)
 
-
         self.syLabel = QtGui.QLabel(u"使用说明")
         self.syLabel.setObjectName("syLabel")
         self.syLabel.setMaximumHeight(100)
@@ -264,6 +263,9 @@ class Example(QtGui.QMainWindow):
                     self.newItem.setWhatsThis(info)
             rowindex += 1
 
+        asd = self.tablewiget.findItems(u"龙须糖", QtCore.Qt.MatchContains)
+        self.tablewiget.clear()
+        self.tablewiget.setItem(0,0,asd[0])
         self.wigetIndex = [self.tablewiget]
         # self.tablewiget.cellClicked.connect(self.slDetail)
 
@@ -393,8 +395,9 @@ class Example(QtGui.QMainWindow):
         # 右框架
         self.text=QtGui.QTextEdit()
         self.text.setObjectName("rightInfo")
-        self.text.setHtml("<img src='ui/yzs.png'>")
+        # self.text.setHtml("<img src='ui/logo.png' width=10% heigth=10%>")
         self.text.setAlignment(QtCore.Qt.AlignCenter)
+        self.text.append("<img src='ui/logo.png'>\n")
         self.text.append(u"\n欢迎加入我们\nQQ群:xxxxxx\n")
         self.text.setTextColor(QtGui.QColor("#FFF3EE"))
         self.text.setFontPointSize(20)
