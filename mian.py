@@ -60,9 +60,9 @@ class Example(QtGui.QMainWindow):
         self.charactorbtn.setObjectName("headbtn")
         self.equipbtn = QtGui.QPushButton(u"装备")
         self.equipbtn.setObjectName("headbtn")
-        self.projectbtn = QtGui.QPushButton(u"装盘模拟")
+        self.projectbtn = QtGui.QPushButton(u"地图攻略")
         self.projectbtn.setObjectName("headbtn")
-        self.cvbtn = QtGui.QPushButton(u"声优")
+        self.cvbtn = QtGui.QPushButton(u"餐车")
         self.cvbtn.setObjectName("headbtn")
         self.damagebtn = QtGui.QPushButton(u"伤害计算")
         self.damagebtn.setObjectName("headbtn")
@@ -177,6 +177,7 @@ class Example(QtGui.QMainWindow):
         elif index == 2:
             self.syText.clear()
             self.syText.append(u"\n\n\n◆食灵界面目前提供食灵列表和食灵详细信息查看")
+            self.syText.append(u"◆食灵列表的满级数据均根据源代码推算得出,误差正负1")
             self.syText.append(u"◆搜索功能少女祈祷中...")
         else:
             self.syText.clear()
@@ -191,14 +192,14 @@ class Example(QtGui.QMainWindow):
 
         con = sqlite3.connect("llcy")
         cur = con.cursor()
-        sql = 'SELECT URL_TX,n.SL_NO,SL_NAME,SL_TYPE,SL_HP,SL_GJ,SL_FY,SL_MZ,SL_SB,SL_BJ,SL_GS,SL_SY,SL_ML,MAX_HP,MAX_GJ,MAX_FY,MAX_MZ,MAX_SB,MAX_BJ,MAX_GS,MAX_SY,MAX_ML FROM fairy_detail n,fairy_detail_max m WHERE n.SL_NO=m.SL_NO;'
+        sql = 'SELECT URL_TX,n.SL_NO,SL_NAME,SL_TYPE,SL_HP,SL_GJ,SL_FY,SL_MZ,SL_SB,SL_BJ,SL_GS,SL_SY,SL_ML,MAX_HP,MAX_GJ,MAX_FY,MAX_MZ,MAX_SB,MAX_SY,MAX_ML FROM fairy_detail n,fairy_detail_max m WHERE n.SL_NO=m.SL_NO;'
         # sql='SELECT * FROM "fairy_info";'
         cur.execute(sql)
         info = cur.fetchall()
         cur.close()
         rowcount = len(info)
 
-        self.tablewiget = QtGui.QTableWidget(rowcount, 22)
+        self.tablewiget = QtGui.QTableWidget(rowcount, 20)
         self.bodygrid.addWidget(self.tablewiget, 0, 0)
 
         self.tablewiget.itemClicked.connect(self.slDetail)  # 表格信号
@@ -208,7 +209,7 @@ class Example(QtGui.QMainWindow):
         # self.tablewiget.horizontalHeader().setVisible(False)
         self.tablewiget.setHorizontalHeaderLabels([u"头像", u"No", u"食灵", u"类型", u"生命", u"攻击", u"防御", u"命中", u"闪避",
                                                    u"暴击", u"攻速", u"石油", u"魔力", u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避",
-                                                   u"满暴击", u"满攻速", u"满石油", u"满魔力"])
+                                                   u"满石油", u"满魔力"])
 
         for x in range(self.tablewiget.columnCount()):
             headItem = self.tablewiget.horizontalHeaderItem(x)  # 获得水平方向表头的Item对象
@@ -263,9 +264,9 @@ class Example(QtGui.QMainWindow):
                     self.newItem.setWhatsThis(info)
             rowindex += 1
 
-        asd = self.tablewiget.findItems(u"龙须糖", QtCore.Qt.MatchContains)
-        self.tablewiget.clear()
-        self.tablewiget.setItem(0,0,asd[0])
+        # asd = self.tablewiget.findItems(u"龙须糖", QtCore.Qt.MatchContains)
+        # self.tablewiget.clear()
+        # self.tablewiget.setItem(0,0,asd[0])
         self.wigetIndex = [self.tablewiget]
         # self.tablewiget.cellClicked.connect(self.slDetail)
 
@@ -366,7 +367,7 @@ class Example(QtGui.QMainWindow):
         self.leftwiget.setLayout(self.leftgrid)
         self.rightwiget.setLayout(self.rightgrid)
         self.leftwiget.setObjectName("aboutLeft")
-        self.leftwiget.setObjectName("aboutRight")
+        self.rightwiget.setObjectName("aboutRight")
 
         # 左框架
         self.infolaber = QtGui.QLabel(u"更新历史")
@@ -396,26 +397,27 @@ class Example(QtGui.QMainWindow):
         self.text=QtGui.QTextEdit()
         self.text.setObjectName("rightInfo")
         # self.text.setHtml("<img src='ui/logo.png' width=10% heigth=10%>")
-        self.text.setAlignment(QtCore.Qt.AlignCenter)
         self.text.append("<img src='ui/logo.png'>\n")
-        self.text.append(u"\n欢迎加入我们\nQQ群:xxxxxx\n")
+        self.text.setAlignment(QtCore.Qt.AlignCenter)
         self.text.setTextColor(QtGui.QColor("#FFF3EE"))
-        self.text.setFontPointSize(20)
+        self.text.append(u"\n欢迎加入我们\nQQ群:627216993\n")
+        # self.text.setTextColor(QtGui.QColor("#DC143C"))
+        self.text.setFontPointSize(18)
         self.text.append(u"界面设计")
-        self.text.setFontPointSize(14)
-        self.text.append(u"XXX\n")
-        self.text.setFontPointSize(20)
+        self.text.setFontPointSize(12)
+        self.text.append(u"薄幸\n莉莉子\n")
+        self.text.setFontPointSize(18)
         self.text.append(u"开发制作")
-        self.text.setFontPointSize(14)
-        self.text.append(u"XXX\n")
-        self.text.setFontPointSize(20)
+        self.text.setFontPointSize(12)
+        self.text.append(u"莉莉子\n")
+        self.text.setFontPointSize(18)
         self.text.append(u"数据")
-        self.text.setFontPointSize(14)
-        self.text.append(u"XXX\n")
-        self.text.setFontPointSize(20)
+        self.text.setFontPointSize(12)
+        self.text.append(u"薄幸\n")
+        self.text.setFontPointSize(18)
         self.text.append(u"美工/UI")
-        self.text.setFontPointSize(14)
-        self.text.append(u"期待您的加入\n")
+        self.text.setFontPointSize(12)
+        self.text.append(u"小四\n")
         self.text.setAlignment(QtCore.Qt.AlignCenter)
         self.rightgrid.addWidget(self.text, 0, 0)
         self.wigetIndex = [self.leftwiget, self.rightwiget]

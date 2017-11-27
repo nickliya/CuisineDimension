@@ -5,7 +5,11 @@ QWidget#mainwindow{
     }
 
 QWidget#aboutRight{
-    background-color: rgba(255,0,0,0);
+    background-color: rgba(105,105,105,150);
+    }
+
+QWidget#aboutLeft{
+    background-color: rgba(105,105,105,150);
     }
 
 QWidget#SLdetail{
@@ -38,7 +42,7 @@ QPushButton#sybtn{
     }
 
 QLabel#aboutName{
-    color:#404040;
+    color:floralwhite;
     font:75 30pt "Microsoft YaHei";
     }
 
@@ -53,10 +57,10 @@ QLabel#syLabel{
     }
 
 QTreeWidget{
-    color:#1F1F1F;
+    color:floralwhite;
     border:none;
     font:75 16pt "Microsoft YaHei";
-    background-color: rgba(255,0,51,50);
+    background-color: rgba(255,0,0,0);
     }
 
 QTableWidget{
@@ -68,7 +72,7 @@ QTableWidget{
 
 QTextEdit#rightInfo{
     font:75 10pt "Microsoft YaHei";
-    background-color: rgba(255,0,51,50);
+    background-color: rgba(255,0,0,0);
     border:none
     }
 
