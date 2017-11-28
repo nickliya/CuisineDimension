@@ -161,7 +161,7 @@ class Example(QtGui.QMainWindow):
         self.syText.setObjectName("syText")
         self.syText.setFixedHeight(390)
         self.syText.append(u"\n\n\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
-        self.syText.append(u"◆本工具所有美术资源或算法由萌百黑大@划破黑夜 破解，破解不易请珍惜成果。")
+        self.syText.append(u"◆本工具所有基础资源来自萌百黑大@划破黑夜,特此鸣谢")
         self.syText.append(u"◆本工具旨在辅助玩家了解游戏信息，工具界面大致还原游戏界面是为了让玩家对工具产生亲切感。禁止窃取、泄露本工具美术资源，任何非法和损害他人利益行为与作者无关！")
         self.sygrid.addWidget(self.syText, 3, 0, 1, 4)
 
@@ -175,7 +175,7 @@ class Example(QtGui.QMainWindow):
         if index == 1:
             self.syText.clear()
             self.syText.append(u"\n\n\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
-            self.syText.append(u"◆本工具所有美术资源或算法由萌百黑大@划破黑夜 破解，破解不易请珍惜成果")
+            self.syText.append(u"◆本工具所有基础资源来自萌百黑大@划破黑夜,特此鸣谢")
             self.syText.append(u"◆本工具旨在辅助玩家了解游戏信息，工具界面大致还原游戏界面是为了让玩家对工具产生亲切感。禁止窃取、泄露本工具美术资源，任何非法和损害他人利益行为与作者无关！")
         elif index == 2:
             self.syText.clear()
@@ -398,7 +398,7 @@ class Example(QtGui.QMainWindow):
                     info = str(x)
                 else:
                     info = x
-                if "/" in info:
+                if "1" in info:
                     info = u"√"
                 self.newItem = QtGui.QTableWidgetItem(info)
                 self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
@@ -412,7 +412,6 @@ class Example(QtGui.QMainWindow):
         self.sniperText.setObjectName("sniper_bz")  # 狙击备注
         self.bodygrid.addWidget(self.sniperText, 1, 0)
         self.sniperText.setFixedHeight(100)
-        self.sniperText.append(u"◆本狙击公式的数据均由源代码提取，未做主观修改")
         self.sniperText.append(u"◆食油，魔力，食材影响出货种类")
         self.sniperText.append(u"◆调料影响出货星级，400以上概率为最大")
 
@@ -457,7 +456,7 @@ class Example(QtGui.QMainWindow):
 
         # 为root节点设置子结点
         child1 = QtGui.QTreeWidgetItem(root)
-        child1.setText(0, u'新增食灵、装备功能\n2017.11.07XXXX工具诞生啦!')
+        child1.setText(0, u'新增食灵、装备功能\n2017.11.28wiki工具りりこの料理教室诞生啦!')
         # child4 = QtGui.QTreeWidgetItem(child3)
         # child4.setText(0, 'child4')
         # child4.setText(1, 'name4')
