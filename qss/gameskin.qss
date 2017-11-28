@@ -83,6 +83,13 @@ QTextBrowser#syText{
     border:none
     }
 
+QTextBrowser#sniper_bz{
+    color:floralwhite;
+    font:75 16pt "Microsoft YaHei";
+    background-color: rgba(25,20,20);
+    border:none;
+    }
+
 QListWidget{
     background-color: rgba(25,20,20);
     font:10pt "Microsoft YaHei";

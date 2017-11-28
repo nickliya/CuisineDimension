@@ -32,7 +32,7 @@ class Example(QtGui.QMainWindow):
     def initUI(self):
         self.resize(1180, 650)
         self.center()
-        self.setWindowTitle(u'次元料理 version:2017.11.03')
+        self.setWindowTitle(u'りりこの料理教室 version:2017.11.28')
         self.setWindowIcon(QtGui.QIcon('web.png'))
         self.setObjectName("mainwindow")
         bgList = ["bg/homeskin/home_1.png", "bg/homeskin/home_2.png", "bg/homeskin/home_main.png"]
@@ -60,9 +60,9 @@ class Example(QtGui.QMainWindow):
         self.charactorbtn.setObjectName("headbtn")
         self.equipbtn = QtGui.QPushButton(u"装备")
         self.equipbtn.setObjectName("headbtn")
-        self.projectbtn = QtGui.QPushButton(u"地图攻略")
-        self.projectbtn.setObjectName("headbtn")
-        self.cvbtn = QtGui.QPushButton(u"餐车")
+        self.sniperbtn = QtGui.QPushButton(u"狙击公式")
+        self.sniperbtn.setObjectName("headbtn")
+        self.cvbtn = QtGui.QPushButton(u"地图攻略")
         self.cvbtn.setObjectName("headbtn")
         self.damagebtn = QtGui.QPushButton(u"伤害计算")
         self.damagebtn.setObjectName("headbtn")
@@ -74,6 +74,7 @@ class Example(QtGui.QMainWindow):
         self.groupbtn.clicked.connect(self.mainView)
         self.charactorbtn.clicked.connect(self.cuisinelist)
         self.equipbtn.clicked.connect(self.equiplist)
+        self.sniperbtn.clicked.connect(self.sniperlist)
         self.aboutbtn.clicked.connect(self.aboutinfo)
 
     def iniGrid(self):
@@ -98,7 +99,7 @@ class Example(QtGui.QMainWindow):
         self.topgrid.addWidget(self.groupbtn, 0, 0)
         self.topgrid.addWidget(self.charactorbtn, 0, 1)
         self.topgrid.addWidget(self.equipbtn, 0, 2)
-        self.topgrid.addWidget(self.projectbtn, 0, 3)
+        self.topgrid.addWidget(self.sniperbtn, 0, 3)
         self.topgrid.addWidget(self.cvbtn, 0, 4)
         self.topgrid.addWidget(self.damagebtn, 0, 5)
         self.topgrid.addWidget(self.aboutbtn, 0, 6)
@@ -120,6 +121,7 @@ class Example(QtGui.QMainWindow):
                 i.deleteLater()
 
     def mainView(self):
+        """首页"""
         self.inibodywiget()
         self.bodygrid.setRowStretch(0, 0)
         self.bodygrid.setRowStretch(1, 0)
@@ -149,11 +151,11 @@ class Example(QtGui.QMainWindow):
         self.sybtn1 = setsybtn(self.sygrid, u"声  明", 1, 0)
         self.sybtn2 = setsybtn(self.sygrid, u"食灵说明", 1, 1)
         self.sybtn3 = setsybtn(self.sygrid, u"装备说明", 1, 2)
-        self.sybtn4 = setsybtn(self.sygrid, u"少女祈祷中", 1, 3)
+        self.sybtn4 = setsybtn(self.sygrid, u"狙击说明", 1, 3)
         self.sybtn1.clicked.connect(lambda: self.mainViewEdit(1))
         self.sybtn2.clicked.connect(lambda: self.mainViewEdit(2))
         self.sybtn3.clicked.connect(lambda: self.mainViewEdit(3))
-        # self.sybtn4.clicked.connect(lambda: self.mainViewEdit(4))
+        self.sybtn4.clicked.connect(lambda: self.mainViewEdit(4))
 
         self.syText = QtGui.QTextBrowser()
         self.syText.setObjectName("syText")
@@ -169,6 +171,7 @@ class Example(QtGui.QMainWindow):
         self.wigetIndex = [self.sywiget]
 
     def mainViewEdit(self, index):
+        """首页编辑"""
         if index == 1:
             self.syText.clear()
             self.syText.append(u"\n\n\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
@@ -179,11 +182,16 @@ class Example(QtGui.QMainWindow):
             self.syText.append(u"\n\n\n◆食灵界面目前提供食灵列表和食灵详细信息查看")
             self.syText.append(u"◆食灵列表的满级数据均根据源代码推算得出,误差正负1")
             self.syText.append(u"◆搜索功能少女祈祷中...")
-        else:
+        elif index == 3:
             self.syText.clear()
             self.syText.append(u"\n\n\n◆装备界面提供一个比较自由的功能，请先选择左侧套装，右边即会显示相关信息")
+        else:
+            self.syText.clear()
+            self.syText.append(u"\n\n\n◆狙击公式大致提供了自由狙击供玩家使用")
+            self.syText.append(u"◆因某些原因现在暂时不公开出货具体概率和45星具体概率数值")
 
     def cuisinelist(self):
+        """食灵列表"""
         self.inibodywiget()
 
         self.bodygrid.setRowStretch(1, 0)
@@ -271,10 +279,11 @@ class Example(QtGui.QMainWindow):
         # self.tablewiget.cellClicked.connect(self.slDetail)
 
     def equiplist(self):
+        """装备列表"""
         self.inibodywiget()
 
         sql = 'SELECT TZ_NAME FROM "equip_suit";'
-        info = ToolFunction.getsqliteInfo(sql)
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
 
         self.tablewiget = QtGui.QTableWidget(3, 1)
         self.tablewiget.horizontalHeader().setStretchLastSection(True)
@@ -310,9 +319,10 @@ class Example(QtGui.QMainWindow):
         self.wigetIndex = [self.tablewiget, self.tablewiget2, self.equipTzList]
 
     def equipEdit(self):
+        """装备列表数据填充"""
         listItemName = unicode(self.equipTzList.currentItem().text())
         sql = "select TZ_ATTR_FIR, TZ_ATTR_SEC, TZ_ATTR_TRI, b1.code_name, b2.code_name, s.tz_name||e_type_sub equip_name, e_attr_fir, e_attr_sec from equip_info t, equip_suit s, (select code, code_name from bas_code where code_id = 'equip_type') b2, (select code, code_name from bas_code where code_id = 'equip_level') b1 where t.e_level = b1.code and t.e_type = b2.code and t.e_tz = s.tz_no and s.TZ_NAME = '"+listItemName+"' order by t.E_TYPE"
-        datainfo = ToolFunction.getsqliteInfo(sql)
+        datainfo = ToolFunction.getsqliteInfo(sql, "llcy")
         # print datainfo
         self.tablewiget.clear()
         self.tablewiget2.clear()
@@ -350,7 +360,66 @@ class Example(QtGui.QMainWindow):
                     columnindex += 1
             rowindex += 1
 
+    def sniperlist(self):
+        """狙击公式"""
+        self.inibodywiget()
+        self.bodygrid.setRowStretch(0, 1)
+        self.bodygrid.setRowStretch(1, 0)
+        self.bodygrid.setColumnStretch(0, 0)
+        self.bodygrid.setColumnStretch(1, 0)
+
+        sql = ToolFunction.getsql("sql/sniper.sql")
+        info = ToolFunction.getsqliteInfo(sql, "lua_llcy")
+
+        rowcount = len(info)
+        self.tablewiget = QtGui.QTableWidget(rowcount, 9)
+        self.bodygrid.addWidget(self.tablewiget, 0, 0)
+        self.tablewiget.horizontalHeader().setStretchLastSection(True)
+        self.tablewiget.verticalHeader().setStretchLastSection(True)
+        self.tablewiget.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+        self.tablewiget.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+        self.tablewiget.setHorizontalHeaderLabels([u"食油", u"魔力", u"食材", u"主食", u"主菜",u"副菜",
+                                                   u"甜品", u"头盘", u"汤饮"])
+        # self.tablewiget.setColumnWidth(0, 70)
+        # self.tablewiget.setColumnWidth(1, 70)
+        # self.tablewiget.setColumnWidth(2, 400)
+        # self.tablewiget.setColumnWidth(3, 190)
+        # self.tablewiget.setColumnWidth(4, 190)
+        # self.tablewiget.setColumnWidth(5, 190)
+        # self.tablewiget.setColumnWidth(6, 190)
+        # self.tablewiget.setColumnWidth(7, 190)
+        # self.tablewiget.setColumnWidth(8, 190)
+
+        rowindex = 0
+        for i in info:
+            columnindex = 0
+            for x in i:
+                if type(x) == int:
+                    info = str(x)
+                else:
+                    info = x
+                if "/" in info:
+                    info = u"√"
+                self.newItem = QtGui.QTableWidgetItem(info)
+                self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                self.tablewiget.setItem(rowindex, columnindex, self.newItem)
+                self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
+                columnindex += 1
+                self.newItem.setWhatsThis(info)
+            rowindex += 1
+
+        self.sniperText = QtGui.QTextBrowser()
+        self.sniperText.setObjectName("sniper_bz")  # 狙击备注
+        self.bodygrid.addWidget(self.sniperText, 1, 0)
+        self.sniperText.setFixedHeight(100)
+        self.sniperText.append(u"◆本狙击公式的数据均由源代码提取，未做主观修改")
+        self.sniperText.append(u"◆食油，魔力，食材影响出货种类")
+        self.sniperText.append(u"◆调料影响出货星级，400以上概率为最大")
+
+        self.wigetIndex = [self.tablewiget, self.sniperText]
+
     def aboutinfo(self):
+        """关于界面"""
         self.inibodywiget()
 
         self.bodygrid.setRowStretch(1, 0)
@@ -423,11 +492,12 @@ class Example(QtGui.QMainWindow):
         self.wigetIndex = [self.leftwiget, self.rightwiget]
 
     def slDetail(self):
+        """食灵详情"""
         indexRow = self.tablewiget.currentRow()
         slnumb = self.tablewiget.item(indexRow, 1).text()
         sql = 'SELECT URL_LH,URL_LH2,SL_NAME,SL_LEVEL,TJ_HP,TJ_GJ,TJ_GJ,TJ_MZ,TJ_FY,TJ_SB,SKILL_NAME,SKILL_DESC,SKILL_GY_NAME,SKILL_GY_DESC,GROUP_DECS,SL_TYPE FROM "fairy_detail" WHERE SL_NO = '+str(slnumb)+';'
         print sql
-        info = ToolFunction.getsqliteInfo(sql)
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
         print info
 
         self.inibodywiget()
@@ -520,7 +590,7 @@ class Example(QtGui.QMainWindow):
         self.wigetIndex = [self.detailWidget]
 
     def slDetailEdit(self, attr, info, row, column):
-        """食灵属性编辑"""
+        """食灵详情数据填充"""
         msg = attr + "  " + info
         iconUrl = {u"技能": 'ui/hero/skill.png', u"装盘": 'ui/hero/skill.png', u"生命": 'ui/hero/hp.png',
                    u"攻击": 'ui/hero/atk.png', u"攻速": 'ui/hero/atkSpeed.png', u"命中": 'ui/hero/hit.png',
@@ -540,13 +610,20 @@ class ToolFunction:
         pass
 
     @staticmethod
-    def getsqliteInfo(sql):
-        con = sqlite3.connect("llcy")
+    def getsqliteInfo(sql, dbName):
+        con = sqlite3.connect(dbName)
         cur = con.cursor()
         cur.execute(sql)
         info = cur.fetchall()
         cur.close()
         return info
+
+    @staticmethod
+    def getsql(sqlurl):
+        sqlfile = open(sqlurl, "rb")
+        sql = sqlfile.read()
+        sqlfile.close()
+        return sql
 
 
 def main():
