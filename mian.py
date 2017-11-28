@@ -369,7 +369,7 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.setColumnStretch(1, 0)
 
         sql = ToolFunction.getsql("sql/sniper.sql")
-        info = ToolFunction.getsqliteInfo(sql, "lua_llcy")
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
 
         rowcount = len(info)
         self.tablewiget = QtGui.QTableWidget(rowcount, 9)
