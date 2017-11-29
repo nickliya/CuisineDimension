@@ -295,7 +295,7 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.addWidget(self.tablewiget, 0, 1)
 
         self.tablewiget2 = QtGui.QTableWidget(10, 5)
-        self.tablewiget2.setHorizontalHeaderLabels([u"名称", u"品质", u"类型", u"基础属性1", u"基础属性2"])
+        self.tablewiget2.setHorizontalHeaderLabels([u"品质", u"类型", u"名称", u"基础属性1", u"基础属性2"])
         self.tablewiget2.verticalHeader().setVisible(False)
 
         self.tablewiget2.verticalHeader().setStretchLastSection(True)
