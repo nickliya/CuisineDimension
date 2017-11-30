@@ -181,6 +181,7 @@ class Example(QtGui.QMainWindow):
         if index == 1:
             self.syText.clear()
             self.syText.append(u"\n\n\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
+            self.syText.append(u"◆本工具灵感来自于《谁在呼唤舰队》，特此致敬")
             self.syText.append(u"◆本工具所有基础资源来自萌百黑大@划破黑夜,特此鸣谢")
             self.syText.append(u"◆本工具旨在辅助玩家了解游戏信息，工具界面大致还原游戏界面是为了让玩家对工具产生亲切感。禁止窃取、泄露本工具美术资源，任何非法和损害他人利益行为与作者无关！")
         elif index == 2:
