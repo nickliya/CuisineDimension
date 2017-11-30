@@ -24,6 +24,9 @@ class Example(QtGui.QMainWindow):
         self.wigetIndex = None
         self.ToolFun = ToolFunction()
 
+    def closeEvent(self, event):
+        ToolFunction().deleteFile("temp")
+
     def center(self):
         """控件居中"""
         qr = self.frameGeometry()
@@ -34,7 +37,7 @@ class Example(QtGui.QMainWindow):
     def initUI(self):
         self.resize(1180, 650)
         self.center()
-        self.setWindowTitle(u'りりこの料理教室 version:2017.11.28')
+        self.setWindowTitle(u'りりこの料理教室 version:2017.11.30')
         self.setWindowIcon(QtGui.QIcon('web.png'))
         self.setObjectName("mainwindow")
         bgList = ["bg/homeskin/home_1.png", "bg/homeskin/home_2.png", "bg/homeskin/home_main.png"]
@@ -616,7 +619,7 @@ class Example(QtGui.QMainWindow):
         self.attributeList.setItem(row, column, self.newItem)
 
     def fortest(self):
-        pass
+        print "ok"
 
 
 class ToolFunction:
@@ -676,5 +679,8 @@ def main():
 
 encrypt_key = 95
 
+
 if __name__ == '__main__':
     main()
+
+
