@@ -282,7 +282,7 @@ class Example(QtGui.QMainWindow):
         """装备列表"""
         self.inibodywiget()
 
-        sql = 'SELECT TZ_NAME FROM "equip_suit";'
+        sql = 'SELECT TZ_NAME FROM "equip_suit" order by tz_level desc,limit_flag ;'
         info = ToolFunction.getsqliteInfo(sql, "llcy")
 
         self.tablewiget = QtGui.QTableWidget(3, 1)
@@ -321,7 +321,7 @@ class Example(QtGui.QMainWindow):
     def equipEdit(self):
         """装备列表数据填充"""
         listItemName = unicode(self.equipTzList.currentItem().text())
-        sql = "select TZ_ATTR_FIR, TZ_ATTR_SEC, TZ_ATTR_TRI, b1.code_name, b2.code_name, s.tz_name||e_type_sub equip_name, e_attr_fir, e_attr_sec from equip_info t, equip_suit s, (select code, code_name from bas_code where code_id = 'equip_type') b2, (select code, code_name from bas_code where code_id = 'equip_level') b1 where t.e_level = b1.code and t.e_type = b2.code and t.e_tz = s.tz_no and s.TZ_NAME = '"+listItemName+"' order by t.E_TYPE"
+        sql = "select TZ_ATTR_FIR, TZ_ATTR_SEC, TZ_ATTR_TRI, b1.code_name, b2.code_name, s.tz_name||e_type_sub equip_name, e_attr_fir, e_attr_sec from equip_info t, equip_suit s, (select code, code_name from bas_code where code_id = 'equip_type') b2, (select code, code_name from bas_code where code_id = 'equip_level') b1 where t.e_level = b1.code and t.e_type = b2.code and t.e_tz = s.tz_no and s.TZ_NAME = '"+listItemName+"' order by t.E_TYPE,e_attr_fir,e_attr_sec"
         datainfo = ToolFunction.getsqliteInfo(sql, "llcy")
         # print datainfo
         self.tablewiget.clear()
