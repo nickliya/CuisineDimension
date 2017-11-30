@@ -289,7 +289,7 @@ class Example(QtGui.QMainWindow):
         """装备列表"""
         self.inibodywiget()
 
-        sql = 'SELECT TZ_NAME FROM "equip_suit";'
+        sql = 'SELECT TZ_NAME FROM "equip_suit" order by tz_level desc, limit_flag;'
         info = ToolFunction.getsqliteInfo(sql, "llcy")
 
         self.tablewiget = QtGui.QTableWidget(3, 1)
@@ -328,7 +328,7 @@ class Example(QtGui.QMainWindow):
     def equipEdit(self):
         """装备列表数据填充"""
         listItemName = unicode(self.equipTzList.currentItem().text())
-        sql = "select TZ_ATTR_FIR, TZ_ATTR_SEC, TZ_ATTR_TRI, b1.code_name, b2.code_name, s.tz_name||e_type_sub equip_name, e_attr_fir, e_attr_sec from equip_info t, equip_suit s, (select code, code_name from bas_code where code_id = 'equip_type') b2, (select code, code_name from bas_code where code_id = 'equip_level') b1 where t.e_level = b1.code and t.e_type = b2.code and t.e_tz = s.tz_no and s.TZ_NAME = '" + listItemName + "' order by t.E_TYPE"
+        sql = "select TZ_ATTR_FIR, TZ_ATTR_SEC, TZ_ATTR_TRI, b1.code_name, b2.code_name, s.tz_name||e_type_sub equip_name, e_attr_fir, e_attr_sec from equip_info t, equip_suit s, (select code, code_name from bas_code where code_id = 'equip_type') b2, (select code, code_name from bas_code where code_id = 'equip_level') b1 where t.e_level = b1.code and t.e_type = b2.code and t.e_tz = s.tz_no and s.TZ_NAME = '" + listItemName + "' order by e_type, e_attr_fir,e_attr_sec"
         datainfo = ToolFunction.getsqliteInfo(sql, "llcy")
         # print datainfo
         self.tablewiget.clear()
@@ -506,7 +506,7 @@ class Example(QtGui.QMainWindow):
         """食灵详情"""
         indexRow = self.tablewiget.currentRow()
         slnumb = self.tablewiget.item(indexRow, 1).text()
-        sql = 'SELECT URL_LH,URL_LH2,SL_NAME,SL_LEVEL,TJ_JN,TJ_ZP,TJ_HP,TJ_GJ,TJ_GJ,TJ_MZ,TJ_FY,TJ_SB,SKILL_NAME,SKILL_DESC,SKILL_GY_NAME,SKILL_GY_DESC,GROUP_DECS,SL_TYPE FROM "fairy_detail" WHERE SL_NO = ' + str(
+        sql = 'SELECT URL_LH,URL_LH2,"   "||SL_NAME,SL_LEVEL,TJ_JN,TJ_ZP,TJ_HP,TJ_GJ,TJ_GJ,TJ_MZ,TJ_FY,TJ_SB,SKILL_NAME,SKILL_DESC,SKILL_GY_NAME,SKILL_GY_DESC,GROUP_DECS,SL_TYPE FROM "fairy_detail" WHERE SL_NO = ' + str(
             slnumb) + ';'
         print sql
         info = ToolFunction.getsqliteInfo(sql, "llcy")
@@ -542,7 +542,7 @@ class Example(QtGui.QMainWindow):
         self.attributeList.verticalHeader().setVisible(False)
         self.attributeList.horizontalHeader().setVisible(False)
         self.attributeList.setShowGrid(False)
-        self.attributeList.setSpan(0, 0, 1, 2)
+        self.attributeList.setSpan(0, 0, 1, 3)
         self.attributeList.setSpan(1, 0, 1, 2)
         self.attributeList.setSpan(7, 0, 2, 4)
         self.attributeList.setSpan(10, 0, 2, 4)
@@ -552,9 +552,9 @@ class Example(QtGui.QMainWindow):
         self.lbp2 = QtGui.QLabel()
         self.lbp2.setPixmap(QtGui.QPixmap('ui/hero/' + str(info[0][17]) + '.png'))
         self.attributeList.setCellWidget(0, 0, self.lbp2)
-        self.newItem.setFont(QtGui.QFont("youyuan", 18, 100))
+        self.newItem.setFont(QtGui.QFont("youyuan", 16, 100))
         # self.newItem.setIcon(QtGui.QIcon('ui/hero/'+str(info[0][15])+'.png'))
-        self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+        # self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
         self.attributeList.setItem(0, 0, self.newItem)
         self.lbp2 = QtGui.QLabel()
         self.lbp2.setPixmap(QtGui.QPixmap('ui/hero/star' + str(info[0][3]) + '.png'))
@@ -571,7 +571,7 @@ class Example(QtGui.QMainWindow):
 
         self.newItem = QtGui.QTableWidgetItem(u"料理技")
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
-        self.newItem.setFont(QtGui.QFont("youyuan", 14, 100))
+        self.newItem.setFont(QtGui.QFont("youyuan", 16, 100))
         self.attributeList.setItem(6, 0, self.newItem)
 
         self.newItem = QtGui.QTableWidgetItem(info[0][12])
