@@ -180,7 +180,7 @@ class Example(QtGui.QMainWindow):
         elif index == 2:
             self.syText.clear()
             self.syText.append(u"\n\n\n◆食灵界面目前提供食灵列表和食灵详细信息查看")
-            self.syText.append(u"◆食灵列表的满级数据均根据源代码推算得出,误差正负1")
+            self.syText.append(u"◆食灵列表的满级数据由推算得出,误差正负1")
             self.syText.append(u"◆搜索功能少女祈祷中...")
         elif index == 3:
             self.syText.clear()
@@ -295,7 +295,7 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.addWidget(self.tablewiget, 0, 1)
 
         self.tablewiget2 = QtGui.QTableWidget(10, 5)
-        self.tablewiget2.setHorizontalHeaderLabels([u"名称", u"品质", u"类型", u"基础属性1", u"基础属性2"])
+        self.tablewiget2.setHorizontalHeaderLabels([u"品质", u"类型", u"名称", u"基础属性1", u"基础属性2"])
         self.tablewiget2.verticalHeader().setVisible(False)
 
         self.tablewiget2.verticalHeader().setStretchLastSection(True)
@@ -327,7 +327,7 @@ class Example(QtGui.QMainWindow):
         self.tablewiget.clear()
         self.tablewiget2.clear()
         self.tablewiget.setHorizontalHeaderLabels([u"套装属性"])
-        self.tablewiget2.setHorizontalHeaderLabels([u"名称", u"品质", u"类型", u"基础属性1", u"基础属性2"])
+        self.tablewiget2.setHorizontalHeaderLabels([u"品质", u"类型", u"名称", u"基础属性1", u"基础属性2"])
 
         typeIndex={u"食器":1, u"厨具":2, u"餐具":3}
         rowindex = 0
@@ -465,7 +465,7 @@ class Example(QtGui.QMainWindow):
         self.text=QtGui.QTextEdit()
         self.text.setObjectName("rightInfo")
         # self.text.setHtml("<img src='ui/logo.png' width=10% heigth=10%>")
-        self.text.append("<img src='ui/logo.png'>\n")
+        self.text.append("<img src='ui/logo.png'>")
         self.text.setAlignment(QtCore.Qt.AlignCenter)
         self.text.setTextColor(QtGui.QColor("#FFF3EE"))
         self.text.append(u"\n欢迎加入我们\nQQ群:627216993\n")
@@ -486,6 +486,7 @@ class Example(QtGui.QMainWindow):
         self.text.append(u"美工/UI")
         self.text.setFontPointSize(12)
         self.text.append(u"小四\n")
+        self.text.append(u"bug或意见反馈\n微博私信@Elza_Scarlet")
         self.text.setAlignment(QtCore.Qt.AlignCenter)
         self.rightgrid.addWidget(self.text, 0, 0)
         self.wigetIndex = [self.leftwiget, self.rightwiget]
