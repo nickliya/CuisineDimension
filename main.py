@@ -404,6 +404,10 @@ class Example(QtGui.QMainWindow):
                     info = x
                 if "1" in info:
                     info = u"√"
+                elif "0" == info:
+                    info = "-"
+                else:
+                    pass
                 self.newItem = QtGui.QTableWidgetItem(info)
                 self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
                 self.tablewiget.setItem(rowindex, columnindex, self.newItem)
