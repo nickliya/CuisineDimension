@@ -646,8 +646,8 @@ class ToolFunction:
     @staticmethod
     def deleteFile(path):
         for dirpath, dirnames, filenames in os.walk(path):
-            for file in filenames:
-                fullpath = os.path.join(dirpath, file)
+            for filename in filenames:
+                fullpath = os.path.join(dirpath, filename)
                 os.remove(fullpath)
 
 
@@ -683,5 +683,3 @@ encrypt_key = 95
 
 if __name__ == '__main__':
     main()
-
-
