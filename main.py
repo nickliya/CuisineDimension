@@ -45,7 +45,8 @@ class Example(QtGui.QMainWindow):
 
         bgList = ["bg/homeskin/home_1.png", "bg/homeskin/home_2.png", "bg/homeskin/home_main.png"]
         bg = random.choice(bgList)
-        self.setStyleSheet("QMainWindow{background-repeat: no-repeat;background-position: center;border-image: url("+bg+");}")
+        self.setStyleSheet(
+            "QMainWindow{background-repeat: no-repeat;background-position: center;border-image: url(" + bg + ");}")
 
         styleqss = open("qss/gameskin.qss", "r")
         styleinfo = styleqss.read()
@@ -81,9 +82,9 @@ class Example(QtGui.QMainWindow):
         self.sniperbtn = QtGui.QPushButton(u"狙击公式")
         self.sniperbtn.setObjectName("headbtn")
         self.sniperbtn.setFont(QtGui.QFont(font))
-        self.cvbtn = QtGui.QPushButton(u"地图攻略")
-        self.cvbtn.setObjectName("headbtn")
-        self.cvbtn.setFont(QtGui.QFont(font))
+        self.mapbtn = QtGui.QPushButton(u"地图攻略")
+        self.mapbtn.setObjectName("headbtn")
+        self.mapbtn.setFont(QtGui.QFont(font))
         self.damagebtn = QtGui.QPushButton(u"伤害计算")
         self.damagebtn.setObjectName("headbtn")
         self.damagebtn.setFont(QtGui.QFont(font))
@@ -96,6 +97,7 @@ class Example(QtGui.QMainWindow):
         self.groupbtn.clicked.connect(self.mainView)
         self.charactorbtn.clicked.connect(self.cuisinelist)
         self.equipbtn.clicked.connect(self.equiplist)
+        self.mapbtn.clicked.connect(self.maplist)
         self.sniperbtn.clicked.connect(self.sniperlist)
         self.aboutbtn.clicked.connect(self.aboutinfo)
 
@@ -121,7 +123,7 @@ class Example(QtGui.QMainWindow):
         self.topgrid.addWidget(self.charactorbtn, 0, 1)
         self.topgrid.addWidget(self.equipbtn, 0, 2)
         self.topgrid.addWidget(self.sniperbtn, 0, 3)
-        self.topgrid.addWidget(self.cvbtn, 0, 4)
+        self.topgrid.addWidget(self.mapbtn, 0, 4)
         self.topgrid.addWidget(self.damagebtn, 0, 5)
         self.topgrid.addWidget(self.aboutbtn, 0, 6)
 
@@ -306,7 +308,7 @@ class Example(QtGui.QMainWindow):
         """装备列表"""
         self.inibodywiget()
 
-        sql = 'SELECT TZ_NAME FROM "equip_suit" order by tz_level desc, limit_flag;'
+        sql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
         info = ToolFunction.getsqliteInfo(sql, "llcy")
 
         self.tablewiget = QtGui.QTableWidget(3, 1)
@@ -345,7 +347,7 @@ class Example(QtGui.QMainWindow):
     def equipEdit(self):
         """装备列表数据填充"""
         listItemName = unicode(self.equipTzList.currentItem().text())
-        sql = "select TZ_ATTR_FIR, TZ_ATTR_SEC, TZ_ATTR_TRI, b1.code_name, b2.code_name, s.tz_name||e_type_sub equip_name, e_attr_fir, e_attr_sec from equip_info t, equip_suit s, (select code, code_name from bas_code where code_id = 'equip_type') b2, (select code, code_name from bas_code where code_id = 'equip_level') b1 where t.e_level = b1.code and t.e_type = b2.code and t.e_tz = s.tz_no and s.TZ_NAME = '" + listItemName + "' order by e_type, e_attr_fir,e_attr_sec"
+        sql = "SELECT TZ_ATTR_FIR, TZ_ATTR_SEC, TZ_ATTR_TRI, b1.code_name, b2.code_name, s.tz_name||e_type_sub equip_name, e_attr_fir, e_attr_sec FROM equip_info t, equip_suit s, (SELECT code, code_name FROM bas_code WHERE code_id = 'equip_type') b2, (SELECT code, code_name FROM bas_code WHERE code_id = 'equip_level') b1 WHERE t.e_level = b1.code AND t.e_type = b2.code AND t.e_tz = s.tz_no AND s.TZ_NAME = '" + listItemName + "' ORDER BY e_type, e_attr_fir,e_attr_sec"
         datainfo = ToolFunction.getsqliteInfo(sql, "llcy")
         # print datainfo
         self.tablewiget.clear()
@@ -444,6 +446,56 @@ class Example(QtGui.QMainWindow):
         self.sniperText.append(u"◆狙击公式所提供数值为最低出货数值，不保证概率，请洗脸后尝试")
 
         self.wigetIndex = [self.tablewiget, self.sniperText]
+
+    def maplist(self):
+        """地图列表"""
+        self.inibodywiget()
+        self.bodygrid.setRowStretch(0, 0)
+        self.bodygrid.setRowStretch(1, 0)
+        self.bodygrid.setColumnStretch(0, 0)
+        self.bodygrid.setColumnStretch(1, 0)
+
+        sql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
+
+        self.mapLabel = QtGui.QLabel()
+        self.bodygrid.addWidget(self.mapLabel, 0, 1)
+
+        self.mapList1 = QtGui.QListWidget()
+        # info = [u"轻度1-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
+        #         u"轻度2-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
+        #         u"轻度3-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
+        #         u"轻度4-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
+        #         u"轻度5-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
+        #         u"轻度6-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
+        #         u"轻度1-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6", ]
+        info = [u"欧罗巴大陆", u"美利坚大陆", u"和风岛", u"次元小屋", u"中华大陆", u"次元壁"]
+        for tzNameIndex in info:
+            newItem = QtGui.QListWidgetItem(tzNameIndex)
+            newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+            self.mapList1.addItem(newItem)
+
+        self.mapList2 = QtGui.QListWidget()
+        info = [u"轻度1-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
+                u"轻度2-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
+                ]
+        for tzNameIndex in info:
+            newItem = QtGui.QListWidgetItem(tzNameIndex)
+            newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+            self.mapList2.addItem(newItem)
+
+        # self.mapList1.itemClicked.connect(self.equipEdit1)
+        # self.mapList2.itemClicked.connect(self.equipEdit2)
+        self.bodygrid.addWidget(self.mapList1, 0, 0)
+        self.bodygrid.addWidget(self.mapList2, 1, 0)
+
+        self.bodygrid.setColumnStretch(0, 0)
+        self.bodygrid.setColumnStretch(1, 1)
+
+        # self.tablewiget.verticalHeader().setVisible(False)
+        # self.tablewiget.horizontalHeader().setVisible(False)
+
+        self.wigetIndex = [self.mapList1, self.mapList2]
 
     def aboutinfo(self):
         """关于界面"""
@@ -695,7 +747,6 @@ def main():
 
 
 encrypt_key = 95
-
 
 if __name__ == '__main__':
     main()
