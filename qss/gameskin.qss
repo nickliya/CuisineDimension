@@ -91,6 +91,7 @@ QTextBrowser#sniper_bz{
     }
 
 QListWidget{
+    background-color: rgba(25,20,20);
     font:10pt "Microsoft YaHei";
     border:none;
     color:floralwhite

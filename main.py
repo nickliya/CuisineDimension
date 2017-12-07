@@ -495,7 +495,7 @@ class Example(QtGui.QMainWindow):
         # self.tablewiget.verticalHeader().setVisible(False)
         # self.tablewiget.horizontalHeader().setVisible(False)
 
-        self.wigetIndex = [self.mapList1, self.mapList2]
+        self.wigetIndex = [self.mapList1, self.mapList2, self.mapLabel]
 
     def aboutinfo(self):
         """关于界面"""
