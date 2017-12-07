@@ -1,0 +1,104 @@
+QMainWindow{
+    }
+
+QWidget#mainWidget{
+    }
+
+QWidget#aboutRight{
+    background-color: rgba(105,105,105,150);
+    }
+
+QWidget#aboutLeft{
+    background-color: rgba(105,105,105,150);
+    }
+
+QWidget#SLdetail{
+    background-color: rgba(25,20,20)
+    }
+
+QWidget#main_sy{
+    border-image:url(ui/main/blackboard.png);
+    }
+
+QTableWidget#sl_Attri{
+    font:75 10pt "Microsoft YaHei";
+    }
+
+QPushButton#headbtn{
+    color:floralwhite;
+    font:100 20pt;
+    border:none;
+    border-image:url(ui/menu/start_bg.png);
+    }
+QPushButton#headbtn:hover{
+    color:#333333;
+    }
+
+QPushButton#sybtn{
+    color:floralwhite;
+    border-image:url(ui/main/frame.png);
+    background-repeat: no-repeat;
+    font:75 14pt "Microsoft YaHei";
+    }
+
+QLabel#aboutName{
+    color:floralwhite;
+    font:75 30pt "Microsoft YaHei";
+    }
+
+QLabel#lhLable{
+    background-color: rgba(255,0,0,0);
+    }
+
+QLabel#syLabel{
+    background-color: rgba(255,0,0,0);
+    color:floralwhite;
+    font:1000 18pt "Microsoft YaHei";
+    }
+
+QTreeWidget{
+    color:floralwhite;
+    border:none;
+    font:75 16pt "Microsoft YaHei";
+    background-color: rgba(255,0,0,0);
+    }
+
+QTableWidget{
+    color:floralwhite;
+    border:none;
+    background-color: rgba(25,20,20);
+}
+
+
+QTextEdit#rightInfo{
+    font:75 10pt "Microsoft YaHei";
+    background-color: rgba(255,0,0,0);
+    border:none
+    }
+
+QTextBrowser#syText{
+    color:floralwhite;
+    font:75 16pt "Microsoft YaHei";
+    background-color: rgba(255,0,0,0);
+    border:none
+    }
+
+QTextBrowser#sniper_bz{
+    color:floralwhite;
+    font:75 16pt "Microsoft YaHei";
+    background-color: rgba(25,20,20);
+    border:none;
+    }
+
+QListWidget{
+    background-color: rgba(25,20,20);
+    font:10pt "Microsoft YaHei";
+    border:none;
+    color:floralwhite
+}
+
+QListWidget:Item{
+}
+
+QHeaderView::section{
+}

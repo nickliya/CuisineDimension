@@ -43,12 +43,14 @@ class Example(QtGui.QMainWindow):
         self.mainwidget = QtGui.QWidget()
         self.mainwidget.setObjectName("mainWidget")
 
-        bgList = ["bg/homeskin/home_1.png", "bg/homeskin/home_2.png", "bg/homeskin/home_3.png"]
+        bgList = ["bg/homeskin/home_1.png", "bg/homeskin/home_2.png", "bg/homeskin/home_3.png",
+                  "bg/homeskin/home_4.png", "bg/homeskin/home_5.png", "bg/homeskin/home_6.png",
+                  "bg/homeskin/home_7.png"]
         bg = random.choice(bgList)
         self.setStyleSheet(
             "QMainWindow{background-repeat: no-repeat;background-position: center;border-image: url(" + bg + ");}")
 
-        styleqss = open("qss/gameskin.qss", "r")
+        styleqss = open("qss/gameskinNana.qss", "r")
         styleinfo = styleqss.read()
         self.mainwidget.setStyleSheet(styleinfo)
         styleqss.close()
