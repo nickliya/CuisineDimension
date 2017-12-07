@@ -40,12 +40,16 @@ class Example(QtGui.QMainWindow):
         self.setWindowTitle(u'りりこの料理教室 version:2017.11.30')
         self.setWindowIcon(QtGui.QIcon('web.png'))
         self.setObjectName("mainwindow")
+        self.mainwidget = QtGui.QWidget()
+        self.mainwidget.setObjectName("mainWidget")
+
         bgList = ["bg/homeskin/home_1.png", "bg/homeskin/home_2.png", "bg/homeskin/home_main.png"]
         bg = random.choice(bgList)
+        self.setStyleSheet("QMainWindow{background-repeat: no-repeat;background-position: center;border-image: url("+bg+");}")
 
         styleqss = open("qss/gameskin.qss", "r")
         styleinfo = styleqss.read()
-        self.setStyleSheet(styleinfo)
+        self.mainwidget.setStyleSheet(styleinfo)
         styleqss.close()
 
         # palette添加背景
@@ -59,20 +63,33 @@ class Example(QtGui.QMainWindow):
 
         self.setWindowOpacity(0.96)
 
+        # 新增字体咪咪体
+        mimitiid = QtGui.QFontDatabase.addApplicationFont('./qss/mimiti.ttf')
+        fontInfoList = QtGui.QFontDatabase.applicationFontFamilies(mimitiid)
+        fontName = fontInfoList[0]
+        font = QtGui.QFont(fontName)
+
         self.groupbtn = QtGui.QPushButton(u"首页")
         self.groupbtn.setObjectName("headbtn")
+        self.groupbtn.setFont(QtGui.QFont(font))
         self.charactorbtn = QtGui.QPushButton(u"食灵")
         self.charactorbtn.setObjectName("headbtn")
+        self.charactorbtn.setFont(QtGui.QFont(font))
         self.equipbtn = QtGui.QPushButton(u"装备")
         self.equipbtn.setObjectName("headbtn")
+        self.equipbtn.setFont(QtGui.QFont(font))
         self.sniperbtn = QtGui.QPushButton(u"狙击公式")
         self.sniperbtn.setObjectName("headbtn")
+        self.sniperbtn.setFont(QtGui.QFont(font))
         self.cvbtn = QtGui.QPushButton(u"地图攻略")
         self.cvbtn.setObjectName("headbtn")
+        self.cvbtn.setFont(QtGui.QFont(font))
         self.damagebtn = QtGui.QPushButton(u"伤害计算")
         self.damagebtn.setObjectName("headbtn")
+        self.damagebtn.setFont(QtGui.QFont(font))
         self.aboutbtn = QtGui.QPushButton(u"关于")
         self.aboutbtn.setObjectName("headbtn")
+        self.aboutbtn.setFont(QtGui.QFont(font))
 
         self.bglabel = QtGui.QLabel()
 
@@ -88,10 +105,9 @@ class Example(QtGui.QMainWindow):
         # self.maingrid.setRowStretch(1, 1)
 
         # mainwindow架构
-        mainwidget = QtGui.QWidget()
         self.maingrid = QtGui.QGridLayout()
-        mainwidget.setLayout(self.maingrid)
-        self.setCentralWidget(mainwidget)
+        self.mainwidget.setLayout(self.maingrid)
+        self.setCentralWidget(self.mainwidget)
         self.maingrid.setRowStretch(1, 1)
         self.maingrid.setColumnStretch(0, 1)
 
@@ -480,7 +496,7 @@ class Example(QtGui.QMainWindow):
         self.text.append("<img src='ui/logo.png'>")
         self.text.setAlignment(QtCore.Qt.AlignCenter)
         self.text.setTextColor(QtGui.QColor("#FFF3EE"))
-        # self.text.append(u"\n欢迎加入我们\nQQ群:627216993\n")
+        self.text.append(u"\n欢迎加入我们\nQQ群:627216993\n")
         # self.text.setTextColor(QtGui.QColor("#DC143C"))
         self.text.setFontPointSize(18)
         self.text.append(u"界面设计")

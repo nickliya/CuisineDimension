@@ -1,7 +1,7 @@
-QWidget#mainwindow{
-    background-repeat: no-repeat;
-    background-position: center;
-    border-image: url(bg/homeskin/home_1.png);
+QMainWindow{
+    }
+
+QWidget#mainWidget{
     }
 
 QWidget#aboutRight{
@@ -26,9 +26,9 @@ QTableWidget#sl_Attri{
 
 QPushButton#headbtn{
     color:floralwhite;
-    font:75 20pt "Microsoft YaHei";
+    font:100 20pt;
     border:none;
-    border-image:url(ui/menu/start_bg.png)
+    border-image:url(ui/menu/start_bg.png);
     }
 QPushButton#headbtn:hover{
     color:#333333;
