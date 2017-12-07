@@ -65,7 +65,7 @@ class Example(QtGui.QMainWindow):
         self.setWindowOpacity(0.96)
 
         # 新增字体咪咪体
-        mimitiid = QtGui.QFontDatabase.addApplicationFont('./qss/mimiti.ttf')
+        mimitiid = QtGui.QFontDatabase.addApplicationFont('font/liyifeng.ttf')
         fontInfoList = QtGui.QFontDatabase.applicationFontFamilies(mimitiid)
         fontName = fontInfoList[0]
         font = QtGui.QFont(fontName)
