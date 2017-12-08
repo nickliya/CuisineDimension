@@ -600,8 +600,8 @@ class Example(QtGui.QMainWindow):
             decrypt(info[0][1], "temp/index2.png")
         except IOError:
             pass
-        stylesheet = "QLabel#lhLable{border-image: url('temp/index1.png');}" + \
-                     "QLabel#lhLable::hover{border-image: url('temp/index2.png');}"
+        stylesheet = "QLabel#lhLabel{border-image: url('temp/index1.png');}" + \
+                     "QLabel#lhLabel::hover{border-image: url('temp/index2.png');}"
         self.cuisineLable.setStyleSheet(stylesheet)
 
         # 右边窗体

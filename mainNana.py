@@ -72,8 +72,14 @@ class Example(QtGui.QMainWindow):
         fontName = fontInfoList[0]
         font = QtGui.QFont(fontName)
 
+        self.kuangwidget = QtGui.QWidget()
+        self.kuangwidget.setObjectName("kuangwidget")
+        self.kuanggrid = QtGui.QGridLayout()
+        self.kuangwidget.setLayout(self.kuanggrid)
+
         self.groupbtn = QtGui.QPushButton(u"首页")
         self.groupbtn.setObjectName("headbtn")
+        self.groupbtn.setStyleSheet("border-img:url(ui/main)")
         self.groupbtn.setFont(QtGui.QFont(font))
         self.charactorbtn = QtGui.QPushButton(u"食灵")
         self.charactorbtn.setObjectName("headbtn")
@@ -158,10 +164,10 @@ class Example(QtGui.QMainWindow):
         # self.lhLabel = QtGui.QLabel()
         self.sylhLabel.setObjectName("sylhLabel")  # 首页立绘
         self.historyLabel.setObjectName("historyLabel")  # 更新历史
-        self.bodygrid.addWidget(self.sywiget, 0, 0)
-        self.bodygrid.addWidget(self.sywiget, 0, 1)
+        # self.bodygrid.addWidget(self.sywiget, 0, 0)
+        # self.bodygrid.addWidget(self.sywiget, 0, 1)
         
-        self.wigetIndex = [self.sywiget]
+        self.wigetIndex = []
 
     def cuisinelist(self):
         """食灵列表"""
@@ -171,18 +177,22 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.setRowStretch(1, 0)
         self.bodygrid.setColumnStretch(0, 1)
         self.bodygrid.setColumnStretch(1, 0)
+        self.kuanggrid.setColumnStretch(0, 0)
+        self.kuanggrid.setColumnStretch(1, 0)
+
 
         con = sqlite3.connect("llcy")
         cur = con.cursor()
         sql = 'SELECT URL_TX,n.SL_NO,SL_NAME,SL_TYPE,SL_HP,SL_GJ,SL_FY,SL_MZ,SL_SB,SL_BJ,SL_GS,SL_SY,SL_ML,MAX_HP,MAX_GJ,MAX_FY,MAX_MZ,MAX_SB,MAX_SY,MAX_ML FROM fairy_detail n,fairy_detail_max m WHERE n.SL_NO=m.SL_NO;'
-        # sql='SELECT * FROM "fairy_info";'
         cur.execute(sql)
         info = cur.fetchall()
         cur.close()
         rowcount = len(info)
 
+        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+        
         self.tablewiget = QtGui.QTableWidget(rowcount, 20)
-        self.bodygrid.addWidget(self.tablewiget, 0, 0)
+        self.kuanggrid.addWidget(self.tablewiget, 0, 0)
 
         self.tablewiget.itemClicked.connect(self.slDetail)  # 表格信号
         # self.tablewiget.horizontalHeader().sectionClicked.connect(self.fortest2)  # 表头信号
@@ -195,7 +205,7 @@ class Example(QtGui.QMainWindow):
 
         for x in range(self.tablewiget.columnCount()):
             headItem = self.tablewiget.horizontalHeaderItem(x)  # 获得水平方向表头的Item对象
-            headItem.setBackgroundColor(QtGui.QColor(0, 60, 10))  # 设置单元格背景颜色
+            headItem.setBackgroundColor(QtGui.QColor(25, 20, 20))  # 设置单元格背景颜色
             headItem.setTextColor(QtGui.QColor(200, 111, 30))
 
             # self.tablewiget.setShowGrid(False)  # 设置网格线
@@ -259,6 +269,8 @@ class Example(QtGui.QMainWindow):
         sql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
         info = ToolFunction.getsqliteInfo(sql, "llcy")
 
+        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+
         self.tablewiget = QtGui.QTableWidget(3, 1)
         self.tablewiget.horizontalHeader().setStretchLastSection(True)
         self.tablewiget.verticalHeader().setStretchLastSection(True)
@@ -266,7 +278,7 @@ class Example(QtGui.QMainWindow):
         self.tablewiget.setFixedHeight(100)
         self.tablewiget.setHorizontalHeaderLabels([u"套装属性"])
         self.tablewiget.verticalHeader().setVisible(False)
-        self.bodygrid.addWidget(self.tablewiget, 0, 1)
+        self.kuanggrid.addWidget(self.tablewiget, 0, 1)
 
         self.tablewiget2 = QtGui.QTableWidget(10, 5)
         self.tablewiget2.setHorizontalHeaderLabels([u"品质", u"类型", u"名称", u"基础属性1", u"基础属性2"])
@@ -274,7 +286,7 @@ class Example(QtGui.QMainWindow):
 
         self.tablewiget2.verticalHeader().setStretchLastSection(True)
         self.tablewiget2.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
-        self.bodygrid.addWidget(self.tablewiget2, 1, 1)
+        self.kuanggrid.addWidget(self.tablewiget2, 1, 1)
         self.equipTzList = QtGui.QListWidget()
         for tzNameIndex in info:
             newItem = QtGui.QListWidgetItem(tzNameIndex[0])
@@ -282,10 +294,10 @@ class Example(QtGui.QMainWindow):
             self.equipTzList.addItem(newItem)
 
         self.equipTzList.itemClicked.connect(self.equipEdit)
-        self.bodygrid.addWidget(self.equipTzList, 0, 0, 0, 1)
+        self.kuanggrid.addWidget(self.equipTzList, 0, 0, 0, 1)
 
-        self.bodygrid.setColumnStretch(0, 0)
-        self.bodygrid.setColumnStretch(1, 1)
+        self.kuanggrid.setColumnStretch(0, 0)
+        self.kuanggrid.setColumnStretch(1, 1)
 
         # self.tablewiget.verticalHeader().setVisible(False)
         # self.tablewiget.horizontalHeader().setVisible(False)
@@ -347,22 +359,13 @@ class Example(QtGui.QMainWindow):
 
         rowcount = len(info)
         self.tablewiget = QtGui.QTableWidget(rowcount, 9)
+        self.tablewiget.setHorizontalHeaderLabels([u"食油", u"魔力", u"食材", u"主食", u"主菜", u"副菜",
+                                                   u"甜品", u"头盘", u"汤饮"])
         self.bodygrid.addWidget(self.tablewiget, 0, 0)
         self.tablewiget.horizontalHeader().setStretchLastSection(True)
         self.tablewiget.verticalHeader().setStretchLastSection(True)
         self.tablewiget.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
         self.tablewiget.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
-        self.tablewiget.setHorizontalHeaderLabels([u"食油", u"魔力", u"食材", u"主食", u"主菜", u"副菜",
-                                                   u"甜品", u"头盘", u"汤饮"])
-        # self.tablewiget.setColumnWidth(0, 70)
-        # self.tablewiget.setColumnWidth(1, 70)
-        # self.tablewiget.setColumnWidth(2, 400)
-        # self.tablewiget.setColumnWidth(3, 190)
-        # self.tablewiget.setColumnWidth(4, 190)
-        # self.tablewiget.setColumnWidth(5, 190)
-        # self.tablewiget.setColumnWidth(6, 190)
-        # self.tablewiget.setColumnWidth(7, 190)
-        # self.tablewiget.setColumnWidth(8, 190)
 
         rowindex = 0
         for i in info:
@@ -584,8 +587,8 @@ class Example(QtGui.QMainWindow):
             decrypt(info[0][1], "temp/index2.png")
         except IOError:
             pass
-        stylesheet = "QLabel#lhLable{border-image: url('temp/index1.png');}" + \
-                     "QLabel#lhLable::hover{border-image: url('temp/index2.png');}"
+        stylesheet = "QLabel#lhLabel{border-image: url('temp/index1.png');}" + \
+                     "QLabel#lhLabel::hover{border-image: url('temp/index2.png');}"
         self.cuisineLable.setStyleSheet(stylesheet)
 
         # 右边窗体

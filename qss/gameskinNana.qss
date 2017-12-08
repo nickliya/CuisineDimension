@@ -17,26 +17,31 @@ QWidget#SLdetail{
     }
 
 QWidget#main_sy{
-    border-image:url(ui/main/blackboard.png);
+    border-image:url(ui/about/blackboard.png);
+    }
+
+QWidget#kuangwidget{
+    border-image:url(ui/beijkuang.png);
     }
 
 QTableWidget#sl_Attri{
     font:75 10pt "Microsoft YaHei";
     }
 
-QPushButton#headbtn{
+/***QPushButton#headbtn{
     color:floralwhite;
     font:100 20pt;
     border:none;
     border-image:url(ui/menu/start_bg.png);
-    }
+    }***/
+
 QPushButton#headbtn:hover{
     color:#333333;
     }
 
 QPushButton#sybtn{
     color:floralwhite;
-    border-image:url(ui/main/frame.png);
+    border-image:url(ui/about/frame.png);
     background-repeat: no-repeat;
     font:75 14pt "Microsoft YaHei";
     }
@@ -64,6 +69,18 @@ QTableWidget{
     background-color: rgba(25,20,20);
 }
 
+
+QHeaderView{
+    border:none;
+    background-color: rgba(25,20,20);
+    color:floralwhite
+}
+
+QHeaderView::section{
+    border:none;
+    background-color: rgba(25,20,20);
+    color:floralwhite;
+}
 
 QTextEdit#rightInfo{
     font:75 10pt "Microsoft YaHei";
@@ -95,5 +112,85 @@ QListWidget{
 QListWidget:Item{
 }
 
-QHeaderView::section{
+
+/**********滚动条-水平**********/
+QScrollBar:horizontal {
+        height: 20px;
+        background: transparent;
+        margin-top: 3px;
+        margin-bottom: 3px;
+}
+QScrollBar::handle:horizontal {
+        height: 20px;
+        min-width: 30px;
+        background: rgb(68, 69, 73);
+        margin-left: 15px;
+        margin-right: 15px;
+}
+QScrollBar::handle:horizontal:hover {
+        background: rgb(80, 80, 80);
+}
+QScrollBar::sub-line:horizontal {
+        width: 15px;
+        background: transparent;
+        image: url(:/Black/arrowLeft);
+        subcontrol-position: left;
+}
+QScrollBar::add-line:horizontal {
+        width: 15px;
+        background: transparent;
+        image: url(:/Black/arrowRight);
+        subcontrol-position: right;
+}
+QScrollBar::sub-line:horizontal:hover {
+        background: rgb(68, 69, 73);
+}
+QScrollBar::add-line:horizontal:hover {
+        background: rgb(68, 69, 73);
+}
+QScrollBar::add-page:horizontal,QScrollBar::sub-page:horizontal {
+        background: transparent;
+}
+
+/**********滚动条-垂直**********/
+QScrollBar:vertical {
+        width: 20px;
+        background: transparent;
+        margin-left: 3px;
+        margin-right: 3px;
+}
+QScrollBar::handle:vertical {
+        width: 20px;
+        min-height: 30px;
+        background: rgb(68, 69, 73);
+        margin-top: 15px;
+        margin-bottom: 15px;
+}
+QScrollBar::handle:vertical:hover {
+        background: rgb(80, 80, 80);
+}
+QScrollBar::sub-line:vertical {
+        height: 15px;
+        background: transparent;
+        image: url(:/Black/arrowTop);
+        subcontrol-position: top;
+}
+QScrollBar::add-line:vertical {
+        height: 15px;
+        background: transparent;
+        image: url(:/Black/arrowBottom);
+        subcontrol-position: bottom;
+}
+QScrollBar::sub-line:vertical:hover {
+        background: rgb(68, 69, 73);
+}
+QScrollBar::add-line:vertical:hover {
+        background: rgb(68, 69, 73);
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+        background: transparent;
+}
+
+QScrollBar#verticalScrollBar:vertical {
+        margin-top: 30px;
 }
