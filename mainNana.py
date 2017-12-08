@@ -77,28 +77,34 @@ class Example(QtGui.QMainWindow):
         self.kuanggrid = QtGui.QGridLayout()
         self.kuangwidget.setLayout(self.kuanggrid)
 
-        self.groupbtn = QtGui.QPushButton(u"首页")
+        self.groupbtn = QtGui.QPushButton()
         self.groupbtn.setObjectName("headbtn")
-        self.groupbtn.setStyleSheet("border-img:url(ui/main)")
-        self.groupbtn.setFont(QtGui.QFont(font))
-        self.charactorbtn = QtGui.QPushButton(u"食灵")
+        self.groupbtn.setStyleSheet("border-image:url(ui/main/shouye.png)")
+        # self.groupbtn.setFont(QtGui.QFont(font))
+        self.charactorbtn = QtGui.QPushButton()
         self.charactorbtn.setObjectName("headbtn")
-        self.charactorbtn.setFont(QtGui.QFont(font))
-        self.equipbtn = QtGui.QPushButton(u"装备")
+        self.charactorbtn.setStyleSheet("border-image:url(ui/main/shiling.png)")
+        # self.charactorbtn.setFont(QtGui.QFont(font))
+        self.equipbtn = QtGui.QPushButton()
         self.equipbtn.setObjectName("headbtn")
-        self.equipbtn.setFont(QtGui.QFont(font))
-        self.sniperbtn = QtGui.QPushButton(u"狙击公式")
+        self.equipbtn.setStyleSheet("border-image:url(ui/main/zhuangbei.png)")
+        # self.equipbtn.setFont(QtGui.QFont(font))
+        self.sniperbtn = QtGui.QPushButton()
         self.sniperbtn.setObjectName("headbtn")
-        self.sniperbtn.setFont(QtGui.QFont(font))
-        self.mapbtn = QtGui.QPushButton(u"地图攻略")
+        self.sniperbtn.setStyleSheet("border-image:url(ui/main/gongshi.png)")
+        # self.sniperbtn.setFont(QtGui.QFont(font))
+        self.mapbtn = QtGui.QPushButton()
         self.mapbtn.setObjectName("headbtn")
-        self.mapbtn.setFont(QtGui.QFont(font))
-        self.damagebtn = QtGui.QPushButton(u"伤害计算")
+        self.mapbtn.setStyleSheet("border-image:url(ui/main/gonglue.png)")
+        # self.mapbtn.setFont(QtGui.QFont(font))
+        self.damagebtn = QtGui.QPushButton()
         self.damagebtn.setObjectName("headbtn")
-        self.damagebtn.setFont(QtGui.QFont(font))
-        self.aboutbtn = QtGui.QPushButton(u"关于")
+        self.damagebtn.setStyleSheet("border-image:url(ui/main/jisuan.png)")
+        # self.damagebtn.setFont(QtGui.QFont(font))
+        self.aboutbtn = QtGui.QPushButton()
         self.aboutbtn.setObjectName("headbtn")
-        self.aboutbtn.setFont(QtGui.QFont(font))
+        self.aboutbtn.setStyleSheet("border-image:url(ui/main/guanyu.png)")
+        # self.aboutbtn.setFont(QtGui.QFont(font))
 
         self.bglabel = QtGui.QLabel()
 
@@ -193,7 +199,7 @@ class Example(QtGui.QMainWindow):
         
         self.tablewiget = QtGui.QTableWidget(rowcount, 20)
         self.kuanggrid.addWidget(self.tablewiget, 0, 0)
-
+        self.tablewiget.verticalHeader().setVisible(False)
         self.tablewiget.itemClicked.connect(self.slDetail)  # 表格信号
         # self.tablewiget.horizontalHeader().sectionClicked.connect(self.fortest2)  # 表头信号
 
@@ -365,6 +371,7 @@ class Example(QtGui.QMainWindow):
         self.tablewiget.horizontalHeader().setStretchLastSection(True)
         self.tablewiget.verticalHeader().setStretchLastSection(True)
         self.tablewiget.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+        self.tablewiget.verticalHeader().setVisible(False)
         self.tablewiget.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
         rowindex = 0
