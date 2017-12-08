@@ -46,7 +46,7 @@ QLabel#aboutName{
     font:75 30pt "Microsoft YaHei";
     }
 
-QLabel#lhLable{
+QLabel#lhLabel{
     background-color: rgba(255,0,0,0);
     }
 

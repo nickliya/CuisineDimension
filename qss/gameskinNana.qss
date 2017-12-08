@@ -41,16 +41,11 @@ QPushButton#sybtn{
     font:75 14pt "Microsoft YaHei";
     }
 
-QLabel#aboutName{
-    color:floralwhite;
-    font:75 30pt "Microsoft YaHei";
-    }
-
-QLabel#lhLable{
+QLabel#lhLabel{
     background-color: rgba(255,0,0,0);
     }
 
-QLabel#syLabel{
+QLabel#instructionsLabel{
     background-color: rgba(255,0,0,0);
     color:floralwhite;
     font:1000 18pt "Microsoft YaHei";
@@ -78,7 +73,7 @@ QTextEdit#rightInfo{
 
 QTextBrowser#syText{
     color:floralwhite;
-    font:75 16pt "Microsoft YaHei";
+    font:75 14pt "Microsoft YaHei";
     background-color: rgba(255,0,0,0);
     border:none
     }

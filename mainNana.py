@@ -112,28 +112,28 @@ class Example(QtGui.QMainWindow):
         self.maingrid = QtGui.QGridLayout()
         self.mainwidget.setLayout(self.maingrid)
         self.setCentralWidget(self.mainwidget)
-        self.maingrid.setRowStretch(1, 1)
+        # self.maingrid.setRowStretch(1, 1)
         self.maingrid.setColumnStretch(0, 1)
 
         # 顶部窗体
         self.topwiget = QtGui.QWidget()
         self.topgrid = QtGui.QGridLayout()
         self.topwiget.setLayout(self.topgrid)
-        self.maingrid.addWidget(self.topwiget, 0, 0)
+        self.maingrid.addWidget(self.topwiget, 0, 1)
 
-        self.topgrid.addWidget(self.groupbtn, 0, 0)
-        self.topgrid.addWidget(self.charactorbtn, 0, 1)
-        self.topgrid.addWidget(self.equipbtn, 0, 2)
-        self.topgrid.addWidget(self.sniperbtn, 0, 3)
-        self.topgrid.addWidget(self.mapbtn, 0, 4)
-        self.topgrid.addWidget(self.damagebtn, 0, 5)
-        self.topgrid.addWidget(self.aboutbtn, 0, 6)
+        self.topgrid.addWidget(self.groupbtn, 1, 0)
+        self.topgrid.addWidget(self.charactorbtn, 2, 0)
+        self.topgrid.addWidget(self.equipbtn, 3, 0)
+        self.topgrid.addWidget(self.sniperbtn, 4, 0)
+        self.topgrid.addWidget(self.mapbtn, 5, 0)
+        self.topgrid.addWidget(self.damagebtn, 6, 0)
+        self.topgrid.addWidget(self.aboutbtn, 7, 0)
 
         # 中间窗体
         self.bodywiget = QtGui.QWidget()
         self.bodygrid = QtGui.QGridLayout()
         self.bodywiget.setLayout(self.bodygrid)
-        self.maingrid.addWidget(self.bodywiget, 1, 0)
+        self.maingrid.addWidget(self.bodywiget, 0, 0)
         # self.bodygrid.setRowStretch(0, 1)
         self.bodywiget.setWindowOpacity(1)
 
@@ -153,69 +153,15 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.setColumnStretch(0, 0)
         self.bodygrid.setColumnStretch(1, 0)
 
-        self.sywiget = QtGui.QWidget()
-        self.sywiget.setObjectName("main_sy")  # 首页
+        self.sylhLabel = QtGui.QLabel()
+        self.historyLabel = QtGui.QLabel()
+        # self.lhLabel = QtGui.QLabel()
+        self.sylhLabel.setObjectName("sylhLabel")  # 首页立绘
+        self.historyLabel.setObjectName("historyLabel")  # 更新历史
         self.bodygrid.addWidget(self.sywiget, 0, 0)
-        self.sygrid = QtGui.QGridLayout()
-        self.sywiget.setLayout(self.sygrid)
-
-        self.syLabel = QtGui.QLabel(u"使用说明")
-        self.syLabel.setObjectName("syLabel")
-        self.syLabel.setMaximumHeight(100)
-        self.syLabel.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignHCenter)
-        self.sygrid.addWidget(self.syLabel, 0, 1, 1, 2)
-
-        def setsybtn(grid, btnName, row, column):
-            """创建首页btn"""
-            sybtn = QtGui.QPushButton(btnName)
-            sybtn.setFixedSize(100, 30)
-            sybtn.setObjectName("sybtn")
-            grid.addWidget(sybtn, row, column)
-            return sybtn
-
-        self.sybtn1 = setsybtn(self.sygrid, u"声  明", 1, 0)
-        self.sybtn2 = setsybtn(self.sygrid, u"食灵说明", 1, 1)
-        self.sybtn3 = setsybtn(self.sygrid, u"装备说明", 1, 2)
-        self.sybtn4 = setsybtn(self.sygrid, u"狙击说明", 1, 3)
-        self.sybtn1.clicked.connect(lambda: self.mainViewEdit(1))
-        self.sybtn2.clicked.connect(lambda: self.mainViewEdit(2))
-        self.sybtn3.clicked.connect(lambda: self.mainViewEdit(3))
-        self.sybtn4.clicked.connect(lambda: self.mainViewEdit(4))
-
-        self.syText = QtGui.QTextBrowser()
-        self.syText.setObjectName("syText")
-        self.syText.setFixedHeight(390)
-        self.syText.append(u"\n\n\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
-        self.syText.append(u"◆本工具灵感来自于《谁在呼唤舰队》，特此致敬")
-        self.syText.append(u"◆本工具所有基础资源来自萌百黑大@划破黑夜,特此鸣谢")
-        self.syText.append(u"◆本工具旨在辅助玩家了解游戏信息，工具界面大致还原游戏界面是为了让玩家对工具产生亲切感。禁止窃取、泄露本工具美术资源，任何非法和损害他人利益行为与作者无关！")
-        self.sygrid.addWidget(self.syText, 3, 0, 1, 4)
-
-        # self.sygrid.setRowStretch(1, 6)
-        # self.sygrid.setRowStretch(2, 2)
-
+        self.bodygrid.addWidget(self.sywiget, 0, 1)
+        
         self.wigetIndex = [self.sywiget]
-
-    def mainViewEdit(self, index):
-        """首页编辑"""
-        if index == 1:
-            self.syText.clear()
-            self.syText.append(u"\n\n\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
-            self.syText.append(u"◆本工具灵感来自于《谁在呼唤舰队》，特此致敬")
-            self.syText.append(u"◆本工具所有基础资源来自萌百黑大@划破黑夜,特此鸣谢")
-            self.syText.append(u"◆本工具旨在辅助玩家了解游戏信息，工具界面大致还原游戏界面是为了让玩家对工具产生亲切感。禁止窃取、泄露本工具美术资源，任何非法和损害他人利益行为与作者无关！")
-        elif index == 2:
-            self.syText.clear()
-            self.syText.append(u"\n\n\n◆食灵界面目前提供食灵列表和食灵详细信息查看")
-            self.syText.append(u"◆食灵列表的满级数据由推算得出,误差正负1")
-            self.syText.append(u"◆搜索功能少女祈祷中...")
-        elif index == 3:
-            self.syText.clear()
-            self.syText.append(u"\n\n\n◆装备界面提供一个比较自由的功能，请先选择左侧套装，右边即会显示相关信息")
-        else:
-            self.syText.clear()
-            self.syText.append(u"\n\n\n◆狙击公式大致提供了自由狙击供玩家使用")
-            self.syText.append(u"◆狙击公式提供数值为最低出货数值，不保证概率，请洗脸后尝试")
 
     def cuisinelist(self):
         """食灵列表"""
@@ -503,7 +449,6 @@ class Example(QtGui.QMainWindow):
         """关于界面"""
         self.inibodywiget()
 
-        self.bodygrid.setRowStretch(1, 0)
         self.bodygrid.setColumnStretch(0, 1)
         self.bodygrid.setColumnStretch(1, 0)
 
@@ -518,30 +463,46 @@ class Example(QtGui.QMainWindow):
         self.rightwiget.setLayout(self.rightgrid)
         self.leftwiget.setObjectName("aboutLeft")
         self.rightwiget.setObjectName("aboutRight")
+        self.rightwiget.setFixedWidth(180)
 
         # 左框架
-        self.infolaber = QtGui.QLabel(u"更新历史")
-        self.leftgrid.addWidget(self.infolaber, 0, 0)
-        self.infolaber.setObjectName("aboutName")
+        self.sywiget = QtGui.QWidget()
+        self.sywiget.setObjectName("main_sy")  # 首页
+        self.leftgrid.addWidget(self.sywiget, 0, 0)
+        self.sygrid = QtGui.QGridLayout()
+        self.sywiget.setLayout(self.sygrid)
 
-        self.tree = QtGui.QTreeWidget()
-        # self.tree.setHeaderLabel(u"更新历史")
-        self.tree.headerItem().setBackgroundColor(0, QtGui.QColor(255, 0, 0))
-        self.tree.setHeaderHidden(True)
-        self.leftgrid.addWidget(self.tree, 1, 0)
-        self.tree.setWindowOpacity(0.1)
+        self.instructionsLabel = QtGui.QLabel(u"使用说明")
+        self.instructionsLabel.setObjectName("instructionsLabel")
+        self.instructionsLabel.setMaximumHeight(100)
+        self.instructionsLabel.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignHCenter)
+        self.sygrid.addWidget(self.instructionsLabel, 0, 1, 1, 2)
 
-        # 设置root为self.tree的子树，所以root就是跟节点
-        root = QtGui.QTreeWidgetItem(self.tree)
-        # 设置根节点的名称
-        root.setText(0, 'Version:1.0.0')
+        def setsybtn(grid, btnName, row, column):
+            """创建首页btn"""
+            sybtn = QtGui.QPushButton(btnName)
+            sybtn.setFixedSize(100, 30)
+            sybtn.setObjectName("sybtn")
+            grid.addWidget(sybtn, row, column)
+            return sybtn
 
-        # 为root节点设置子结点
-        child1 = QtGui.QTreeWidgetItem(root)
-        child1.setText(0, u'新增食灵、装备功能\n2017.11.28wiki工具りりこの料理教室诞生啦!')
-        # child4 = QtGui.QTreeWidgetItem(child3)
-        # child4.setText(0, 'child4')
-        # child4.setText(1, 'name4')
+        self.sybtn1 = setsybtn(self.sygrid, u"声  明", 1, 0)
+        self.sybtn2 = setsybtn(self.sygrid, u"食灵说明", 1, 1)
+        self.sybtn3 = setsybtn(self.sygrid, u"装备说明", 1, 2)
+        self.sybtn4 = setsybtn(self.sygrid, u"狙击说明", 1, 3)
+        self.sybtn1.clicked.connect(lambda: self.aboutViewEdit(1))
+        self.sybtn2.clicked.connect(lambda: self.aboutViewEdit(2))
+        self.sybtn3.clicked.connect(lambda: self.aboutViewEdit(3))
+        self.sybtn4.clicked.connect(lambda: self.aboutViewEdit(4))
+
+        self.syText = QtGui.QTextBrowser()
+        self.syText.setObjectName("syText")
+        self.syText.setFixedHeight(390)
+        self.syText.append(u"\n\n\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
+        self.syText.append(u"◆本工具灵感来自于《谁在呼唤舰队》，特此致敬")
+        self.syText.append(u"◆本工具所有基础资源来自萌百黑大@划破黑夜,特此鸣谢")
+        self.syText.append(u"◆本工具旨在辅助玩家了解游戏信息，工具界面大致还原游戏界面是为了让玩家对工具产生亲切感。禁止窃取、泄露本工具美术资源，任何非法和损害他人利益行为与作者无关！")
+        self.sygrid.addWidget(self.syText, 3, 0, 1, 4)
 
         # 右框架
         self.text = QtGui.QTextEdit()
@@ -573,6 +534,27 @@ class Example(QtGui.QMainWindow):
         self.rightgrid.addWidget(self.text, 0, 0)
         self.wigetIndex = [self.leftwiget, self.rightwiget]
 
+    def aboutViewEdit(self, index):
+        """首页编辑"""
+        if index == 1:
+            self.syText.clear()
+            self.syText.append(u"\n\n\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
+            self.syText.append(u"◆本工具灵感来自于《谁在呼唤舰队》，特此致敬")
+            self.syText.append(u"◆本工具所有基础资源来自萌百黑大@划破黑夜,特此鸣谢")
+            self.syText.append(u"◆本工具旨在辅助玩家了解游戏信息，工具界面大致还原游戏界面是为了让玩家对工具产生亲切感。禁止窃取、泄露本工具美术资源，任何非法和损害他人利益行为与作者无关！")
+        elif index == 2:
+            self.syText.clear()
+            self.syText.append(u"\n\n\n◆食灵界面目前提供食灵列表和食灵详细信息查看")
+            self.syText.append(u"◆食灵列表的满级数据由推算得出,误差正负1")
+            self.syText.append(u"◆搜索功能少女祈祷中...")
+        elif index == 3:
+            self.syText.clear()
+            self.syText.append(u"\n\n\n◆装备界面提供一个比较自由的功能，请先选择左侧套装，右边即会显示相关信息")
+        else:
+            self.syText.clear()
+            self.syText.append(u"\n\n\n◆狙击公式大致提供了自由狙击供玩家使用")
+            self.syText.append(u"◆狙击公式提供数值为最低出货数值，不保证概率，请洗脸后尝试")
+            
     def slDetail(self):
         """食灵详情"""
         indexRow = self.tablewiget.currentRow()
@@ -595,7 +577,7 @@ class Example(QtGui.QMainWindow):
 
         # 左边贴图
         self.cuisineLable = QtGui.QLabel()
-        self.cuisineLable.setObjectName("lhLable")
+        self.cuisineLable.setObjectName("lhLabel")
         self.detailFrameGrid.addWidget(self.cuisineLable, 0, 0)
         try:
             decrypt(info[0][0], "temp/index1.png")

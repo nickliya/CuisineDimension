@@ -593,7 +593,7 @@ class Example(QtGui.QMainWindow):
 
         # 左边贴图
         self.cuisineLable = QtGui.QLabel()
-        self.cuisineLable.setObjectName("lhLable")
+        self.cuisineLable.setObjectName("lhLabel")
         self.detailFrameGrid.addWidget(self.cuisineLable, 0, 0)
         try:
             decrypt(info[0][0], "temp/index1.png")
