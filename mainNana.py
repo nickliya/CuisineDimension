@@ -124,14 +124,14 @@ class Example(QtGui.QMainWindow):
         self.maingrid = QtGui.QGridLayout()
         self.mainwidget.setLayout(self.maingrid)
         self.setCentralWidget(self.mainwidget)
-        # self.maingrid.setRowStretch(1, 1)
+        self.maingrid.setRowStretch(1, 1)
         self.maingrid.setColumnStretch(0, 1)
 
-        # 顶部窗体
+        # 功能按钮窗体
         self.topwiget = QtGui.QWidget()
         self.topgrid = QtGui.QGridLayout()
         self.topwiget.setLayout(self.topgrid)
-        self.maingrid.addWidget(self.topwiget, 0, 1)
+        self.maingrid.addWidget(self.topwiget, 1, 1)
 
         self.topgrid.addWidget(self.groupbtn, 1, 0)
         self.topgrid.addWidget(self.charactorbtn, 2, 0)
@@ -141,11 +141,19 @@ class Example(QtGui.QMainWindow):
         self.topgrid.addWidget(self.damagebtn, 6, 0)
         self.topgrid.addWidget(self.aboutbtn, 7, 0)
 
+        # banner窗体
+        self.bannerwiget = QtGui.QWidget()
+        self.bannerwiget.setObjectName("bannerwiget")
+        self.bannerwiget.setFixedHeight(40)
+        self.bannergrid = QtGui.QGridLayout()
+        self.bannerwiget.setLayout(self.bannergrid)
+        self.maingrid.addWidget(self.bannerwiget, 0, 0, 1, 0)
+
         # 中间窗体
         self.bodywiget = QtGui.QWidget()
         self.bodygrid = QtGui.QGridLayout()
         self.bodywiget.setLayout(self.bodygrid)
-        self.maingrid.addWidget(self.bodywiget, 0, 0)
+        self.maingrid.addWidget(self.bodywiget, 1, 0)
         # self.bodygrid.setRowStretch(0, 1)
         self.bodywiget.setWindowOpacity(1)
 
@@ -157,23 +165,57 @@ class Example(QtGui.QMainWindow):
             for i in self.wigetIndex:
                 i.deleteLater()
 
+    def switchlh(self):
+        sql = 'SELECT URL_LH,URL_LH2 FROM "fairy_detail"'
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
+        while (None,None) in info:
+            info.remove((None,None))
+        lhurl = random.choice(info)
+        try:
+            decrypt(lhurl[0], "temp/index1.png")
+            decrypt(lhurl[1], "temp/index2.png")
+        except IOError:
+            pass
+        stylesheet = "QLabel#sylhLabel{border-image: url('temp/index1.png');}" + \
+                     "QLabel#sylhLabel::hover{border-image: url('temp/index2.png');}"
+
+        self.sylhLabel.setStyleSheet(stylesheet)
+
     def mainView(self):
         """首页"""
         self.inibodywiget()
         self.bodygrid.setRowStretch(0, 0)
         self.bodygrid.setRowStretch(1, 0)
-        self.bodygrid.setColumnStretch(0, 0)
-        self.bodygrid.setColumnStretch(1, 0)
+        self.bodygrid.setColumnStretch(0, 1)
+        self.bodygrid.setColumnStretch(1, 0.9)
+
+        self.switchBtn = QtGui.QPushButton()
+        self.switchBtn.setObjectName("switchBtn")
+        self.switchBtn.setStyleSheet("border-image:url(ui/banner/qiehuananniu.png)")
+        self.switchBtn.setFixedWidth(30)
+        self.switchBtn.setFixedHeight(30)
+        self.bannergrid.addWidget(self.switchBtn, 0, 0)
+        self.switchBtn.clicked.connect(self.switchlh)
 
         self.sylhLabel = QtGui.QLabel()
-        self.historyLabel = QtGui.QLabel()
-        # self.lhLabel = QtGui.QLabel()
+        self.historyTextBrowser = QtGui.QTextBrowser()
         self.sylhLabel.setObjectName("sylhLabel")  # 首页立绘
-        self.historyLabel.setObjectName("historyLabel")  # 更新历史
-        # self.bodygrid.addWidget(self.sywiget, 0, 0)
-        # self.bodygrid.addWidget(self.sywiget, 0, 1)
+        self.switchlh()
+        self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
+
+        # palette添加背景
+        self.historyTextBrowser.setAutoFillBackground(True)
+        palette1 = QtGui.QPalette()
+        # palette1.setColor(self.backgroundRole(), QtGui.QColor(50, 50, 50, 80))  # 设置背景颜色
+        pix = QtGui.QPixmap('ui/main/gengxinrizhi.png')
+        # pix = pix.scaled(self.historyTextBrowser.width(), self.historyTextBrowser.height()).scaled(QtCore.Qt.IgnoreAspectRatio)
+        palette1.setBrush(self.backgroundRole(), QtGui.QBrush(pix))   # 设置背景图片
+        self.historyTextBrowser.setPalette(palette1)
+
+        self.bodygrid.addWidget(self.sylhLabel, 0, 0)
+        self.bodygrid.addWidget(self.historyTextBrowser, 0, 1)
         
-        self.wigetIndex = []
+        self.wigetIndex = [self.switchBtn, self.sylhLabel, self.historyTextBrowser ]
 
     def cuisinelist(self):
         """食灵列表"""
@@ -185,7 +227,6 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.setColumnStretch(1, 0)
         self.kuanggrid.setColumnStretch(0, 0)
         self.kuanggrid.setColumnStretch(1, 0)
-
 
         con = sqlite3.connect("llcy")
         cur = con.cursor()
@@ -276,8 +317,11 @@ class Example(QtGui.QMainWindow):
         info = ToolFunction.getsqliteInfo(sql, "llcy")
 
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+        self.kuanggrid.setSpacing(0)  # 设置控件间隔
 
         self.tablewiget = QtGui.QTableWidget(3, 1)
+        self.tablewiget.setObjectName("tzsxTabel")
+        self.tablewiget.setShowGrid(False)
         self.tablewiget.horizontalHeader().setStretchLastSection(True)
         self.tablewiget.verticalHeader().setStretchLastSection(True)
         self.tablewiget.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
@@ -287,6 +331,8 @@ class Example(QtGui.QMainWindow):
         self.kuanggrid.addWidget(self.tablewiget, 0, 1)
 
         self.tablewiget2 = QtGui.QTableWidget(10, 5)
+        self.tablewiget2.setObjectName("zbsxTabel")
+        self.tablewiget2.setShowGrid(False)
         self.tablewiget2.setHorizontalHeaderLabels([u"品质", u"类型", u"名称", u"基础属性1", u"基础属性2"])
         self.tablewiget2.verticalHeader().setVisible(False)
 
@@ -571,9 +617,9 @@ class Example(QtGui.QMainWindow):
         slnumb = self.tablewiget.item(indexRow, 1).text()
         sql = 'SELECT URL_LH,URL_LH2,"   "||SL_NAME,SL_LEVEL,TJ_JN,TJ_ZP,TJ_HP,TJ_GJ,TJ_GJ,TJ_MZ,TJ_FY,TJ_SB,SKILL_NAME,SKILL_DESC,SKILL_GY_NAME,SKILL_GY_DESC,GROUP_DECS,SL_TYPE FROM "fairy_detail" WHERE SL_NO = ' + str(
             slnumb) + ';'
-        print sql
+        # print sql
         info = ToolFunction.getsqliteInfo(sql, "llcy")
-        print info
+        # print info
 
         self.inibodywiget()
 

@@ -4,6 +4,10 @@ QMainWindow{
 QWidget#mainWidget{
     }
 
+QWidget#bannerwiget{
+    background-color: rgba(105,105,105,150);
+    }
+
 QWidget#aboutRight{
     background-color: rgba(105,105,105,150);
     }
@@ -21,14 +25,7 @@ QWidget#main_sy{
     }
 
 QWidget#kuangwidget{
-    /*border-image:url(ui/beijkuang.png);*/
-    border-style: outset;
-    border-width: 2px;
-    border-radius: 10px;
-    border-color: beige;
-    font: bold 14px;
-    min-width: 10em;
-    padding: 6px;
+    border-image:url(ui/beijkuang2.png);
     }
 
 QTableWidget#sl_Attri{
@@ -62,6 +59,10 @@ QLabel#lhLabel{
     background-color: rgba(255,0,0,0);
     }
 
+QLabel#sylhLabel{
+    background-color: rgba(255,0,0,0);
+    }
+
 QLabel#instructionsLabel{
     background-color: rgba(255,0,0,0);
     color:floralwhite;
@@ -76,21 +77,39 @@ QTreeWidget{
     }
 
 QTableWidget{
-    color:floralwhite;
     border:none;
-    background-color: rgba(25,20,20);
+    color:rgba(230,216,180);
+    background-color: rgba(255,0,0,0);
 }
 
+QTableWidget#tzsxTabel{
+    font:10pt "Microsoft YaHei";
+    background-color: rgba(255,0,0,0);
+    color: rgba(230,216,180);
+    border-style: outset;
+    border-bottom-color: #ffff66;
+    border-bottom-width: 1px;
+}
+
+QTableWidget#zbsxTabel{
+    background-color: rgba(255,0,0,0);
+    font:10pt "Microsoft YaHei";
+    color: rgba(230,216,180);
+    border-style: outset;
+    border-top-color: #ffff66;
+    border-top-width: 1px;
+}
 
 QHeaderView{
     border:none;
-    background-color: rgba(25,20,20);
+    background-color: rgba(255,0,0,0);
     color:floralwhite
 }
 
 QHeaderView::section{
+    font:500 12pt "Microsoft YaHei";
     border:none;
-    background-color: rgba(25,20,20);
+    background-color: rgba(255,0,0,0);
     color:floralwhite;
 }
 
@@ -114,16 +133,25 @@ QTextBrowser#sniper_bz{
     border:none;
     }
 
-QListWidget{
+QTextBrowser#historyBrowser{
+    font:75 16pt "Microsoft YaHei";
     background-color: rgba(25,20,20);
-    font:10pt "Microsoft YaHei";
     border:none;
-    color:floralwhite
+
+    }
+
+QListWidget{
+    background-color: rgba(255,0,0,0);
+    font:12pt "Microsoft YaHei";
+    color: rgba(230,216,180);
+    border-style: outset;
+    border-right-color: #FFE08E;
+    border-right-width: 2px;
 }
 
 QListWidget:Item{
+    height:28px
 }
-
 
 /**********滚动条-水平**********/
 QScrollBar:horizontal {
