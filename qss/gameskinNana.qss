@@ -5,7 +5,7 @@ QWidget#mainWidget{
     }
 
 QWidget#bannerwiget{
-    background-color: rgba(105,105,105,150);
+    background-color: rgba(255,0,0,0);
     }
 
 QWidget#aboutRight{
@@ -69,6 +69,10 @@ QLabel#instructionsLabel{
     font:1000 18pt "Microsoft YaHei";
     }
 
+QLabel#mapLabel{
+    background-color: rgba(255,0,0,0);
+    }
+
 QTreeWidget{
     color:floralwhite;
     border:none;
@@ -122,22 +126,24 @@ QTextEdit#rightInfo{
 QTextBrowser#syText{
     color:floralwhite;
     font:75 14pt "Microsoft YaHei";
-    background-color: rgba(255,0,0,0);
-    border:none
+    background-color: rgba(255,25,25,0);
+    border:none;
+    padding:50px;
     }
 
 QTextBrowser#sniper_bz{
-    color:floralwhite;
+    color:rgba(230,216,180);
     font:75 16pt "Microsoft YaHei";
-    background-color: rgba(25,20,20);
+    background-color: rgba(255,0,0,0);
     border:none;
     }
 
 QTextBrowser#historyBrowser{
     font:75 16pt "Microsoft YaHei";
-    background-color: rgba(25,20,20);
+    /*background-color: rgba(25,20,20);*/
     border:none;
-
+    background-image:url(ui/main/gengxinrizhi.png);
+    background-repeat:no-repeat
     }
 
 QListWidget{

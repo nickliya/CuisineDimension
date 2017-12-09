@@ -118,6 +118,8 @@ class Example(QtGui.QMainWindow):
         self.maingrid = QtGui.QGridLayout()
         self.mainwidget.setLayout(self.maingrid)
         self.setCentralWidget(self.mainwidget)
+
+        self.maingrid.setSpacing(0)
         self.maingrid.setRowStretch(1, 1)
         self.maingrid.setColumnStretch(0, 1)
 
@@ -138,8 +140,9 @@ class Example(QtGui.QMainWindow):
         # banner窗体
         self.bannerwiget = QtGui.QWidget()
         self.bannerwiget.setObjectName("bannerwiget")
-        self.bannerwiget.setFixedHeight(40)
-        self.bannergrid = QtGui.QGridLayout()
+        self.bannerwiget.setFixedHeight(60)
+        self.bannergrid = QtGui.QHBoxLayout()
+        # self.bannergrid.addStretch(1)
         self.bannerwiget.setLayout(self.bannergrid)
         self.maingrid.addWidget(self.bannerwiget, 0, 0, 1, 0)
 
@@ -188,30 +191,28 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.setRowStretch(0, 0)
         self.bodygrid.setRowStretch(1, 0)
         self.bodygrid.setColumnStretch(0, 1)
-        self.bodygrid.setColumnStretch(1, 0.9)
 
         self.switchBtn = QtGui.QPushButton()
+        self.switchBtn2 = QtGui.QPushButton()
         self.switchBtn.setObjectName("switchBtn")
+        self.switchBtn2.setObjectName("switchBtn2") # 把switch按钮顶到左边
         self.switchBtn.setStyleSheet("border-image:url(ui/banner/qiehuananniu.png)")
-        self.switchBtn.setFixedWidth(30)
-        self.switchBtn.setFixedHeight(30)
-        self.bannergrid.addWidget(self.switchBtn, 0, 0)
+        self.switchBtn2.setStyleSheet("background-color: rgba(255,0,0,0);")
+        self.switchBtn.setFixedWidth(50)
+        self.switchBtn.setFixedHeight(50)
+        self.switchBtn2.setFixedWidth(700)
+
+        self.bannergrid.addWidget(self.switchBtn)
+        self.bannergrid.addWidget(self.switchBtn2)
+
         self.switchBtn.clicked.connect(self.switchlh)
 
         self.sylhLabel = QtGui.QLabel()
         self.historyTextBrowser = QtGui.QTextBrowser()
+        self.historyTextBrowser.setMinimumWidth(400)
         self.sylhLabel.setObjectName("sylhLabel")  # 首页立绘
         self.switchlh()
         self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
-
-        # palette添加背景
-        self.historyTextBrowser.setAutoFillBackground(True)
-        palette1 = QtGui.QPalette()
-        # palette1.setColor(self.backgroundRole(), QtGui.QColor(50, 50, 50, 80))  # 设置背景颜色
-        pix = QtGui.QPixmap('ui/main/gengxinrizhi.png')
-        # pix = pix.scaled(self.historyTextBrowser.width(), self.historyTextBrowser.height()).scaled(QtCore.Qt.IgnoreAspectRatio)
-        palette1.setBrush(self.backgroundRole(), QtGui.QBrush(pix))  # 设置背景图片
-        self.historyTextBrowser.setPalette(palette1)
 
         self.bodygrid.addWidget(self.sylhLabel, 0, 0)
         self.bodygrid.addWidget(self.historyTextBrowser, 0, 1)
@@ -226,6 +227,11 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.setRowStretch(1, 0)
         self.bodygrid.setColumnStretch(0, 1)
         self.bodygrid.setColumnStretch(1, 0)
+
+        self.bgkuang()
+        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+        # self.kuanggrid.setSpacing(0)  # 设置控件间隔
+
         self.kuanggrid.setColumnStretch(0, 0)
         self.kuanggrid.setColumnStretch(1, 0)
 
@@ -240,7 +246,6 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
 
         self.tablewiget = QtGui.QTableWidget(rowcount, 20)
-        self.kuanggrid.addWidget(self.tablewiget, 0, 0)
         self.tablewiget.verticalHeader().setVisible(False)
         self.tablewiget.itemClicked.connect(self.slDetail)  # 表格信号
         # self.tablewiget.horizontalHeader().sectionClicked.connect(self.fortest2)  # 表头信号
@@ -410,6 +415,10 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.setColumnStretch(0, 0)
         self.bodygrid.setColumnStretch(1, 0)
 
+        self.bgkuang()
+        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+        # self.kuanggrid.setSpacing(0)  # 设置控件间隔
+
         sql = ToolFunction.getsql("sql/sniper.sql")
         info = ToolFunction.getsqliteInfo(sql, "llcy")
 
@@ -417,7 +426,7 @@ class Example(QtGui.QMainWindow):
         self.tablewiget = QtGui.QTableWidget(rowcount, 9)
         self.tablewiget.setHorizontalHeaderLabels([u"食油", u"魔力", u"食材", u"主食", u"主菜", u"副菜",
                                                    u"甜品", u"头盘", u"汤饮"])
-        self.bodygrid.addWidget(self.tablewiget, 0, 0)
+        self.kuanggrid.addWidget(self.tablewiget, 0, 0)
         self.tablewiget.horizontalHeader().setStretchLastSection(True)
         self.tablewiget.verticalHeader().setStretchLastSection(True)
         self.tablewiget.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
@@ -448,12 +457,12 @@ class Example(QtGui.QMainWindow):
 
         self.sniperText = QtGui.QTextBrowser()
         self.sniperText.setObjectName("sniper_bz")  # 狙击备注
-        self.bodygrid.addWidget(self.sniperText, 1, 0)
+        self.kuanggrid.addWidget(self.sniperText, 1, 0)
         self.sniperText.setFixedHeight(100)
         self.sniperText.append(u"◆食油，魔力，食材影响出货种类，调料建议400以上")
         self.sniperText.append(u"◆狙击公式所提供数值为最低出货数值，不保证概率，请洗脸后尝试")
 
-        self.wigetIndex = [self.tablewiget, self.sniperText]
+        self.wigetIndex = [self.tablewiget, self.sniperText, self.kuangwidget]
 
     def maplist(self):
         """地图列表"""
@@ -471,6 +480,7 @@ class Example(QtGui.QMainWindow):
         info = ToolFunction.getsqliteInfo(sql, "llcy")
 
         self.mapLabel = QtGui.QLabel()
+        self.mapLabel.setObjectName("mapLabel")
         self.kuanggrid.addWidget(self.mapLabel, 0, 1, 0, 1)
 
         self.mapList1 = QtGui.QListWidget()
@@ -524,7 +534,7 @@ class Example(QtGui.QMainWindow):
         if listRow1 == 6 or mapurl is None:
             pass
         else:
-            qss = "border-image:url("+mapurl+")"
+            qss = "border-image:url("+mapurl+");"
             self.mapLabel.setStyleSheet(qss)
 
     def aboutinfo(self):
@@ -533,6 +543,7 @@ class Example(QtGui.QMainWindow):
 
         self.bodygrid.setColumnStretch(0, 1)
         self.bodygrid.setColumnStretch(1, 0)
+        self.bodygrid.setSpacing(0)
 
         # 设置左右框架
         self.leftwiget = QtGui.QWidget()
@@ -556,9 +567,9 @@ class Example(QtGui.QMainWindow):
 
         self.instructionsLabel = QtGui.QLabel(u"使用说明")
         self.instructionsLabel.setObjectName("instructionsLabel")
-        self.instructionsLabel.setMaximumHeight(100)
+        self.instructionsLabel.setMaximumHeight(190)
         self.instructionsLabel.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignHCenter)
-        self.sygrid.addWidget(self.instructionsLabel, 0, 1, 1, 2)
+        self.sygrid.addWidget(self.instructionsLabel, 0, 1, 1, 3)
 
         def setsybtn(grid, btnName, row, column):
             """创建首页btn"""
@@ -572,19 +583,21 @@ class Example(QtGui.QMainWindow):
         self.sybtn2 = setsybtn(self.sygrid, u"食灵说明", 1, 1)
         self.sybtn3 = setsybtn(self.sygrid, u"装备说明", 1, 2)
         self.sybtn4 = setsybtn(self.sygrid, u"狙击说明", 1, 3)
+        self.sybtn5 = setsybtn(self.sygrid, u"地图说明", 1, 4)
         self.sybtn1.clicked.connect(lambda: self.aboutViewEdit(1))
         self.sybtn2.clicked.connect(lambda: self.aboutViewEdit(2))
         self.sybtn3.clicked.connect(lambda: self.aboutViewEdit(3))
         self.sybtn4.clicked.connect(lambda: self.aboutViewEdit(4))
+        self.sybtn5.clicked.connect(lambda: self.aboutViewEdit(5))
 
         self.syText = QtGui.QTextBrowser()
         self.syText.setObjectName("syText")
-        self.syText.setFixedHeight(390)
-        self.syText.append(u"\n\n\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
+        self.syText.setFixedHeight(370)
+        self.syText.append(u"\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
         self.syText.append(u"◆本工具灵感来自于《谁在呼唤舰队》，特此致敬")
         self.syText.append(u"◆本工具所有基础资源来自萌百黑大@划破黑夜,特此鸣谢")
         self.syText.append(u"◆本工具旨在辅助玩家了解游戏信息，工具界面大致还原游戏界面是为了让玩家对工具产生亲切感。禁止窃取、泄露本工具美术资源，任何非法和损害他人利益行为与作者无关！")
-        self.sygrid.addWidget(self.syText, 3, 0, 1, 4)
+        self.sygrid.addWidget(self.syText, 3, 0, 1, 5)
 
         # 右框架
         self.text = QtGui.QTextEdit()
@@ -595,21 +608,21 @@ class Example(QtGui.QMainWindow):
         self.text.setTextColor(QtGui.QColor("#FFF3EE"))
         self.text.append(u"\n欢迎加入我们\nQQ群:627216993\n")
         # self.text.setTextColor(QtGui.QColor("#DC143C"))
-        self.text.setFontPointSize(18)
+        self.text.setFontPointSize(16)
         self.text.append(u"界面设计")
-        self.text.setFontPointSize(12)
+        self.text.setFontPointSize(10)
         self.text.append(u"玉引\n莉莉子\n")
-        self.text.setFontPointSize(18)
+        self.text.setFontPointSize(16)
         self.text.append(u"开发制作")
-        self.text.setFontPointSize(12)
+        self.text.setFontPointSize(10)
         self.text.append(u"莉莉子\n")
-        self.text.setFontPointSize(18)
+        self.text.setFontPointSize(16)
         self.text.append(u"数据")
-        self.text.setFontPointSize(12)
+        self.text.setFontPointSize(10)
         self.text.append(u"玉引\n")
-        self.text.setFontPointSize(18)
+        self.text.setFontPointSize(16)
         self.text.append(u"美工/UI")
-        self.text.setFontPointSize(12)
+        self.text.setFontPointSize(10)
         self.text.append(u"小四\n")
         self.text.append(u"bug或意见反馈\n微博私信@Elza_Scarlet")
         self.text.setAlignment(QtCore.Qt.AlignCenter)
@@ -620,22 +633,25 @@ class Example(QtGui.QMainWindow):
         """首页编辑"""
         if index == 1:
             self.syText.clear()
-            self.syText.append(u"\n\n\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
+            self.syText.append(u"\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
             self.syText.append(u"◆本工具灵感来自于《谁在呼唤舰队》，特此致敬")
             self.syText.append(u"◆本工具所有基础资源来自萌百黑大@划破黑夜,特此鸣谢")
             self.syText.append(u"◆本工具旨在辅助玩家了解游戏信息，工具界面大致还原游戏界面是为了让玩家对工具产生亲切感。禁止窃取、泄露本工具美术资源，任何非法和损害他人利益行为与作者无关！")
         elif index == 2:
             self.syText.clear()
-            self.syText.append(u"\n\n\n◆食灵界面目前提供食灵列表和食灵详细信息查看")
+            self.syText.append(u"\n◆食灵界面目前提供食灵列表和食灵详细信息查看")
             self.syText.append(u"◆食灵列表的满级数据由推算得出,误差正负1")
             self.syText.append(u"◆搜索功能少女祈祷中...")
         elif index == 3:
             self.syText.clear()
-            self.syText.append(u"\n\n\n◆装备界面提供一个比较自由的功能，请先选择左侧套装，右边即会显示相关信息")
+            self.syText.append(u"\n◆装备界面提供一个比较自由的功能，请先选择左侧套装，右边即会显示相关信息")
+        elif index == 4:
+            self.syText.clear()
+            self.syText.append(u"\n◆狙击公式大致提供了自由狙击供玩家使用")
+            self.syText.append(u"◆狙击公式提供数值为最低出货数值，不保证概率，请洗脸后尝试")
         else:
             self.syText.clear()
-            self.syText.append(u"\n\n\n◆狙击公式大致提供了自由狙击供玩家使用")
-            self.syText.append(u"◆狙击公式提供数值为最低出货数值，不保证概率，请洗脸后尝试")
+            self.syText.append(u"\n◆地图攻略地图摘自萌百")
 
     def slDetail(self):
         """食灵详情"""
