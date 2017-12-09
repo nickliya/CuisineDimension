@@ -44,8 +44,7 @@ class Example(QtGui.QMainWindow):
         self.mainwidget.setObjectName("mainWidget")
 
         bgList = ["bg/homeskin/home_1.png", "bg/homeskin/home_2.png", "bg/homeskin/home_3.png",
-                  "bg/homeskin/home_4.png", "bg/homeskin/home_5.png", "bg/homeskin/home_6.png",
-                  "bg/homeskin/home_7.png"]
+                  "bg/homeskin/home_4.png", "bg/homeskin/home_5.png", "bg/homeskin/home_6.png"]
         bg = random.choice(bgList)
         self.setStyleSheet(
             "QMainWindow{background-repeat: no-repeat;background-position: center;border-image: url(" + bg + ");}")
@@ -71,11 +70,6 @@ class Example(QtGui.QMainWindow):
         fontInfoList = QtGui.QFontDatabase.applicationFontFamilies(mimitiid)
         fontName = fontInfoList[0]
         font = QtGui.QFont(fontName)
-
-        self.kuangwidget = QtGui.QWidget()
-        self.kuangwidget.setObjectName("kuangwidget")
-        self.kuanggrid = QtGui.QGridLayout()
-        self.kuangwidget.setLayout(self.kuanggrid)
 
         self.groupbtn = QtGui.QPushButton()
         self.groupbtn.setObjectName("headbtn")
@@ -157,6 +151,13 @@ class Example(QtGui.QMainWindow):
         # self.bodygrid.setRowStretch(0, 1)
         self.bodywiget.setWindowOpacity(1)
 
+    def bgkuang(self):
+        """初始化背景框"""
+        self.kuangwidget = QtGui.QWidget()
+        self.kuangwidget.setObjectName("kuangwidget")
+        self.kuanggrid = QtGui.QGridLayout()
+        self.kuangwidget.setLayout(self.kuanggrid)
+
     def inibodywiget(self):
         """初始化body"""
         if self.wigetIndex is None:
@@ -168,8 +169,8 @@ class Example(QtGui.QMainWindow):
     def switchlh(self):
         sql = 'SELECT URL_LH,URL_LH2 FROM "fairy_detail"'
         info = ToolFunction.getsqliteInfo(sql, "llcy")
-        while (None,None) in info:
-            info.remove((None,None))
+        while (None, None) in info:
+            info.remove((None, None))
         lhurl = random.choice(info)
         try:
             decrypt(lhurl[0], "temp/index1.png")
@@ -209,13 +210,13 @@ class Example(QtGui.QMainWindow):
         # palette1.setColor(self.backgroundRole(), QtGui.QColor(50, 50, 50, 80))  # 设置背景颜色
         pix = QtGui.QPixmap('ui/main/gengxinrizhi.png')
         # pix = pix.scaled(self.historyTextBrowser.width(), self.historyTextBrowser.height()).scaled(QtCore.Qt.IgnoreAspectRatio)
-        palette1.setBrush(self.backgroundRole(), QtGui.QBrush(pix))   # 设置背景图片
+        palette1.setBrush(self.backgroundRole(), QtGui.QBrush(pix))  # 设置背景图片
         self.historyTextBrowser.setPalette(palette1)
 
         self.bodygrid.addWidget(self.sylhLabel, 0, 0)
         self.bodygrid.addWidget(self.historyTextBrowser, 0, 1)
-        
-        self.wigetIndex = [self.switchBtn, self.sylhLabel, self.historyTextBrowser ]
+
+        self.wigetIndex = [self.switchBtn, self.sylhLabel, self.historyTextBrowser]
 
     def cuisinelist(self):
         """食灵列表"""
@@ -237,7 +238,7 @@ class Example(QtGui.QMainWindow):
         rowcount = len(info)
 
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
-        
+
         self.tablewiget = QtGui.QTableWidget(rowcount, 20)
         self.kuanggrid.addWidget(self.tablewiget, 0, 0)
         self.tablewiget.verticalHeader().setVisible(False)
@@ -316,6 +317,7 @@ class Example(QtGui.QMainWindow):
         sql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
         info = ToolFunction.getsqliteInfo(sql, "llcy")
 
+        self.bgkuang()
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
         self.kuanggrid.setSpacing(0)  # 设置控件间隔
 
@@ -339,7 +341,9 @@ class Example(QtGui.QMainWindow):
         self.tablewiget2.verticalHeader().setStretchLastSection(True)
         self.tablewiget2.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
         self.kuanggrid.addWidget(self.tablewiget2, 1, 1)
+
         self.equipTzList = QtGui.QListWidget()
+        self.equipTzList.setObjectName("equipTzList")
         for tzNameIndex in info:
             newItem = QtGui.QListWidgetItem(tzNameIndex[0])
             newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
@@ -354,7 +358,7 @@ class Example(QtGui.QMainWindow):
         # self.tablewiget.verticalHeader().setVisible(False)
         # self.tablewiget.horizontalHeader().setVisible(False)
 
-        self.wigetIndex = [self.tablewiget, self.tablewiget2, self.equipTzList]
+        self.wigetIndex = [self.tablewiget, self.tablewiget2, self.equipTzList, self.kuangwidget]
 
     def equipEdit(self):
         """装备列表数据填充"""
@@ -459,13 +463,20 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.setColumnStretch(0, 0)
         self.bodygrid.setColumnStretch(1, 0)
 
+        self.bgkuang()
+        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+        # self.kuanggrid.setSpacing(0)  # 设置控件间隔
+
         sql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
         info = ToolFunction.getsqliteInfo(sql, "llcy")
 
         self.mapLabel = QtGui.QLabel()
-        self.bodygrid.addWidget(self.mapLabel, 0, 1)
+        self.kuanggrid.addWidget(self.mapLabel, 0, 1, 0, 1)
 
         self.mapList1 = QtGui.QListWidget()
+        self.mapList1.setObjectName("mapList1")
+        self.mapList1.setMaximumWidth(180)
+        self.mapList1.setMaximumHeight(200)
         # info = [u"轻度1-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
         #         u"轻度2-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
         #         u"轻度3-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
@@ -480,26 +491,41 @@ class Example(QtGui.QMainWindow):
             self.mapList1.addItem(newItem)
 
         self.mapList2 = QtGui.QListWidget()
-        info = [u"轻度1-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
-                u"轻度2-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
-                ]
+        self.mapList2.setObjectName("mapList2")
+        self.mapList2.setMaximumWidth(180)
+        info = [u"轻度1", u"轻度2", u"轻度3", u"轻度4", u"轻度5", u"轻度6",
+                u"重度1", u"重度2", u"重度3", u"重度4", u"重度5", u"重度6", ]
         for tzNameIndex in info:
             newItem = QtGui.QListWidgetItem(tzNameIndex)
             newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
             self.mapList2.addItem(newItem)
 
-        # self.mapList1.itemClicked.connect(self.equipEdit1)
-        # self.mapList2.itemClicked.connect(self.equipEdit2)
-        self.bodygrid.addWidget(self.mapList1, 0, 0)
-        self.bodygrid.addWidget(self.mapList2, 1, 0)
+        self.mapList1.itemClicked.connect(self.getMap)
+        self.mapList2.itemClicked.connect(self.getMap)
 
-        self.bodygrid.setColumnStretch(0, 0)
-        self.bodygrid.setColumnStretch(1, 1)
+        self.kuanggrid.addWidget(self.mapList1, 0, 0)
+        self.kuanggrid.addWidget(self.mapList2, 1, 0)
 
-        # self.tablewiget.verticalHeader().setVisible(False)
-        # self.tablewiget.horizontalHeader().setVisible(False)
+        self.kuanggrid.setColumnStretch(0, 0)
+        self.kuanggrid.setColumnStretch(1, 1)
 
-        self.wigetIndex = [self.mapList1, self.mapList2, self.mapLabel]
+        self.wigetIndex = [self.mapList1, self.mapList2, self.mapLabel, self.kuangwidget]
+
+    def getMap(self):
+        """获取要查看的地图"""
+        listRow1 = self.mapList1.currentRow()+1
+        listRow2 = self.mapList2.currentRow()+1
+        if listRow1 == 0 or listRow2 == 0:
+            pass
+            mapurl = None
+        else:
+            mapurl = "map/"+unicode(listRow1)+"/"+unicode(listRow2)+".jpg"
+
+        if listRow1 == 6 or mapurl is None:
+            pass
+        else:
+            qss = "border-image:url("+mapurl+")"
+            self.mapLabel.setStyleSheet(qss)
 
     def aboutinfo(self):
         """关于界面"""
@@ -610,7 +636,7 @@ class Example(QtGui.QMainWindow):
             self.syText.clear()
             self.syText.append(u"\n\n\n◆狙击公式大致提供了自由狙击供玩家使用")
             self.syText.append(u"◆狙击公式提供数值为最低出货数值，不保证概率，请洗脸后尝试")
-            
+
     def slDetail(self):
         """食灵详情"""
         indexRow = self.tablewiget.currentRow()

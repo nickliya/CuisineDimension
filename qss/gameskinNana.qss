@@ -142,15 +142,36 @@ QTextBrowser#historyBrowser{
 
 QListWidget{
     background-color: rgba(255,0,0,0);
-    font:12pt "Microsoft YaHei";
     color: rgba(230,216,180);
     border-style: outset;
+}
+
+QListWidget:Item{
+}
+
+QListWidget#equipTzList{
+    font:12pt "Microsoft YaHei";
     border-right-color: #FFE08E;
     border-right-width: 2px;
 }
 
-QListWidget:Item{
+QListWidget#mapList1{
+    font:16pt "Microsoft YaHei";
+}
+
+QListWidget#mapList2{
+    font:12pt "Microsoft YaHei";
+}
+
+QListWidget:Item#equipTzList{
     height:28px
+}
+
+QListWidget:Item#mapList1{
+    height:30px
+}
+QListWidget:Item#mapList2{
+    height:20px
 }
 
 /**********滚动条-水平**********/
