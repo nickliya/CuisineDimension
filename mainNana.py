@@ -70,7 +70,7 @@ class Example(QtGui.QMainWindow):
         mimitiid = QtGui.QFontDatabase.addApplicationFont('font/liyifeng.ttf')
         fontInfoList = QtGui.QFontDatabase.applicationFontFamilies(mimitiid)
         fontName = fontInfoList[0]
-        font = QtGui.QFont(fontName)
+        self.diyfont = QtGui.QFont(fontName)
 
         self.groupbtn = QtGui.QPushButton()
         self.groupbtn.setObjectName("headbtn")
@@ -96,6 +96,10 @@ class Example(QtGui.QMainWindow):
         self.calculationbtn.setObjectName("headbtn")
         self.calculationbtn.setStyleSheet("border-image:url(ui/main/jisuan.png)")
         # self.calculation.setFont(QtGui.QFont(font))
+        self.consignbtn = QtGui.QPushButton()
+        self.consignbtn.setObjectName("headbtn")
+        self.consignbtn.setStyleSheet("border-image:url(ui/main/weituo.png)")
+        # self.calculation.setFont(QtGui.QFont(font))
         self.aboutbtn = QtGui.QPushButton()
         self.aboutbtn.setObjectName("headbtn")
         self.aboutbtn.setStyleSheet("border-image:url(ui/main/guanyu.png)")
@@ -109,6 +113,7 @@ class Example(QtGui.QMainWindow):
         self.mapbtn.clicked.connect(self.maplist)
         self.sniperbtn.clicked.connect(self.sniperlist)
         self.calculationbtn.clicked.connect(self.calculation)
+        self.consignbtn.clicked.connect(self.consignlist)
         self.aboutbtn.clicked.connect(self.aboutinfo)
 
     def iniGrid(self):
@@ -134,10 +139,11 @@ class Example(QtGui.QMainWindow):
         self.topgrid.addWidget(self.groupbtn, 1, 0)
         self.topgrid.addWidget(self.charactorbtn, 2, 0)
         self.topgrid.addWidget(self.equipbtn, 3, 0)
-        self.topgrid.addWidget(self.sniperbtn, 4, 0)
-        self.topgrid.addWidget(self.mapbtn, 5, 0)
-        self.topgrid.addWidget(self.calculationbtn, 6, 0)
-        self.topgrid.addWidget(self.aboutbtn, 7, 0)
+        self.topgrid.addWidget(self.consignbtn, 4, 0)
+        self.topgrid.addWidget(self.sniperbtn, 5, 0)
+        self.topgrid.addWidget(self.mapbtn, 6, 0)
+        self.topgrid.addWidget(self.calculationbtn, 7, 0)
+        self.topgrid.addWidget(self.aboutbtn, 8, 0)
 
         # banner窗体
         self.bannerwiget = QtGui.QWidget()
@@ -198,7 +204,7 @@ class Example(QtGui.QMainWindow):
         self.switchBtn = QtGui.QPushButton()
         self.switchBtn2 = QtGui.QPushButton()
         self.switchBtn.setObjectName("switchBtn")
-        self.switchBtn2.setObjectName("switchBtn2") # 把switch按钮顶到左边
+        self.switchBtn2.setObjectName("switchBtn2")  # 把switch按钮顶到左边
         self.switchBtn.setStyleSheet("border-image:url(ui/banner/qiehuananniu.png)")
         self.switchBtn2.setStyleSheet("background-color: rgba(255,0,0,0);")
         self.switchBtn.setFixedWidth(50)
@@ -216,7 +222,7 @@ class Example(QtGui.QMainWindow):
 
         self.historyTextBrowser = QtGui.QTextBrowser()
         self.historyTextBrowser.setMinimumWidth(400)
-
+        self.historyTextBrowser.setFont(QtGui.QFont(self.diyfont))
         self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
         self.historyTextBrowser.append(u"\n◆工具改版啦！欢迎各位主厨品尝新皮肤~")
         self.historyTextBrowser.append(u"◆食灵新增猪扒丼之前各个小姐姐资料！")
@@ -228,6 +234,197 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.addWidget(self.historyTextBrowser, 0, 1)
 
         self.wigetIndex = [self.switchBtn, self.switchBtn2, self.sylhLabel, self.historyTextBrowser]
+
+    def cuisinelist(self):
+        """食灵列表"""
+        self.inibodywiget()
+        ToolFunction().deleteFile("temp")
+
+        self.bodygrid.setRowStretch(1, 0)
+        self.bodygrid.setColumnStretch(0, 1)
+        self.bodygrid.setColumnStretch(1, 0)
+
+        self.bgkuang()
+        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+        # self.kuanggrid.setSpacing(0)  # 设置控件间隔
+
+        self.kuanggrid.setColumnStretch(0, 0)
+        self.kuanggrid.setColumnStretch(1, 0)
+
+        sql = ToolFunction.getsql("sql/slList.sql")
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
+        rowcount = len(info)
+
+        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+
+        self.tablewiget = QtGui.QTableWidget(rowcount, 21)
+        self.tablewiget.verticalHeader().setVisible(False)
+        self.tablewiget.itemClicked.connect(self.slDetail)  # 表格信号
+        # self.tablewiget.horizontalHeader().sectionClicked.connect(self.fortest2)  # 表头信号
+
+        # self.tablewiget.verticalHeader().setVisible(False)
+        # self.tablewiget.horizontalHeader().setVisible(False)
+        self.tablewiget.setHorizontalHeaderLabels(
+            [u"头像", u"No", u"食灵", u"类型", u"烹饪时间", u"生命", u"攻击", u"防御", u"命中", u"闪避",
+             u"暴击", u"攻速", u"石油", u"魔力", u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避",
+             u"满石油", u"满魔力"])
+
+        for x in range(self.tablewiget.columnCount()):
+            headItem = self.tablewiget.horizontalHeaderItem(x)  # 获得水平方向表头的Item对象
+            headItem.setBackgroundColor(QtGui.QColor(25, 20, 20))  # 设置单元格背景颜色
+            headItem.setTextColor(QtGui.QColor(200, 111, 30))
+
+            # self.tablewiget.setShowGrid(False)  # 设置网格线
+
+        # self.lbp = QtGui.QLabel()
+        # self.lbp.setPixmap(QtGui.QPixmap(U"card/cutin/bmf_n.png"))
+        # self.tablewiget.setCellWidget(0, 0, self.lbp)
+
+        # self.tablewiget.horizontalHeader().setStretchLastSection(True)
+        # self.tablewiget.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+        # self.tablewiget.verticalHeader().setStretchLastSection(True)
+        # self.tablewiget.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+
+        # self.tablewiget.resizeRowsToContents()
+        self.tablewiget.resizeColumnsToContents()
+        # self.tablewiget.resizeColumnToContents(1)
+        # self.tablewiget.resizeColumnToContents(3)
+        # self.tablewiget.resizeColumnToContents(4)
+
+        self.tablewiget.setColumnWidth(0, 200)
+        self.tablewiget.setColumnWidth(1, 28)
+        self.tablewiget.setColumnWidth(2, 140)
+        self.tablewiget.setColumnWidth(4, 130)
+
+        rowindex = 0
+        for i in info:
+            columnindex = 0
+            for x in i:
+                if type(x) == int:
+                    info = str(x)
+                else:
+                    info = x
+
+                if columnindex == 0:
+                    self.lbp = QtGui.QLabel()
+                    self.lbp.setPixmap(QtGui.QPixmap(info))
+                    self.tablewiget.setCellWidget(rowindex, columnindex, self.lbp)
+                    columnindex += 1
+                    pass
+                elif columnindex == 3:
+                    self.lbp = QtGui.QLabel()
+                    self.lbp.setPixmap(QtGui.QPixmap('ui/hero/' + info + '.png'))
+                    self.tablewiget.setCellWidget(rowindex, columnindex, self.lbp)
+                    columnindex += 1
+                else:
+                    try:
+                        self.newItem = QtGui.QTableWidgetItem(info)
+                    except TypeError, msg:
+                        print msg
+                    self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                    self.tablewiget.setItem(rowindex, columnindex, self.newItem)
+                    columnindex += 1
+                    self.newItem.setWhatsThis(info)
+            rowindex += 1
+
+        # asd = self.tablewiget.findItems(u"龙须糖", QtCore.Qt.MatchContains)
+        # self.tablewiget.clear()
+        # self.tablewiget.setItem(0,0,asd[0])
+        self.kuanggrid.addWidget(self.tablewiget, 0, 0)
+        self.wigetIndex = [self.tablewiget, self.kuangwidget]
+        # self.tablewiget.cellClicked.connect(self.slDetail)
+
+    def equiplist(self):
+        """装备列表"""
+        self.inibodywiget()
+
+        sql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
+
+        self.bgkuang()
+        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+        self.kuanggrid.setSpacing(0)  # 设置控件间隔
+
+        self.tablewiget = QtGui.QTableWidget(3, 1)
+        self.tablewiget.setObjectName("tzsxTabel")
+        self.tablewiget.setShowGrid(False)
+        self.tablewiget.horizontalHeader().setStretchLastSection(True)
+        self.tablewiget.verticalHeader().setStretchLastSection(True)
+        self.tablewiget.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+        self.tablewiget.setFixedHeight(100)
+        self.tablewiget.setHorizontalHeaderLabels([u"套装属性"])
+        self.tablewiget.verticalHeader().setVisible(False)
+        self.kuanggrid.addWidget(self.tablewiget, 0, 1)
+
+        self.tablewiget2 = QtGui.QTableWidget(10, 5)
+        self.tablewiget2.setObjectName("zbsxTabel")
+        self.tablewiget2.setShowGrid(False)
+        self.tablewiget2.setHorizontalHeaderLabels([u"品质", u"类型", u"名称", u"基础属性1", u"基础属性2"])
+        self.tablewiget2.verticalHeader().setVisible(False)
+
+        self.tablewiget2.verticalHeader().setStretchLastSection(True)
+        self.tablewiget2.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+        self.kuanggrid.addWidget(self.tablewiget2, 1, 1)
+
+        self.equipTzList = QtGui.QListWidget()
+        self.equipTzList.setObjectName("equipTzList")
+        for tzNameIndex in info:
+            newItem = QtGui.QListWidgetItem(tzNameIndex[0])
+            newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+            self.equipTzList.addItem(newItem)
+
+        self.equipTzList.itemClicked.connect(self.equipEdit)
+        self.kuanggrid.addWidget(self.equipTzList, 0, 0, 0, 1)
+
+        self.kuanggrid.setColumnStretch(0, 0)
+        self.kuanggrid.setColumnStretch(1, 1)
+
+        # self.tablewiget.verticalHeader().setVisible(False)
+        # self.tablewiget.horizontalHeader().setVisible(False)
+
+        self.wigetIndex = [self.tablewiget, self.tablewiget2, self.equipTzList, self.kuangwidget]
+
+    def equipEdit(self):
+        """装备列表数据填充"""
+        listItemName = unicode(self.equipTzList.currentItem().text())
+        sql = "SELECT CASE WHEN LIMIT_FLAG = 'N' THEN '-' ELSE (SELECT MAP_NAME FROM map_info WHERE MAP_NO = LIMIT_FLAG)||ifnull(LIMIT_MAP,'') END getMethod,TZ_ATTR_FIR||' / '||TZ_ATTR_SEC, TZ_ATTR_TRI, b1.code_name, b2.code_name, s.tz_name||e_type_sub equip_name, e_attr_fir, e_attr_sec FROM equip_info t, equip_suit s, (SELECT code, code_name FROM bas_code WHERE code_id = 'equip_type') b2, (SELECT code, code_name FROM bas_code WHERE code_id = 'equip_level') b1 WHERE t.e_level = b1.code AND t.e_type = b2.code AND t.e_tz = s.tz_no AND s.TZ_NAME = '" + listItemName + "' ORDER BY e_type, e_attr_fir,e_attr_sec"
+        datainfo = ToolFunction.getsqliteInfo(sql, "llcy")
+        # print datainfo
+        self.tablewiget.clear()
+        self.tablewiget2.clear()
+        self.tablewiget.setHorizontalHeaderLabels([u"套装属性"])
+        self.tablewiget2.setHorizontalHeaderLabels([u"品质", u"类型", u"名称", u"基础属性1", u"基础属性2"])
+
+        typeIndex = {u"食器": 1, u"厨具": 2, u"餐具": 3}
+        rowindex = 0
+        for rowData in datainfo:
+            columnindex = 0
+            for columnData in rowData:
+                if type(columnData) == int:
+                    info = str(columnData)
+                else:
+                    info = columnData
+
+                if columnindex < 3:
+                    self.newItem = QtGui.QTableWidgetItem(info)
+                    # self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                    self.tablewiget.setItem(columnindex, 0, self.newItem)
+                    self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
+                    columnindex += 1
+                elif columnindex == 4:
+                    self.newItem = QtGui.QTableWidgetItem(info)
+                    self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                    self.tablewiget2.setItem(rowindex, columnindex - 3, self.newItem)
+                    self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
+                    self.newItem.setIcon(QtGui.QIcon('ui/equip/' + str(typeIndex[info]) + '.png'))
+                    columnindex += 1
+                else:
+                    self.newItem = QtGui.QTableWidgetItem(info)
+                    self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                    self.tablewiget2.setItem(rowindex, columnindex - 3, self.newItem)
+                    self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
+                    columnindex += 1
+            rowindex += 1
 
     def consignlist(self):
         """委托列表"""
@@ -319,196 +516,6 @@ class Example(QtGui.QMainWindow):
         self.wigetIndex = [self.tablewiget, self.kuangwidget]
         # self.tablewiget.cellClicked.connect(self.slDetail)
 
-    def cuisinelist(self):
-        """食灵列表"""
-        self.inibodywiget()
-        ToolFunction().deleteFile("temp")
-
-        self.bodygrid.setRowStretch(1, 0)
-        self.bodygrid.setColumnStretch(0, 1)
-        self.bodygrid.setColumnStretch(1, 0)
-
-        self.bgkuang()
-        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
-        # self.kuanggrid.setSpacing(0)  # 设置控件间隔
-
-        self.kuanggrid.setColumnStretch(0, 0)
-        self.kuanggrid.setColumnStretch(1, 0)
-
-        sql = ToolFunction.getsql("sql/slList.sql")
-        info = ToolFunction.getsqliteInfo(sql, "llcy")
-        rowcount = len(info)
-
-        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
-
-        self.tablewiget = QtGui.QTableWidget(rowcount, 21)
-        self.tablewiget.verticalHeader().setVisible(False)
-        self.tablewiget.itemClicked.connect(self.slDetail)  # 表格信号
-        # self.tablewiget.horizontalHeader().sectionClicked.connect(self.fortest2)  # 表头信号
-
-        # self.tablewiget.verticalHeader().setVisible(False)
-        # self.tablewiget.horizontalHeader().setVisible(False)
-        self.tablewiget.setHorizontalHeaderLabels([u"头像", u"No", u"食灵", u"类型", u"烹饪时间", u"生命", u"攻击", u"防御", u"命中", u"闪避",
-                                                   u"暴击", u"攻速", u"石油", u"魔力", u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避",
-                                                   u"满石油", u"满魔力"])
-
-        for x in range(self.tablewiget.columnCount()):
-            headItem = self.tablewiget.horizontalHeaderItem(x)  # 获得水平方向表头的Item对象
-            headItem.setBackgroundColor(QtGui.QColor(25, 20, 20))  # 设置单元格背景颜色
-            headItem.setTextColor(QtGui.QColor(200, 111, 30))
-
-            # self.tablewiget.setShowGrid(False)  # 设置网格线
-
-        # self.lbp = QtGui.QLabel()
-        # self.lbp.setPixmap(QtGui.QPixmap(U"card/cutin/bmf_n.png"))
-        # self.tablewiget.setCellWidget(0, 0, self.lbp)
-
-        # self.tablewiget.horizontalHeader().setStretchLastSection(True)
-        # self.tablewiget.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
-        # self.tablewiget.verticalHeader().setStretchLastSection(True)
-        # self.tablewiget.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
-
-        # self.tablewiget.resizeRowsToContents()
-        self.tablewiget.resizeColumnsToContents()
-        # self.tablewiget.resizeColumnToContents(1)
-        # self.tablewiget.resizeColumnToContents(3)
-        # self.tablewiget.resizeColumnToContents(4)
-
-        self.tablewiget.setColumnWidth(0, 200)
-        self.tablewiget.setColumnWidth(1, 28)
-        self.tablewiget.setColumnWidth(2, 140)
-        self.tablewiget.setColumnWidth(4, 130)
-
-        rowindex = 0
-        for i in info:
-            columnindex = 0
-            for x in i:
-                if type(x) == int:
-                    info = str(x)
-                else:
-                    info = x
-
-                if columnindex == 0:
-                    self.lbp = QtGui.QLabel()
-                    self.lbp.setPixmap(QtGui.QPixmap(info))
-                    self.tablewiget.setCellWidget(rowindex, columnindex, self.lbp)
-                    columnindex += 1
-                    pass
-                elif columnindex == 3:
-                    self.lbp = QtGui.QLabel()
-                    self.lbp.setPixmap(QtGui.QPixmap('ui/hero/' + info + '.png'))
-                    self.tablewiget.setCellWidget(rowindex, columnindex, self.lbp)
-                    columnindex += 1
-                else:
-                    try:
-                        self.newItem = QtGui.QTableWidgetItem(info)
-                    except TypeError, msg:
-                        print msg
-                    self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
-                    self.tablewiget.setItem(rowindex, columnindex, self.newItem)
-                    columnindex += 1
-                    self.newItem.setWhatsThis(info)
-            rowindex += 1
-
-        # asd = self.tablewiget.findItems(u"龙须糖", QtCore.Qt.MatchContains)
-        # self.tablewiget.clear()
-        # self.tablewiget.setItem(0,0,asd[0])
-        self.kuanggrid.addWidget(self.tablewiget,0,0)
-        self.wigetIndex = [self.tablewiget,self.kuangwidget]
-        # self.tablewiget.cellClicked.connect(self.slDetail)
-
-    def equiplist(self):
-        """装备列表"""
-        self.inibodywiget()
-
-        sql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
-        info = ToolFunction.getsqliteInfo(sql, "llcy")
-
-        self.bgkuang()
-        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
-        self.kuanggrid.setSpacing(0)  # 设置控件间隔
-
-        self.tablewiget = QtGui.QTableWidget(3, 1)
-        self.tablewiget.setObjectName("tzsxTabel")
-        self.tablewiget.setShowGrid(False)
-        self.tablewiget.horizontalHeader().setStretchLastSection(True)
-        self.tablewiget.verticalHeader().setStretchLastSection(True)
-        self.tablewiget.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
-        self.tablewiget.setFixedHeight(100)
-        self.tablewiget.setHorizontalHeaderLabels([u"套装属性"])
-        self.tablewiget.verticalHeader().setVisible(False)
-        self.kuanggrid.addWidget(self.tablewiget, 0, 1)
-
-        self.tablewiget2 = QtGui.QTableWidget(10, 5)
-        self.tablewiget2.setObjectName("zbsxTabel")
-        self.tablewiget2.setShowGrid(False)
-        self.tablewiget2.setHorizontalHeaderLabels([u"品质", u"类型", u"名称", u"基础属性1", u"基础属性2"])
-        self.tablewiget2.verticalHeader().setVisible(False)
-
-        self.tablewiget2.verticalHeader().setStretchLastSection(True)
-        self.tablewiget2.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
-        self.kuanggrid.addWidget(self.tablewiget2, 1, 1)
-
-        self.equipTzList = QtGui.QListWidget()
-        self.equipTzList.setObjectName("equipTzList")
-        for tzNameIndex in info:
-            newItem = QtGui.QListWidgetItem(tzNameIndex[0])
-            newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
-            self.equipTzList.addItem(newItem)
-
-        self.equipTzList.itemClicked.connect(self.equipEdit)
-        self.kuanggrid.addWidget(self.equipTzList, 0, 0, 0, 1)
-
-        self.kuanggrid.setColumnStretch(0, 0)
-        self.kuanggrid.setColumnStretch(1, 1)
-
-        # self.tablewiget.verticalHeader().setVisible(False)
-        # self.tablewiget.horizontalHeader().setVisible(False)
-
-        self.wigetIndex = [self.tablewiget, self.tablewiget2, self.equipTzList, self.kuangwidget]
-
-    def equipEdit(self):
-        """装备列表数据填充"""
-        listItemName = unicode(self.equipTzList.currentItem().text())
-        sql = "SELECT case when LIMIT_FLAG = 'N' then '-' else (select MAP_NAME from map_info where MAP_NO = LIMIT_FLAG)||ifnull(LIMIT_MAP,'') end getMethod,TZ_ATTR_FIR||' / '||TZ_ATTR_SEC, TZ_ATTR_TRI, b1.code_name, b2.code_name, s.tz_name||e_type_sub equip_name, e_attr_fir, e_attr_sec FROM equip_info t, equip_suit s, (SELECT code, code_name FROM bas_code WHERE code_id = 'equip_type') b2, (SELECT code, code_name FROM bas_code WHERE code_id = 'equip_level') b1 WHERE t.e_level = b1.code AND t.e_type = b2.code AND t.e_tz = s.tz_no AND s.TZ_NAME = '" + listItemName + "' ORDER BY e_type, e_attr_fir,e_attr_sec"
-        datainfo = ToolFunction.getsqliteInfo(sql, "llcy")
-        # print datainfo
-        self.tablewiget.clear()
-        self.tablewiget2.clear()
-        self.tablewiget.setHorizontalHeaderLabels([u"套装属性"])
-        self.tablewiget2.setHorizontalHeaderLabels([u"品质", u"类型", u"名称", u"基础属性1", u"基础属性2"])
-
-        typeIndex = {u"食器": 1, u"厨具": 2, u"餐具": 3}
-        rowindex = 0
-        for rowData in datainfo:
-            columnindex = 0
-            for columnData in rowData:
-                if type(columnData) == int:
-                    info = str(columnData)
-                else:
-                    info = columnData
-
-                if columnindex < 3:
-                    self.newItem = QtGui.QTableWidgetItem(info)
-                    # self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
-                    self.tablewiget.setItem(columnindex, 0, self.newItem)
-                    self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
-                    columnindex += 1
-                elif columnindex == 4:
-                    self.newItem = QtGui.QTableWidgetItem(info)
-                    self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
-                    self.tablewiget2.setItem(rowindex, columnindex - 3, self.newItem)
-                    self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
-                    self.newItem.setIcon(QtGui.QIcon('ui/equip/' + str(typeIndex[info]) + '.png'))
-                    columnindex += 1
-                else:
-                    self.newItem = QtGui.QTableWidgetItem(info)
-                    self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
-                    self.tablewiget2.setItem(rowindex, columnindex - 3, self.newItem)
-                    self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
-                    columnindex += 1
-            rowindex += 1
-
     def sniperlist(self):
         """狙击公式"""
         self.inibodywiget()
@@ -562,7 +569,8 @@ class Example(QtGui.QMainWindow):
         self.kuanggrid.addWidget(self.sniperText, 1, 0)
         self.sniperText.setFixedHeight(100)
         self.sniperText.append(u"◆食油，魔力，食材影响出货种类，调料建议400以上，公式不保证概率，请洗脸后尝试。")
-        self.sniperText.append(u"◆烹饪限定食灵：白米饭,热香饼,那不勒斯披萨,佛跳墙,玉子烧,甜甜圈,香菜戚风蛋糕,关东煮,冰糖燕窝,冬荫功,冬瓜盅,叫花鸡,焦糖布丁,提拉米苏,荣耀女仆蛋挞,香槟,西芹百合,苏格兰蛋,罗宋汤,肴肉,猫饭,韩式泡菜")
+        self.sniperText.append(
+            u"◆烹饪限定食灵：白米饭,热香饼,那不勒斯披萨,佛跳墙,玉子烧,甜甜圈,香菜戚风蛋糕,关东煮,冰糖燕窝,冬荫功,冬瓜盅,叫花鸡,焦糖布丁,提拉米苏,荣耀女仆蛋挞,香槟,西芹百合,苏格兰蛋,罗宋汤,肴肉,猫饭,韩式泡菜")
 
         self.wigetIndex = [self.tablewiget, self.sniperText, self.kuangwidget]
 
@@ -621,22 +629,25 @@ class Example(QtGui.QMainWindow):
         self.kuanggrid.setColumnStretch(0, 0)
         self.kuanggrid.setColumnStretch(1, 1)
 
+        qss = "border-image:url(map/mapMain.png);"
+        self.mapLabel.setStyleSheet(qss)
+
         self.wigetIndex = [self.mapList1, self.mapList2, self.mapLabel, self.kuangwidget]
 
     def getMap(self):
         """获取要查看的地图"""
-        listRow1 = self.mapList1.currentRow()+1
-        listRow2 = self.mapList2.currentRow()+1
+        listRow1 = self.mapList1.currentRow() + 1
+        listRow2 = self.mapList2.currentRow() + 1
         if listRow1 == 0 or listRow2 == 0:
             pass
             mapurl = None
         else:
-            mapurl = "map/"+unicode(listRow1)+"/"+unicode(listRow2)+".jpg"
+            mapurl = "map/" + unicode(listRow1) + "/" + unicode(listRow2) + ".jpg"
 
         if listRow1 == 6 or mapurl is None:
             pass
         else:
-            qss = "border-image:url("+mapurl+");"
+            qss = "border-image:url(" + mapurl + ");"
             self.mapLabel.setStyleSheet(qss)
 
     def calculation(self):
@@ -667,7 +678,7 @@ class Example(QtGui.QMainWindow):
         self.levelzbjs.setObjectName("calculationLabelHead")
         self.nowlevLabel2.setObjectName("calculationLabel")
         self.taglevLabel2.setObjectName("calculationLabel")
-        
+
         self.nowlevEntry = QtGui.QLineEdit()
         self.taglevpEntry = QtGui.QLineEdit()
         self.expEntry = QtGui.QLineEdit()
@@ -770,25 +781,25 @@ class Example(QtGui.QMainWindow):
         self.text.append("<img src='ui/logo.png'>")
         self.text.setAlignment(QtCore.Qt.AlignCenter)
         self.text.setTextColor(QtGui.QColor("#FFF3EE"))
-        self.text.append(u"\n欢迎加入我们\nQQ群:621285038\n")
+        self.text.append(u"欢迎加入我们\nQQ群:621285038\n")
         # self.text.setTextColor(QtGui.QColor("#DC143C"))
-        self.text.setFontPointSize(16)
+        self.text.setFontPointSize(15)
         self.text.append(u"界面设计")
         self.text.setFontPointSize(10)
-        self.text.append(u"玉引\n莉莉子\n呐呐\n")
-        self.text.setFontPointSize(16)
+        self.text.append(u"呐呐\n玉引\n莉莉子\n")
+        self.text.setFontPointSize(15)
         self.text.append(u"开发制作")
         self.text.setFontPointSize(10)
         self.text.append(u"莉莉子\n")
-        self.text.setFontPointSize(16)
+        self.text.setFontPointSize(15)
         self.text.append(u"数据")
         self.text.setFontPointSize(10)
         self.text.append(u"玉引\n")
-        self.text.setFontPointSize(16)
+        self.text.setFontPointSize(15)
         self.text.append(u"美工/UI")
         self.text.setFontPointSize(10)
-        self.text.append(u"小四\n")
-        self.text.append(u"bug或意见反馈\n微博私信@Elza_Scarlet")
+        self.text.append(u"呐呐\n小四\n")
+        self.text.append(u"bug或意见反馈,微博私信@Elza_Scarlet")
         self.text.setAlignment(QtCore.Qt.AlignCenter)
         self.rightgrid.addWidget(self.text, 0, 0)
         self.wigetIndex = [self.leftwiget, self.rightwiget]
