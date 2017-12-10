@@ -211,10 +211,12 @@ class Example(QtGui.QMainWindow):
         self.switchBtn.clicked.connect(self.switchlh)
 
         self.sylhLabel = QtGui.QLabel()
-        self.historyTextBrowser = QtGui.QTextBrowser()
-        self.historyTextBrowser.setMinimumWidth(400)
         self.sylhLabel.setObjectName("sylhLabel")  # 首页立绘
         self.switchlh()
+
+        self.historyTextBrowser = QtGui.QTextBrowser()
+        self.historyTextBrowser.setMinimumWidth(400)
+
         self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
         self.historyTextBrowser.append(u"\n◆工具改版啦！欢迎各位主厨品尝新皮肤~")
         self.historyTextBrowser.append(u"◆食灵新增猪扒丼之前各个小姐姐资料！")
@@ -590,7 +592,7 @@ class Example(QtGui.QMainWindow):
 
         self.jsgo = QtGui.QPushButton("Go!")
         self.jsgo2 = QtGui.QPushButton("Go!")
-        
+
         self.kuanggrid.addWidget(self.leveljs, 0, 0)
         self.kuanggrid.addWidget(self.jsgo, 0, 1)
         self.kuanggrid.addWidget(self.nowlevLabel, 1, 0)
@@ -601,6 +603,7 @@ class Example(QtGui.QMainWindow):
         self.kuanggrid.addWidget(self.expEntry, 2, 1)
 
         self.kuanggrid.addWidget(self.levelzbjs, 3, 0)
+        self.kuanggrid.addWidget(self.jsgo2, 3, 1)
         self.kuanggrid.addWidget(self.nowlevLabel2, 4, 0)
         self.kuanggrid.addWidget(self.nowlevEntry2, 4, 1)
         self.kuanggrid.addWidget(self.taglevLabel2, 4, 2)
