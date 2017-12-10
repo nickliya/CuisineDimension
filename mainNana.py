@@ -92,10 +92,10 @@ class Example(QtGui.QMainWindow):
         self.mapbtn.setObjectName("headbtn")
         self.mapbtn.setStyleSheet("border-image:url(ui/main/gonglue.png)")
         # self.mapbtn.setFont(QtGui.QFont(font))
-        self.damagebtn = QtGui.QPushButton()
-        self.damagebtn.setObjectName("headbtn")
-        self.damagebtn.setStyleSheet("border-image:url(ui/main/jisuan.png)")
-        # self.damagebtn.setFont(QtGui.QFont(font))
+        self.calculationbtn = QtGui.QPushButton()
+        self.calculationbtn.setObjectName("headbtn")
+        self.calculationbtn.setStyleSheet("border-image:url(ui/main/jisuan.png)")
+        # self.calculation.setFont(QtGui.QFont(font))
         self.aboutbtn = QtGui.QPushButton()
         self.aboutbtn.setObjectName("headbtn")
         self.aboutbtn.setStyleSheet("border-image:url(ui/main/guanyu.png)")
@@ -108,6 +108,7 @@ class Example(QtGui.QMainWindow):
         self.equipbtn.clicked.connect(self.equiplist)
         self.mapbtn.clicked.connect(self.maplist)
         self.sniperbtn.clicked.connect(self.sniperlist)
+        self.calculationbtn.clicked.connect(self.calculation)
         self.aboutbtn.clicked.connect(self.aboutinfo)
 
     def iniGrid(self):
@@ -135,7 +136,7 @@ class Example(QtGui.QMainWindow):
         self.topgrid.addWidget(self.equipbtn, 3, 0)
         self.topgrid.addWidget(self.sniperbtn, 4, 0)
         self.topgrid.addWidget(self.mapbtn, 5, 0)
-        self.topgrid.addWidget(self.damagebtn, 6, 0)
+        self.topgrid.addWidget(self.calculationbtn, 6, 0)
         self.topgrid.addWidget(self.aboutbtn, 7, 0)
 
         # banner窗体
@@ -543,6 +544,67 @@ class Example(QtGui.QMainWindow):
         else:
             qss = "border-image:url("+mapurl+");"
             self.mapLabel.setStyleSheet(qss)
+
+    def calculation(self):
+        """计算"""
+        self.inibodywiget()
+        self.bodygrid.setRowStretch(0, 0)
+        self.bodygrid.setRowStretch(1, 0)
+        self.bodygrid.setColumnStretch(0, 0)
+        self.bodygrid.setColumnStretch(1, 0)
+
+        self.bgkuang()
+        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+        # self.kuanggrid.setSpacing(0)  # 设置控件间隔
+
+
+        self.leveljs = QtGui.QLabel(u"经验计算")
+        self.nowlevLabel = QtGui.QLabel(u"当前等级")
+        self.taglevLabel = QtGui.QLabel(u"目标等级")
+        self.expLabel = QtGui.QLabel(u"每局经验")
+
+        self.levelzbjs = QtGui.QLabel(u"装备经验计算")
+        self.nowlevLabel2 = QtGui.QLabel(u"当前等级")
+        self.taglevLabel2 = QtGui.QLabel(u"目标等级")
+        self.leveljs.setObjectName("calculationLabelHead")
+        self.nowlevLabel.setObjectName("calculationLabel")
+        self.taglevLabel.setObjectName("calculationLabel")
+        self.expLabel.setObjectName("calculationLabel")
+        self.levelzbjs.setObjectName("calculationLabelHead")
+        self.nowlevLabel2.setObjectName("calculationLabel")
+        self.taglevLabel2.setObjectName("calculationLabel")
+        
+        self.nowlevEntry = QtGui.QLineEdit()
+        self.taglevpEntry = QtGui.QLineEdit()
+        self.expEntry = QtGui.QLineEdit()
+        self.nowlevEntry.setObjectName("calculationEntry")
+        self.taglevpEntry.setObjectName("calculationEntry")
+        self.expEntry.setObjectName("calculationEntry")
+
+        self.nowlevEntry2 = QtGui.QLineEdit()
+        self.taglevpEntry2 = QtGui.QLineEdit()
+        self.nowlevEntry2.setObjectName("calculationEntry")
+        self.taglevpEntry2.setObjectName("calculationEntry")
+
+        self.jsgo = QtGui.QPushButton("Go!")
+        self.jsgo2 = QtGui.QPushButton("Go!")
+        
+        self.kuanggrid.addWidget(self.leveljs, 0, 0)
+        self.kuanggrid.addWidget(self.jsgo, 0, 1)
+        self.kuanggrid.addWidget(self.nowlevLabel, 1, 0)
+        self.kuanggrid.addWidget(self.nowlevEntry, 1, 1)
+        self.kuanggrid.addWidget(self.taglevLabel, 1, 2)
+        self.kuanggrid.addWidget(self.taglevpEntry, 1, 3)
+        self.kuanggrid.addWidget(self.expLabel, 2, 0)
+        self.kuanggrid.addWidget(self.expEntry, 2, 1)
+
+        self.kuanggrid.addWidget(self.levelzbjs, 3, 0)
+        self.kuanggrid.addWidget(self.nowlevLabel2, 4, 0)
+        self.kuanggrid.addWidget(self.nowlevEntry2, 4, 1)
+        self.kuanggrid.addWidget(self.taglevLabel2, 4, 2)
+        self.kuanggrid.addWidget(self.taglevpEntry2, 4, 3)
+
+        self.wigetIndex = [self.kuangwidget]
 
     def aboutinfo(self):
         """关于界面"""
