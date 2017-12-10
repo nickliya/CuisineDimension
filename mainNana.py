@@ -593,6 +593,7 @@ class Example(QtGui.QMainWindow):
                 self.newItem.setWhatsThis(info)
             rowindex += 1
 
+        self.tablewiget.setSortingEnabled(True)
         # asd = self.tablewiget.findItems(u"龙须糖", QtCore.Qt.MatchContains)
         # self.tablewiget.clear()
         # self.tablewiget.setItem(0,0,asd[0])
@@ -607,7 +608,6 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.setRowStretch(1, 0)
         self.bodygrid.setColumnStretch(0, 0)
         self.bodygrid.setColumnStretch(1, 0)
-
         self.bgkuang()
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
         # self.kuanggrid.setSpacing(0)  # 设置控件间隔
@@ -647,6 +647,8 @@ class Example(QtGui.QMainWindow):
                 columnindex += 1
                 self.newItem.setWhatsThis(info)
             rowindex += 1
+
+        self.tablewiget.setSortingEnabled(True)  # 排序
 
         self.sniperText = QtGui.QTextBrowser()
         self.sniperText.setObjectName("sniper_bz")  # 狙击备注
