@@ -140,10 +140,12 @@ QTextBrowser#sniper_bz{
 
 QTextBrowser#historyBrowser{
     font:75 16pt "Microsoft YaHei";
+    color:rgba(203,89,34);
     /*background-color: rgba(25,20,20);*/
     border:none;
     background-image:url(ui/main/gengxinrizhi.png);
-    background-repeat:no-repeat
+    background-repeat:no-repeat;
+    padding:60px
     }
 
 QListWidget{
@@ -163,10 +165,16 @@ QListWidget#equipTzList{
 
 QListWidget#mapList1{
     font:16pt "Microsoft YaHei";
+    border-right-color: #FFE08E;
+    border-right-width: 2px;
 }
 
 QListWidget#mapList2{
     font:12pt "Microsoft YaHei";
+    border-top-color: #FFE08E;
+    border-top-width: 2px;
+    border-right-color: #FFE08E;
+    border-right-width: 2px;
 }
 
 QListWidget:Item#equipTzList{

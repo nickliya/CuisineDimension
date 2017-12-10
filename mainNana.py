@@ -23,6 +23,7 @@ class Example(QtGui.QMainWindow):
         self.iniGrid()
         self.wigetIndex = None
         self.ToolFun = ToolFunction()
+        self.mainView()
 
     def closeEvent(self, event):
         ToolFunction().deleteFile("temp")
@@ -214,6 +215,9 @@ class Example(QtGui.QMainWindow):
         self.sylhLabel.setObjectName("sylhLabel")  # 首页立绘
         self.switchlh()
         self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
+        self.historyTextBrowser.append(u"\n◆工具改版啦！欢迎各位主厨品尝新皮肤")
+        self.historyTextBrowser.append(u"◆食灵列表新增猪扒丼之前各个小姐姐资料")
+        self.historyTextBrowser.append(u"◆增加地图攻略,地图来自萌白")
 
         self.bodygrid.addWidget(self.sylhLabel, 0, 0)
         self.bodygrid.addWidget(self.historyTextBrowser, 0, 1)
@@ -249,9 +253,9 @@ class Example(QtGui.QMainWindow):
 
         # self.tablewiget.verticalHeader().setVisible(False)
         # self.tablewiget.horizontalHeader().setVisible(False)
-        self.tablewiget.setHorizontalHeaderLabels([u"头像", u"No", u"食灵", u"类型", u"生命", u"攻击", u"防御", u"命中", u"闪避",
+        self.tablewiget.setHorizontalHeaderLabels([u"头像", u"No", u"食灵", u"烹饪时间",u"类型", u"生命", u"攻击", u"防御", u"命中", u"闪避",
                                                    u"暴击", u"攻速", u"石油", u"魔力", u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避",
-                                                   u"满石油", u"满魔力", u"烹饪时间"])
+                                                   u"满石油", u"满魔力"])
 
         for x in range(self.tablewiget.columnCount()):
             headItem = self.tablewiget.horizontalHeaderItem(x)  # 获得水平方向表头的Item对象
@@ -276,7 +280,9 @@ class Example(QtGui.QMainWindow):
         # self.tablewiget.resizeColumnToContents(4)
 
         self.tablewiget.setColumnWidth(0, 200)
-        self.tablewiget.setColumnWidth(2, 160)
+        self.tablewiget.setColumnWidth(1, 28)
+        self.tablewiget.setColumnWidth(2, 140)
+        self.tablewiget.setColumnWidth(3, 130)
 
         rowindex = 0
         for i in info:
@@ -293,7 +299,7 @@ class Example(QtGui.QMainWindow):
                     self.tablewiget.setCellWidget(rowindex, columnindex, self.lbp)
                     columnindex += 1
                     pass
-                elif columnindex == 3:
+                elif columnindex == 4:
                     self.lbp = QtGui.QLabel()
                     self.lbp.setPixmap(QtGui.QPixmap('ui/hero/' + info + '.png'))
                     self.tablewiget.setCellWidget(rowindex, columnindex, self.lbp)
@@ -475,7 +481,7 @@ class Example(QtGui.QMainWindow):
 
         self.bgkuang()
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
-        # self.kuanggrid.setSpacing(0)  # 设置控件间隔
+        self.kuanggrid.setSpacing(0)  # 设置控件间隔
 
         sql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
         info = ToolFunction.getsqliteInfo(sql, "llcy")
