@@ -191,6 +191,7 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.setRowStretch(0, 0)
         self.bodygrid.setRowStretch(1, 0)
         self.bodygrid.setColumnStretch(0, 1)
+        self.bodygrid.setColumnStretch(1, 0)
 
         self.switchBtn = QtGui.QPushButton()
         self.switchBtn2 = QtGui.QPushButton()
@@ -217,7 +218,7 @@ class Example(QtGui.QMainWindow):
         self.bodygrid.addWidget(self.sylhLabel, 0, 0)
         self.bodygrid.addWidget(self.historyTextBrowser, 0, 1)
 
-        self.wigetIndex = [self.switchBtn, self.sylhLabel, self.historyTextBrowser]
+        self.wigetIndex = [self.switchBtn, self.switchBtn2, self.sylhLabel, self.historyTextBrowser]
 
     def cuisinelist(self):
         """食灵列表"""
@@ -235,12 +236,8 @@ class Example(QtGui.QMainWindow):
         self.kuanggrid.setColumnStretch(0, 0)
         self.kuanggrid.setColumnStretch(1, 0)
 
-        con = sqlite3.connect("llcy")
-        cur = con.cursor()
-        sql = 'SELECT URL_TX,n.SL_NO,SL_NAME,SL_TYPE,SL_HP,SL_GJ,SL_FY,SL_MZ,SL_SB,SL_BJ,SL_GS,SL_SY,SL_ML,MAX_HP,MAX_GJ,MAX_FY,MAX_MZ,MAX_SB,MAX_SY,MAX_ML FROM fairy_detail n,fairy_detail_max m WHERE n.SL_NO=m.SL_NO;'
-        cur.execute(sql)
-        info = cur.fetchall()
-        cur.close()
+        sql = ToolFunction.getsql("sql/slList.sql")
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
         rowcount = len(info)
 
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
