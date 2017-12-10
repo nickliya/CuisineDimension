@@ -229,6 +229,96 @@ class Example(QtGui.QMainWindow):
 
         self.wigetIndex = [self.switchBtn, self.switchBtn2, self.sylhLabel, self.historyTextBrowser]
 
+    def consignlist(self):
+        """委托列表"""
+        self.inibodywiget()
+        ToolFunction().deleteFile("temp")
+
+        self.bodygrid.setRowStretch(1, 0)
+        self.bodygrid.setColumnStretch(0, 1)
+        self.bodygrid.setColumnStretch(1, 0)
+
+        self.bgkuang()
+        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+        # self.kuanggrid.setSpacing(0)  # 设置控件间隔
+
+        self.kuanggrid.setColumnStretch(0, 0)
+        self.kuanggrid.setColumnStretch(1, 0)
+
+        sql = ToolFunction.getsql("sql/wtList.sql")
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
+        rowcount = len(info)
+
+        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+
+        self.tablewiget = QtGui.QTableWidget(rowcount, 15)
+        self.tablewiget.verticalHeader().setVisible(False)
+        # self.tablewiget.horizontalHeader().sectionClicked.connect(self.fortest2)  # 表头信号
+
+        # self.tablewiget.verticalHeader().setVisible(False)
+        # self.tablewiget.horizontalHeader().setVisible(False)
+        self.tablewiget.setHorizontalHeaderLabels(
+            [u"地图", u"时长", u"食油", u"魔力", u"食材", u"调料", u"获得经验", u"其他", u"大成功条件", u"每小时总量",
+             u"食油", u"魔力", u"食材", u"调料", u"经验"])
+
+        for x in range(self.tablewiget.columnCount()):
+            headItem = self.tablewiget.horizontalHeaderItem(x)  # 获得水平方向表头的Item对象
+            headItem.setBackgroundColor(QtGui.QColor(25, 20, 20))  # 设置单元格背景颜色
+            headItem.setTextColor(QtGui.QColor(200, 111, 30))
+
+            # self.tablewiget.setShowGrid(False)  # 设置网格线
+
+        # self.lbp = QtGui.QLabel()
+        # self.lbp.setPixmap(QtGui.QPixmap(U"card/cutin/bmf_n.png"))
+        # self.tablewiget.setCellWidget(0, 0, self.lbp)
+
+        # self.tablewiget.horizontalHeader().setStretchLastSection(True)
+        # self.tablewiget.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+        # self.tablewiget.verticalHeader().setStretchLastSection(True)
+        # self.tablewiget.verticalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+
+        # self.tablewiget.resizeRowsToContents()
+        self.tablewiget.resizeColumnsToContents()
+        # self.tablewiget.resizeColumnToContents(1)
+        # self.tablewiget.resizeColumnToContents(3)
+        # self.tablewiget.resizeColumnToContents(4)
+
+        self.tablewiget.setColumnWidth(0, 50)
+        self.tablewiget.setColumnWidth(1, 120)
+        self.tablewiget.setColumnWidth(2, 60)
+        self.tablewiget.setColumnWidth(3, 60)
+        self.tablewiget.setColumnWidth(4, 60)
+        self.tablewiget.setColumnWidth(5, 60)
+        self.tablewiget.setColumnWidth(6, 100)
+        self.tablewiget.setColumnWidth(8, 150)
+        self.tablewiget.setColumnWidth(14, 90)
+
+        rowindex = 0
+        for i in info:
+            columnindex = 0
+            for x in i:
+                if type(x) == int:
+                    info = str(x)
+                else:
+                    info = x
+
+                try:
+                    self.newItem = QtGui.QTableWidgetItem(info)
+                except TypeError, msg:
+                    print msg
+                self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                self.tablewiget.setItem(rowindex, columnindex, self.newItem)
+                columnindex += 1
+                self.newItem.setWhatsThis(info)
+            rowindex += 1
+
+        # asd = self.tablewiget.findItems(u"龙须糖", QtCore.Qt.MatchContains)
+        # self.tablewiget.clear()
+        # self.tablewiget.setItem(0,0,asd[0])
+        self.kuanggrid.addWidget(self.tablewiget, 0, 0)
+        self.wigetIndex = [self.tablewiget, self.kuangwidget]
+        # self.tablewiget.cellClicked.connect(self.slDetail)
+
     def cuisinelist(self):
         """食灵列表"""
         self.inibodywiget()
