@@ -215,9 +215,11 @@ class Example(QtGui.QMainWindow):
         self.sylhLabel.setObjectName("sylhLabel")  # 首页立绘
         self.switchlh()
         self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
-        self.historyTextBrowser.append(u"\n◆工具改版啦！欢迎各位主厨品尝新皮肤")
-        self.historyTextBrowser.append(u"◆食灵列表新增猪扒丼之前各个小姐姐资料")
-        self.historyTextBrowser.append(u"◆增加地图攻略,地图来自萌白")
+        self.historyTextBrowser.append(u"\n◆工具改版啦！欢迎各位主厨品尝新皮肤~")
+        self.historyTextBrowser.append(u"◆食灵新增猪扒丼之前各个小姐姐资料！")
+        self.historyTextBrowser.append(u"◆食灵列表添加烹饪时间！")
+        self.historyTextBrowser.append(u"◆食灵明细新增食灵故事！")
+        self.historyTextBrowser.append(u"◆增加地图速推攻略（来自萌百），更多地图攻略可参见萌百！")
 
         self.bodygrid.addWidget(self.sylhLabel, 0, 0)
         self.bodygrid.addWidget(self.historyTextBrowser, 0, 1)
@@ -253,7 +255,7 @@ class Example(QtGui.QMainWindow):
 
         # self.tablewiget.verticalHeader().setVisible(False)
         # self.tablewiget.horizontalHeader().setVisible(False)
-        self.tablewiget.setHorizontalHeaderLabels([u"头像", u"No", u"食灵", u"烹饪时间",u"类型", u"生命", u"攻击", u"防御", u"命中", u"闪避",
+        self.tablewiget.setHorizontalHeaderLabels([u"头像", u"No", u"食灵", u"类型", u"烹饪时间", u"生命", u"攻击", u"防御", u"命中", u"闪避",
                                                    u"暴击", u"攻速", u"石油", u"魔力", u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避",
                                                    u"满石油", u"满魔力"])
 
@@ -282,7 +284,7 @@ class Example(QtGui.QMainWindow):
         self.tablewiget.setColumnWidth(0, 200)
         self.tablewiget.setColumnWidth(1, 28)
         self.tablewiget.setColumnWidth(2, 140)
-        self.tablewiget.setColumnWidth(3, 130)
+        self.tablewiget.setColumnWidth(4, 130)
 
         rowindex = 0
         for i in info:
@@ -299,7 +301,7 @@ class Example(QtGui.QMainWindow):
                     self.tablewiget.setCellWidget(rowindex, columnindex, self.lbp)
                     columnindex += 1
                     pass
-                elif columnindex == 4:
+                elif columnindex == 3:
                     self.lbp = QtGui.QLabel()
                     self.lbp.setPixmap(QtGui.QPixmap('ui/hero/' + info + '.png'))
                     self.tablewiget.setCellWidget(rowindex, columnindex, self.lbp)
@@ -375,7 +377,7 @@ class Example(QtGui.QMainWindow):
     def equipEdit(self):
         """装备列表数据填充"""
         listItemName = unicode(self.equipTzList.currentItem().text())
-        sql = "SELECT TZ_ATTR_FIR, TZ_ATTR_SEC, TZ_ATTR_TRI, b1.code_name, b2.code_name, s.tz_name||e_type_sub equip_name, e_attr_fir, e_attr_sec FROM equip_info t, equip_suit s, (SELECT code, code_name FROM bas_code WHERE code_id = 'equip_type') b2, (SELECT code, code_name FROM bas_code WHERE code_id = 'equip_level') b1 WHERE t.e_level = b1.code AND t.e_type = b2.code AND t.e_tz = s.tz_no AND s.TZ_NAME = '" + listItemName + "' ORDER BY e_type, e_attr_fir,e_attr_sec"
+        sql = "SELECT case when LIMIT_FLAG = 'N' then '-' else (select MAP_NAME from map_info where MAP_NO = LIMIT_FLAG)||ifnull(LIMIT_MAP,'') end getMethod,TZ_ATTR_FIR||' / '||TZ_ATTR_SEC, TZ_ATTR_TRI, b1.code_name, b2.code_name, s.tz_name||e_type_sub equip_name, e_attr_fir, e_attr_sec FROM equip_info t, equip_suit s, (SELECT code, code_name FROM bas_code WHERE code_id = 'equip_type') b2, (SELECT code, code_name FROM bas_code WHERE code_id = 'equip_level') b1 WHERE t.e_level = b1.code AND t.e_type = b2.code AND t.e_tz = s.tz_no AND s.TZ_NAME = '" + listItemName + "' ORDER BY e_type, e_attr_fir,e_attr_sec"
         datainfo = ToolFunction.getsqliteInfo(sql, "llcy")
         # print datainfo
         self.tablewiget.clear()
@@ -466,8 +468,8 @@ class Example(QtGui.QMainWindow):
         self.sniperText.setObjectName("sniper_bz")  # 狙击备注
         self.kuanggrid.addWidget(self.sniperText, 1, 0)
         self.sniperText.setFixedHeight(100)
-        self.sniperText.append(u"◆食油，魔力，食材影响出货种类，调料建议400以上")
-        self.sniperText.append(u"◆狙击公式所提供数值为最低出货数值，不保证概率，请洗脸后尝试")
+        self.sniperText.append(u"◆食油，魔力，食材影响出货种类，调料建议400以上，公式不保证概率，请洗脸后尝试。")
+        self.sniperText.append(u"◆烹饪限定食灵：白米饭,热香饼,那不勒斯披萨,佛跳墙,玉子烧,甜甜圈,香菜戚风蛋糕,关东煮,冰糖燕窝,冬荫功,冬瓜盅,叫花鸡,焦糖布丁,提拉米苏,荣耀女仆蛋挞,香槟,西芹百合,苏格兰蛋,罗宋汤,肴肉,猫饭,韩式泡菜")
 
         self.wigetIndex = [self.tablewiget, self.sniperText, self.kuangwidget]
 
@@ -501,7 +503,7 @@ class Example(QtGui.QMainWindow):
         #         u"轻度5-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
         #         u"轻度6-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6",
         #         u"轻度1-1", u"轻度1-2", u"轻度1-3", u"轻度1-4", u"轻度1-5", u"轻度1-6", ]
-        info = [u"欧罗巴大陆", u"美利坚大陆", u"和风岛", u"次元小屋", u"中华大陆", u"次元壁"]
+        info = [u"欧罗巴大陆", u"美利坚大陆", u"和风岛", u"次元小屋", u"中华大陆", u"次元壁(暂无)"]
         for tzNameIndex in info:
             newItem = QtGui.QListWidgetItem(tzNameIndex)
             newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
@@ -613,12 +615,12 @@ class Example(QtGui.QMainWindow):
         self.text.append("<img src='ui/logo.png'>")
         self.text.setAlignment(QtCore.Qt.AlignCenter)
         self.text.setTextColor(QtGui.QColor("#FFF3EE"))
-        self.text.append(u"\n欢迎加入我们\nQQ群:627216993\n")
+        self.text.append(u"\n欢迎加入我们\nQQ群:621285038\n")
         # self.text.setTextColor(QtGui.QColor("#DC143C"))
         self.text.setFontPointSize(16)
         self.text.append(u"界面设计")
         self.text.setFontPointSize(10)
-        self.text.append(u"玉引\n莉莉子\n")
+        self.text.append(u"玉引\n莉莉子\n呐呐\n")
         self.text.setFontPointSize(16)
         self.text.append(u"开发制作")
         self.text.setFontPointSize(10)
@@ -647,7 +649,7 @@ class Example(QtGui.QMainWindow):
         elif index == 2:
             self.syText.clear()
             self.syText.append(u"\n◆食灵界面目前提供食灵列表和食灵详细信息查看")
-            self.syText.append(u"◆食灵列表的满级数据由推算得出,误差正负1")
+            self.syText.append(u"◆食灵列表的满级数据由推算得出，如有较大误差，请向制作组反馈")
             self.syText.append(u"◆搜索功能少女祈祷中...")
         elif index == 3:
             self.syText.clear()
@@ -658,13 +660,15 @@ class Example(QtGui.QMainWindow):
             self.syText.append(u"◆狙击公式提供数值为最低出货数值，不保证概率，请洗脸后尝试")
         else:
             self.syText.clear()
-            self.syText.append(u"\n◆地图攻略地图摘自萌百")
+            self.syText.append(u"\n◆地图攻略地图以及内容摘自萌百")
+            self.syText.append(u"◆最终生成地图由小四制作")
+            self.syText.append(u"◆更多地图攻略可参见萌百")
 
     def slDetail(self):
         """食灵详情"""
         indexRow = self.tablewiget.currentRow()
         slnumb = self.tablewiget.item(indexRow, 1).text()
-        sql = 'SELECT URL_LH,URL_LH2,"   "||SL_NAME,SL_LEVEL,TJ_JN,TJ_ZP,TJ_HP,TJ_GJ,TJ_GJ,TJ_MZ,TJ_FY,TJ_SB,SKILL_NAME,SKILL_DESC,SKILL_GY_NAME,SKILL_GY_DESC,GROUP_DECS,SL_TYPE FROM "fairy_detail" WHERE SL_NO = ' + str(
+        sql = 'SELECT URL_LH,URL_LH2,"   "||SL_NAME,SL_LEVEL,TJ_JN,TJ_ZP,TJ_HP,TJ_GJ,TJ_GJ,TJ_MZ,TJ_FY,TJ_SB,SKILL_NAME,SKILL_DESC,SKILL_GY_NAME,SKILL_GY_DESC,GROUP_DECS,SL_TYPE,ifnull(SL_STORY,"") FROM "fairy_detail" WHERE SL_NO = ' + str(
             slnumb) + ';'
         # print sql
         info = ToolFunction.getsqliteInfo(sql, "llcy")
@@ -694,7 +698,7 @@ class Example(QtGui.QMainWindow):
         self.cuisineLable.setStyleSheet(stylesheet)
 
         # 右边窗体
-        self.attributeList = QtGui.QTableWidget(15, 4)
+        self.attributeList = QtGui.QTableWidget(23, 4)
         self.attributeList.setObjectName("sl_Attri")
         self.detailFrameGrid.addWidget(self.attributeList, 0, 1)
         self.attributeList.verticalHeader().setVisible(False)
@@ -702,9 +706,10 @@ class Example(QtGui.QMainWindow):
         self.attributeList.setShowGrid(False)
         self.attributeList.setSpan(0, 0, 1, 3)
         self.attributeList.setSpan(1, 0, 1, 2)
-        self.attributeList.setSpan(7, 0, 2, 4)
-        self.attributeList.setSpan(10, 0, 2, 4)
-        self.attributeList.setSpan(13, 0, 2, 4)
+        self.attributeList.setSpan(5, 0, 2, 4)
+        self.attributeList.setSpan(8, 0, 2, 4)
+        self.attributeList.setSpan(11, 0, 2, 4)
+        self.attributeList.setSpan(14, 0, 9, 4)
 
         self.newItem = QtGui.QTableWidgetItem(info[0][2])
         self.lbp2 = QtGui.QLabel()
@@ -718,49 +723,58 @@ class Example(QtGui.QMainWindow):
         self.lbp2.setPixmap(QtGui.QPixmap('ui/hero/star' + str(info[0][3]) + '.png'))
         self.attributeList.setCellWidget(1, 0, self.lbp2)
 
-        self.slDetailEdit(u'技能', info[0][4], 2, 0)
-        self.slDetailEdit(u'装盘', info[0][5], 2, 1)
-        self.slDetailEdit(u'生命', info[0][6], 3, 0)
-        self.slDetailEdit(u'攻击', info[0][7], 3, 1)
-        self.slDetailEdit(u'攻速', info[0][8], 4, 0)
-        self.slDetailEdit(u'命中', info[0][9], 4, 1)
-        self.slDetailEdit(u'防御', info[0][10], 5, 0)
-        self.slDetailEdit(u'闪避', info[0][11], 5, 1)
+        self.slDetailEdit(u'生命', info[0][6], 2, 0)
+        self.slDetailEdit(u'技能', info[0][4], 2, 1)
+        self.slDetailEdit(u'装盘', info[0][5], 2, 2)
+        self.slDetailEdit(u'攻速', info[0][8], 2, 3)
+        self.slDetailEdit(u'攻击', info[0][7], 3, 0)
+        self.slDetailEdit(u'防御', info[0][10], 3, 1)
+        self.slDetailEdit(u'命中', info[0][9], 3, 2)
+        self.slDetailEdit(u'闪避', info[0][11], 3, 3)
 
         self.newItem = QtGui.QTableWidgetItem(u"料理技")
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
         self.newItem.setFont(QtGui.QFont("youyuan", 16, 100))
-        self.attributeList.setItem(6, 0, self.newItem)
+        self.attributeList.setItem(4, 0, self.newItem)
 
         self.newItem = QtGui.QTableWidgetItem(info[0][12])
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
-        self.attributeList.setItem(6, 1, self.newItem)
+        self.attributeList.setItem(4, 1, self.newItem)
 
         self.newItem = QtGui.QTableWidgetItem(info[0][13])
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
-        self.attributeList.setItem(7, 0, self.newItem)
+        self.attributeList.setItem(5, 0, self.newItem)
 
         self.newItem = QtGui.QTableWidgetItem(u"固有技")
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
         self.newItem.setFont(QtGui.QFont("youyuan", 14, 100))
-        self.attributeList.setItem(9, 0, self.newItem)
+        self.attributeList.setItem(7, 0, self.newItem)
 
         self.newItem = QtGui.QTableWidgetItem(info[0][14])
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
-        self.attributeList.setItem(9, 1, self.newItem)
+        self.attributeList.setItem(7, 1, self.newItem)
 
         self.newItem = QtGui.QTableWidgetItem(info[0][15])
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
-        self.attributeList.setItem(10, 0, self.newItem)
+        self.attributeList.setItem(8, 0, self.newItem)
 
         self.newItem = QtGui.QTableWidgetItem(u"装盘效果")
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
         self.newItem.setFont(QtGui.QFont("youyuan", 14, 100))
-        self.attributeList.setItem(12, 0, self.newItem)
+        self.attributeList.setItem(10, 0, self.newItem)
 
         self.newItem = QtGui.QTableWidgetItem(info[0][16])
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
+        self.attributeList.setItem(11, 0, self.newItem)
+
+        self.newItem = QtGui.QTableWidgetItem(u"食灵故事")
+        self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
+        self.newItem.setFont(QtGui.QFont("youyuan", 14, 100))
         self.attributeList.setItem(13, 0, self.newItem)
+
+        self.newItem = QtGui.QTableWidgetItem(info[0][18])
+        self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
+        self.attributeList.setItem(14, 0, self.newItem)
 
         self.wigetIndex = [self.detailWidget]
 
