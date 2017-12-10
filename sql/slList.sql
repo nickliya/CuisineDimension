@@ -1,1 +1,1 @@
-SELECT URL_TX,n.SL_NO,SL_NAME,SL_TYPE,SL_HP,SL_GJ,SL_FY,SL_MZ,SL_SB,SL_BJ,SL_GS,SL_SY,SL_ML,MAX_HP,MAX_GJ,MAX_FY,MAX_MZ,MAX_SB,MAX_SY,MAX_ML FROM fairy_detail n,fairy_detail_max m WHERE n.SL_NO=m.SL_NO;
+SELECT URL_TX,n.SL_NO,n.SL_NAME,SL_TYPE,SL_HP,SL_GJ,SL_FY,SL_MZ,SL_SB,SL_BJ,SL_GS,SL_SY,SL_ML,MAX_HP,MAX_GJ,MAX_FY,MAX_MZ,MAX_SB,MAX_SY,MAX_ML,case when sl_time is null then "" else sl_time end as sl_time FROM fairy_detail n,fairy_detail_max m WHERE n.SL_NO=m.SL_NO and n.hb_open = 1 AND n.SL_NO<100

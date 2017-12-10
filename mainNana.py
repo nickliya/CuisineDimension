@@ -242,7 +242,7 @@ class Example(QtGui.QMainWindow):
 
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
 
-        self.tablewiget = QtGui.QTableWidget(rowcount, 20)
+        self.tablewiget = QtGui.QTableWidget(rowcount, 21)
         self.tablewiget.verticalHeader().setVisible(False)
         self.tablewiget.itemClicked.connect(self.slDetail)  # 表格信号
         # self.tablewiget.horizontalHeader().sectionClicked.connect(self.fortest2)  # 表头信号
@@ -251,7 +251,7 @@ class Example(QtGui.QMainWindow):
         # self.tablewiget.horizontalHeader().setVisible(False)
         self.tablewiget.setHorizontalHeaderLabels([u"头像", u"No", u"食灵", u"类型", u"生命", u"攻击", u"防御", u"命中", u"闪避",
                                                    u"暴击", u"攻速", u"石油", u"魔力", u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避",
-                                                   u"满石油", u"满魔力"])
+                                                   u"满石油", u"满魔力", u"烹饪时间"])
 
         for x in range(self.tablewiget.columnCount()):
             headItem = self.tablewiget.horizontalHeaderItem(x)  # 获得水平方向表头的Item对象
@@ -299,7 +299,10 @@ class Example(QtGui.QMainWindow):
                     self.tablewiget.setCellWidget(rowindex, columnindex, self.lbp)
                     columnindex += 1
                 else:
-                    self.newItem = QtGui.QTableWidgetItem(info)
+                    try:
+                        self.newItem = QtGui.QTableWidgetItem(info)
+                    except TypeError, msg:
+                        print msg
                     self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
                     self.tablewiget.setItem(rowindex, columnindex, self.newItem)
                     columnindex += 1
@@ -309,7 +312,8 @@ class Example(QtGui.QMainWindow):
         # asd = self.tablewiget.findItems(u"龙须糖", QtCore.Qt.MatchContains)
         # self.tablewiget.clear()
         # self.tablewiget.setItem(0,0,asd[0])
-        self.wigetIndex = [self.tablewiget]
+        self.kuanggrid.addWidget(self.tablewiget,0,0)
+        self.wigetIndex = [self.tablewiget,self.kuangwidget]
         # self.tablewiget.cellClicked.connect(self.slDetail)
 
     def equiplist(self):
