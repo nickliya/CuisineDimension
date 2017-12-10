@@ -334,7 +334,7 @@ class Example(QtGui.QMainWindow):
         self.wigetIndex = [self.tablewiget, self.kuangwidget]
         # self.tablewiget.cellClicked.connect(self.slDetail)
 
-    def equiplist(self):
+    def equiplist1(self):
         """装备列表"""
         self.inibodywiget()
 
@@ -425,6 +425,90 @@ class Example(QtGui.QMainWindow):
                     self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
                     columnindex += 1
             rowindex += 1
+
+    def dinerlist(self):
+        """餐车数据"""
+        self.inibodywiget()
+
+        sql = "select name,type,size,Desc from fitment order by box,box_max,type"
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
+
+        sql2 = ToolFunction.getsql("sql/dinerList.sql")
+        info2 = ToolFunction.getsqliteInfo(sql2, "llcy")
+
+        self.bgkuang()
+        self.bodygrid.addWidget(self.kuangwidget, 0, 0)
+        #self.kuanggrid.setSpacing(0)  # 设置控件间隔
+
+        rowcount = len(info2)
+        self.tablewiget = QtGui.QTableWidget(rowcount, 7)
+        self.tablewiget.setObjectName("dishTabel")
+        self.tablewiget.setShowGrid(False)
+        self.tablewiget.setHorizontalHeaderLabels([u"名称", u"类型", u"特性", u"外形", u"风味", u"营养", u"合计"])
+        self.tablewiget.verticalHeader().setVisible(False)
+        self.kuanggrid.addWidget(self.tablewiget, 0, 1)
+        self.tablewiget.setColumnWidth(1, 50)
+        self.tablewiget.setColumnWidth(2, 50)
+        self.tablewiget.setColumnWidth(3, 50)
+        self.tablewiget.setColumnWidth(4, 50)
+        self.tablewiget.setColumnWidth(5, 50)
+        self.tablewiget.setColumnWidth(6, 50)
+
+        rowcount = len(info)
+        self.equipTzList = QtGui.QTableWidget(rowcount, 4)
+        self.equipTzList.setObjectName("equipTzList")
+        self.equipTzList.setShowGrid(False)
+        self.equipTzList.setHorizontalHeaderLabels([u"名称", u"类型", u"规格", u"描述"])
+        self.equipTzList.verticalHeader().setVisible(False)
+        self.kuanggrid.addWidget(self.equipTzList, 0, 0)
+        self.equipTzList.setColumnWidth(1, 50)
+        self.equipTzList.setColumnWidth(3, 220)
+
+        rowindex = 0
+        for i in info:
+            columnindex = 0
+            for x in i:
+                if type(x) == int:
+                    info = str(x)
+                else:
+                    info = x
+
+                try:
+                    self.newItem = QtGui.QTableWidgetItem(info)
+                except TypeError, msg:
+                    print msg
+                self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                self.equipTzList.setItem(rowindex, columnindex, self.newItem)
+                columnindex += 1
+                self.newItem.setWhatsThis(info)
+            rowindex += 1
+
+        rowindex = 0
+        for i in info2:
+            columnindex = 0
+            for x in i:
+                if type(x) == int:
+                    info2 = str(x)
+                else:
+                    info2 = x
+
+                try:
+                    self.newItem = QtGui.QTableWidgetItem(info2)
+                except TypeError, msg:
+                    print msg
+                self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                self.tablewiget.setItem(rowindex, columnindex, self.newItem)
+                columnindex += 1
+                self.newItem.setWhatsThis(info2)
+            rowindex += 1
+
+        self.kuanggrid.setColumnStretch(0, 0)
+        self.kuanggrid.setColumnStretch(1, 1)
+
+        # self.tablewiget.verticalHeader().setVisible(False)
+        # self.tablewiget.horizontalHeader().setVisible(False)
+
+        self.wigetIndex = [self.tablewiget, self.equipTzList, self.kuangwidget]
 
     def consignlist(self):
         """委托列表"""

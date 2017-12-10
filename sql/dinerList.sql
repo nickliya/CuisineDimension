@@ -1,0 +1,1 @@
+select name,(select code_name from bas_code where code = type and code_id = 'sl_type'),specialDesc,wx4,fw4,yy4,wx4+fw4+yy4 from dish where hb_open = 1 order by type,specialDesc,wx4+fw4+yy4
