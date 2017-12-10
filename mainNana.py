@@ -425,7 +425,7 @@ class Example(QtGui.QMainWindow):
                     self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
                     columnindex += 1
             rowindex += 1
-
+    #def consignlist(self):
     def dinerlist(self):
         """餐车数据"""
         self.inibodywiget()
@@ -502,7 +502,7 @@ class Example(QtGui.QMainWindow):
                 self.newItem.setWhatsThis(info2)
             rowindex += 1
 
-        self.kuanggrid.setColumnStretch(0, 0)
+        self.kuanggrid.setColumnStretch(0, 1)
         self.kuanggrid.setColumnStretch(1, 1)
 
         # self.tablewiget.verticalHeader().setVisible(False)
