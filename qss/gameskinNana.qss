@@ -73,6 +73,20 @@ QLabel#mapLabel{
     background-color: rgba(255,0,0,0);
     }
 
+QLabel#calculationLabel{
+    color: rgba(230,216,180);
+    font:75 20pt "Microsoft YaHei";
+    }
+
+QLabel#calculationLabelHead{
+    color: rgba(230,216,180);
+    font:100 24pt "Microsoft YaHei";
+    }
+
+QLineEdit#calculationEntry{
+    max-width:50px;
+    }
+
 QTreeWidget{
     color:floralwhite;
     border:none;
