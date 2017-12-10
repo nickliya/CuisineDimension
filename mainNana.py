@@ -334,7 +334,7 @@ class Example(QtGui.QMainWindow):
         self.wigetIndex = [self.tablewiget, self.kuangwidget]
         # self.tablewiget.cellClicked.connect(self.slDetail)
 
-    def equiplist1(self):
+    def equiplist(self):
         """装备列表"""
         self.inibodywiget()
 
