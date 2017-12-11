@@ -747,7 +747,7 @@ class Example(QtGui.QMainWindow):
         if listRow1 == 6 or mapurl is None:
             pass
         else:
-            qss = "border-image:url(" + mapurl + ");"
+            qss = "border-image:url(\'" + mapurl + "\');"
             self.mapLabel.setStyleSheet(qss)
 
     def calculation(self):
