@@ -38,7 +38,7 @@ class Example(QtGui.QMainWindow):
     def initUI(self):
         self.resize(1180, 650)
         self.center()
-        self.setWindowTitle(u'りりこの料理教室 version:2017.11.30')
+        self.setWindowTitle(u'りりこの料理教室 version:2017.12.11')
         self.setWindowIcon(QtGui.QIcon('web.png'))
         self.setObjectName("mainwindow")
         self.mainwidget = QtGui.QWidget()
@@ -47,8 +47,12 @@ class Example(QtGui.QMainWindow):
         bgList = ["bg/homeskin/home_1.png", "bg/homeskin/home_2.png", "bg/homeskin/home_3.png",
                   "bg/homeskin/home_4.png", "bg/homeskin/home_5.png", "bg/homeskin/home_6.png"]
         bg = random.choice(bgList)
-        self.setStyleSheet(
-            "QMainWindow{background-repeat: no-repeat;background-position: center;border-image: url(" + bg + ");}")
+        try:
+            decrypt(bg, "temp/bg.png")
+        except IOError:
+            pass
+        stylesheet = "QMainWindow{background-repeat: no-repeat;background-position: center;border-image: url(temp/bg.png);}"
+        self.setStyleSheet(stylesheet)
 
         styleqss = open("qss/gameskinNana.qss", "r")
         styleinfo = styleqss.read()
@@ -100,6 +104,10 @@ class Example(QtGui.QMainWindow):
         self.consignbtn.setObjectName("headbtn")
         self.consignbtn.setStyleSheet("border-image:url(ui/main/weituo.png)")
         # self.calculation.setFont(QtGui.QFont(font))
+        self.dinnerbtn = QtGui.QPushButton()
+        self.dinnerbtn.setObjectName("headbtn")
+        self.dinnerbtn.setStyleSheet("border-image:url(ui/main/canche.png)")
+        # self.calculation.setFont(QtGui.QFont(font))
         self.aboutbtn = QtGui.QPushButton()
         self.aboutbtn.setObjectName("headbtn")
         self.aboutbtn.setStyleSheet("border-image:url(ui/main/guanyu.png)")
@@ -114,6 +122,7 @@ class Example(QtGui.QMainWindow):
         self.sniperbtn.clicked.connect(self.sniperlist)
         self.calculationbtn.clicked.connect(self.calculation)
         self.consignbtn.clicked.connect(self.consignlist)
+        self.dinnerbtn.clicked.connect(self.dinnerList)
         self.aboutbtn.clicked.connect(self.aboutinfo)
 
     def iniGrid(self):
@@ -140,9 +149,10 @@ class Example(QtGui.QMainWindow):
         self.topgrid.addWidget(self.charactorbtn, 2, 0)
         self.topgrid.addWidget(self.equipbtn, 3, 0)
         self.topgrid.addWidget(self.consignbtn, 4, 0)
-        self.topgrid.addWidget(self.sniperbtn, 5, 0)
-        self.topgrid.addWidget(self.mapbtn, 6, 0)
-        self.topgrid.addWidget(self.calculationbtn, 7, 0)
+        self.topgrid.addWidget(self.dinnerbtn, 5, 0)
+        self.topgrid.addWidget(self.sniperbtn, 6, 0)
+        self.topgrid.addWidget(self.mapbtn, 7, 0)
+        # self.topgrid.addWidget(self.calculationbtn, 8, 0)
         self.topgrid.addWidget(self.aboutbtn, 8, 0)
 
         # banner窗体
@@ -207,7 +217,7 @@ class Example(QtGui.QMainWindow):
         self.switchBtn2.setObjectName("switchBtn2")  # 把switch按钮顶到左边
         self.switchBtn.setStyleSheet("border-image:url(ui/banner/qiehuananniu.png)")
         self.switchBtn2.setStyleSheet("background-color: rgba(255,0,0,0);")
-        self.switchBtn.setFixedWidth(50)
+        self.switchBtn.setFixedWidth(60)
         self.switchBtn.setFixedHeight(50)
         self.switchBtn2.setFixedWidth(700)
 
@@ -222,12 +232,13 @@ class Example(QtGui.QMainWindow):
 
         self.historyTextBrowser = QtGui.QTextBrowser()
         self.historyTextBrowser.setMinimumWidth(400)
-        self.historyTextBrowser.setFont(QtGui.QFont(self.diyfont))
+        # self.historyTextBrowser.setFont(QtGui.QFont(self.diyfont))
         self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
-        self.historyTextBrowser.append(u"\n◆工具改版啦！欢迎各位主厨品尝新皮肤~")
+        self.historyTextBrowser.append(u"\n\n◆工具改版啦！欢迎各位主厨品尝新皮肤,现在工具会随机渲染背景哟~")
         self.historyTextBrowser.append(u"◆食灵新增猪扒丼之前各个小姐姐资料！")
         self.historyTextBrowser.append(u"◆食灵列表添加烹饪时间！")
         self.historyTextBrowser.append(u"◆食灵明细新增食灵故事！")
+        self.historyTextBrowser.append(u"◆新增委托大成功数据和餐车数据！")
         self.historyTextBrowser.append(u"◆增加地图速推攻略（来自萌百），更多地图攻略可参见萌百！")
 
         self.bodygrid.addWidget(self.sylhLabel, 0, 0)
@@ -425,8 +436,8 @@ class Example(QtGui.QMainWindow):
                     self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
                     columnindex += 1
             rowindex += 1
-    #def consignlist(self):
-    def dinerlist(self):
+
+    def dinnerList(self):
         """餐车数据"""
         self.inibodywiget()
 
@@ -478,6 +489,7 @@ class Example(QtGui.QMainWindow):
                 except TypeError, msg:
                     print msg
                 self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
                 self.equipTzList.setItem(rowindex, columnindex, self.newItem)
                 columnindex += 1
                 self.newItem.setWhatsThis(info)
@@ -497,6 +509,7 @@ class Example(QtGui.QMainWindow):
                 except TypeError, msg:
                     print msg
                 self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
                 self.tablewiget.setItem(rowindex, columnindex, self.newItem)
                 columnindex += 1
                 self.newItem.setWhatsThis(info2)
@@ -588,6 +601,7 @@ class Example(QtGui.QMainWindow):
                 except TypeError, msg:
                     print msg
                 self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
                 self.tablewiget.setItem(rowindex, columnindex, self.newItem)
                 columnindex += 1
                 self.newItem.setWhatsThis(info)
@@ -779,6 +793,7 @@ class Example(QtGui.QMainWindow):
 
         self.jsgo = QtGui.QPushButton("Go!")
         self.jsgo2 = QtGui.QPushButton("Go!")
+        self.jsgo2.setFont(QtGui.QFont(self.diyfont))
 
         self.kuanggrid.addWidget(self.leveljs, 0, 0)
         self.kuanggrid.addWidget(self.jsgo, 0, 1)

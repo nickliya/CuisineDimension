@@ -153,7 +153,7 @@ QTextBrowser#sniper_bz{
     }
 
 QTextBrowser#historyBrowser{
-    font:75 16pt "YouYuan";
+    font:700 14pt "YouYuan";
     color:rgba(203,89,34);
     /*background-color: rgba(25,20,20);*/
     border:none;
@@ -185,7 +185,7 @@ QListWidget#mapList1{
 
 QListWidget#mapList2{
     font:12pt "Microsoft YaHei";
-    border-top-color: #FFE08E;
+    border-top-color: #FFD700;
     border-top-width: 2px;
     border-right-color: #FFE08E;
     border-right-width: 2px;
