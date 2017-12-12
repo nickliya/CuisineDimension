@@ -9,6 +9,7 @@
 # vervion:2017.11.03
 
 from PyQt4 import QtGui, QtCore
+from PyQt4.phonon import Phonon
 import sys
 import sqlite3
 import random
@@ -19,6 +20,7 @@ import os
 class Example(QtGui.QMainWindow):
     def __init__(self):
         super(Example, self).__init__()
+        self.music = Music()
         self.initUI()
         self.iniGrid()
         self.wigetIndex = None
@@ -205,6 +207,7 @@ class Example(QtGui.QMainWindow):
 
     def mainView(self):
         """首页"""
+        self.music.touchPlay()
         self.inibodywiget()
         self.bodygrid.setRowStretch(0, 0)
         self.bodygrid.setRowStretch(1, 0)
@@ -248,6 +251,7 @@ class Example(QtGui.QMainWindow):
 
     def cuisinelist(self):
         """食灵列表"""
+        self.music.touchPlay()
         self.inibodywiget()
         ToolFunction().deleteFile("temp")
 
@@ -347,6 +351,7 @@ class Example(QtGui.QMainWindow):
 
     def equiplist(self):
         """装备列表"""
+        self.music.touchPlay()
         self.inibodywiget()
 
         sql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
@@ -439,6 +444,7 @@ class Example(QtGui.QMainWindow):
 
     def dinnerList(self):
         """餐车数据"""
+        self.music.touchPlay()
         self.inibodywiget()
 
         sql = "select name,type,size,Desc from fitment order by box,box_max,type"
@@ -525,6 +531,7 @@ class Example(QtGui.QMainWindow):
 
     def consignlist(self):
         """委托列表"""
+        self.music.touchPlay()
         self.inibodywiget()
         ToolFunction().deleteFile("temp")
 
@@ -617,6 +624,7 @@ class Example(QtGui.QMainWindow):
 
     def sniperlist(self):
         """狙击公式"""
+        self.music.touchPlay()
         self.inibodywiget()
         self.bodygrid.setRowStretch(0, 1)
         self.bodygrid.setRowStretch(1, 0)
@@ -676,6 +684,7 @@ class Example(QtGui.QMainWindow):
 
     def maplist(self):
         """地图列表"""
+        self.music.touchPlay()
         self.inibodywiget()
         self.bodygrid.setRowStretch(0, 0)
         self.bodygrid.setRowStretch(1, 0)
@@ -752,6 +761,7 @@ class Example(QtGui.QMainWindow):
 
     def calculation(self):
         """计算"""
+        self.music.touchPlay()
         self.inibodywiget()
         self.bodygrid.setRowStretch(0, 0)
         self.bodygrid.setRowStretch(1, 0)
@@ -815,6 +825,7 @@ class Example(QtGui.QMainWindow):
 
     def aboutinfo(self):
         """关于界面"""
+        self.music.touchPlay()
         self.inibodywiget()
 
         self.bodygrid.setColumnStretch(0, 1)
@@ -1059,6 +1070,16 @@ class Example(QtGui.QMainWindow):
 
     def fortest(self):
         print "ok"
+
+
+class Music:
+    def __init__(self):
+        url = "music/ui/se_ui_001_x_2.mp3"
+        self.touth = Phonon.createPlayer(Phonon.MusicCategory, Phonon.MediaSource(url))
+
+    def touchPlay(self):
+        self.touth.stop()
+        self.touth.play()
 
 
 class ToolFunction:
