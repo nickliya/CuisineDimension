@@ -325,7 +325,14 @@ class MainProject(QtGui.QMainWindow):
                     self.lbp.setPixmap(QtGui.QPixmap(info))
                     self.tablewiget.setCellWidget(rowindex, columnindex, self.lbp)
                     columnindex += 1
-                    pass
+                elif columnindex == 1:
+                    try:
+                        self.newItem = QtGui.QTableWidgetItem(info.rjust(3))
+                    except TypeError, msg:
+                        print msg
+                    self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                    self.tablewiget.setItem(rowindex, columnindex, self.newItem)
+                    columnindex += 1
                 elif columnindex == 3:
                     self.lbp = QtGui.QLabel()
                     self.lbp.setPixmap(QtGui.QPixmap('ui/hero/' + info + '.png'))
@@ -345,6 +352,7 @@ class MainProject(QtGui.QMainWindow):
         # asd = self.tablewiget.findItems(u"龙须糖", QtCore.Qt.MatchContains)
         # self.tablewiget.clear()
         # self.tablewiget.setItem(0,0,asd[0])
+        self.tablewiget.setSortingEnabled(True)
         self.kuanggrid.addWidget(self.tablewiget, 0, 0)
         self.wigetIndex = [self.tablewiget, self.kuangwidget]
         # self.tablewiget.cellClicked.connect(self.slDetail)
@@ -464,6 +472,7 @@ class MainProject(QtGui.QMainWindow):
         self.tablewiget.setHorizontalHeaderLabels([u"名称", u"类型", u"特性", u"外形", u"风味", u"营养", u"合计"])
         self.tablewiget.verticalHeader().setVisible(False)
         self.kuanggrid.addWidget(self.tablewiget, 0, 1)
+        self.tablewiget.setColumnWidth(0, 120)
         self.tablewiget.setColumnWidth(1, 50)
         self.tablewiget.setColumnWidth(2, 50)
         self.tablewiget.setColumnWidth(3, 50)
@@ -524,6 +533,8 @@ class MainProject(QtGui.QMainWindow):
         self.kuanggrid.setColumnStretch(0, 1)
         self.kuanggrid.setColumnStretch(1, 1)
 
+        self.tablewiget.setSortingEnabled(True)
+        self.equipTzList.setSortingEnabled(True)
         # self.tablewiget.verticalHeader().setVisible(False)
         # self.tablewiget.horizontalHeader().setVisible(False)
 
@@ -585,21 +596,25 @@ class MainProject(QtGui.QMainWindow):
         # self.tablewiget.resizeColumnToContents(4)
 
         self.tablewiget.setColumnWidth(0, 50)
-        self.tablewiget.setColumnWidth(1, 120)
+        self.tablewiget.setColumnWidth(1, 80)
         self.tablewiget.setColumnWidth(2, 60)
         self.tablewiget.setColumnWidth(3, 60)
         self.tablewiget.setColumnWidth(4, 60)
         self.tablewiget.setColumnWidth(5, 60)
         self.tablewiget.setColumnWidth(6, 100)
         self.tablewiget.setColumnWidth(8, 150)
-        self.tablewiget.setColumnWidth(14, 90)
+        self.tablewiget.setColumnWidth(10, 50)
+        self.tablewiget.setColumnWidth(11, 50)
+        self.tablewiget.setColumnWidth(12, 50)
+        self.tablewiget.setColumnWidth(13, 50)
+        self.tablewiget.setColumnWidth(14, 80)
 
         rowindex = 0
         for i in info:
             columnindex = 0
             for x in i:
                 if type(x) == int:
-                    info = str(x)
+                    info = str(x).rjust(5)
                 else:
                     info = x
 
