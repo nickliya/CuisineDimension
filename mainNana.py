@@ -17,9 +17,9 @@ import base64
 import os
 
 
-class Example(QtGui.QMainWindow):
+class MainProject(QtGui.QMainWindow):
     def __init__(self):
-        super(Example, self).__init__()
+        super(MainProject, self).__init__()
         self.music = Music()
         self.initUI()
         self.iniGrid()
@@ -918,6 +918,7 @@ class Example(QtGui.QMainWindow):
 
     def aboutViewEdit(self, index):
         """首页编辑"""
+        self.music.touchPlay()
         if index == 1:
             self.syText.clear()
             self.syText.append(u"\n◆欢迎使用本工具！初次使用可以在此处查看使用帮助，有任何疑问和建议可以联系作者。")
@@ -1074,8 +1075,8 @@ class Example(QtGui.QMainWindow):
 
 class Music:
     def __init__(self):
-        url = "music/ui/se_ui_001_x_2.mp3"
-        self.touth = Phonon.createPlayer(Phonon.MusicCategory, Phonon.MediaSource(url))
+        path = "music/ui/se_ui_001_x_2.mp3"
+        self.touth = Phonon.createPlayer(Phonon.MusicCategory, Phonon.MediaSource(path))
 
     def touchPlay(self):
         self.touth.stop()
@@ -1132,7 +1133,7 @@ def decrypt(images_path, imgUrl):
 
 def main():
     app = QtGui.QApplication(sys.argv)
-    ex = Example()
+    ex = MainProject()
     ex.show()
     sys.exit(app.exec_())
 
