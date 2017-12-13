@@ -234,7 +234,7 @@ class MainProject(QtGui.QMainWindow):
         self.switchlh()
 
         self.historyTextBrowser = QtGui.QTextBrowser()
-        self.historyTextBrowser.setMinimumWidth(400)
+        self.historyTextBrowser.setMinimumWidth(450)
         # self.historyTextBrowser.setFont(QtGui.QFont(self.diyfont))
         self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
         self.historyTextBrowser.append(u"\n\n◆工具改版啦！欢迎各位主厨品尝新皮肤,现在工具会随机渲染背景哟~")
