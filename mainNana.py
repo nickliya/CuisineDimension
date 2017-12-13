@@ -237,12 +237,12 @@ class MainProject(QtGui.QMainWindow):
         self.historyTextBrowser.setMinimumWidth(450)
         # self.historyTextBrowser.setFont(QtGui.QFont(self.diyfont))
         self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
-        self.historyTextBrowser.append(u"\n\n◆工具改版啦！欢迎各位主厨品尝新皮肤,现在工具会随机渲染背景哟~")
-        self.historyTextBrowser.append(u"◆食灵新增猪扒丼之前各个小姐姐资料！")
-        self.historyTextBrowser.append(u"◆食灵列表添加烹饪时间！")
-        self.historyTextBrowser.append(u"◆食灵明细新增食灵故事！")
-        self.historyTextBrowser.append(u"◆新增委托大成功数据和餐车数据！")
-        self.historyTextBrowser.append(u"◆增加地图速推攻略（来自萌百），更多地图攻略可参见萌百！")
+        self.historyTextBrowser.append(u"\n◆工具改版啦!欢迎各位主厨\n品尝新皮肤,现在工具会随机\n渲染背景哟~")
+        self.historyTextBrowser.append(u"◆食灵新增猪扒丼之前各个小\n姐姐资料!")
+        self.historyTextBrowser.append(u"◆食灵列表添加烹饪时间!")
+        self.historyTextBrowser.append(u"◆食灵明细新增食灵故事!")
+        self.historyTextBrowser.append(u"◆新增委托大成功数据和餐车\n数据!")
+        self.historyTextBrowser.append(u"◆增加地图速推攻略（来自萌\n百),更多地图攻略可参见萌百!")
 
         self.bodygrid.addWidget(self.sylhLabel, 0, 0)
         self.bodygrid.addWidget(self.historyTextBrowser, 0, 1)

@@ -155,11 +155,11 @@ QTextBrowser#sniper_bz{
 QTextBrowser#historyBrowser{
     font:700 14pt "YouYuan";
     color:rgba(203,89,34);
-    /*background-color: rgba(25,20,20);*/
+    background-color: rgba(255,0,0,0);
     border:none;
     background-image:url(ui/main/gengxinrizhi.png);
     background-repeat:no-repeat;
-    padding:60px
+    padding:70px
     }
 
 QListWidget{
