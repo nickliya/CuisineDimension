@@ -962,7 +962,7 @@ class MainProject(QtGui.QMainWindow):
         """食灵详情"""
         indexRow = self.tablewiget.currentRow()
         slnumb = self.tablewiget.item(indexRow, 1).text()
-        sql = 'SELECT URL_LH,URL_LH2,"   "||SL_NAME,SL_LEVEL,TJ_JN,TJ_ZP,TJ_HP,TJ_GJ,TJ_GJ,TJ_MZ,TJ_FY,TJ_SB,SKILL_NAME,SKILL_DESC,SKILL_GY_NAME,SKILL_GY_DESC,GROUP_DECS,SL_TYPE,ifnull(SL_STORY,"") FROM "fairy_detail" WHERE SL_NO = ' + str(
+        sql = 'SELECT URL_LH,URL_LH2,"   "||SL_NAME,SL_LEVEL,TJ_JN,TJ_ZP,TJ_HP,TJ_GJ,TJ_GS,TJ_MZ,TJ_FY,TJ_SB,SKILL_NAME,SKILL_DESC,SKILL_GY_NAME,SKILL_GY_DESC,GROUP_DECS,SL_TYPE,ifnull(SL_STORY,"") FROM "fairy_detail" WHERE SL_NO = ' + str(
             slnumb) + ';'
         # print sql
         info = ToolFunction.getsqliteInfo(sql, "llcy")
@@ -1017,12 +1017,12 @@ class MainProject(QtGui.QMainWindow):
         self.lbp2.setPixmap(QtGui.QPixmap('ui/hero/star' + str(info[0][3]) + '.png'))
         self.attributeList.setCellWidget(1, 0, self.lbp2)
 
-        self.slDetailEdit(u'生命', info[0][6], 2, 0)
-        self.slDetailEdit(u'技能', info[0][4], 2, 1)
-        self.slDetailEdit(u'装盘', info[0][5], 2, 2)
-        self.slDetailEdit(u'攻速', info[0][8], 2, 3)
-        self.slDetailEdit(u'攻击', info[0][7], 3, 0)
-        self.slDetailEdit(u'防御', info[0][10], 3, 1)
+        self.slDetailEdit(u'技能', info[0][4], 2, 0)
+        self.slDetailEdit(u'生命', info[0][6], 2, 1)
+        self.slDetailEdit(u'攻速', info[0][8], 2, 2)
+        self.slDetailEdit(u'防御', info[0][10], 2, 3)
+        self.slDetailEdit(u'装盘', info[0][5], 3, 0)
+        self.slDetailEdit(u'攻击', info[0][7], 3, 1)
         self.slDetailEdit(u'命中', info[0][9], 3, 2)
         self.slDetailEdit(u'闪避', info[0][11], 3, 3)
 
@@ -1067,6 +1067,7 @@ class MainProject(QtGui.QMainWindow):
         self.attributeList.setItem(13, 0, self.newItem)
 
         self.newItem = QtGui.QTableWidgetItem(info[0][18])
+        self.newItem.setTextAlignment(QtCore.Qt.AlignTop)
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
         self.attributeList.setItem(14, 0, self.newItem)
 
