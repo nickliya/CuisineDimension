@@ -154,8 +154,8 @@ class MainProject(QtGui.QMainWindow):
         self.topgrid.addWidget(self.dinnerbtn, 5, 0)
         self.topgrid.addWidget(self.sniperbtn, 6, 0)
         self.topgrid.addWidget(self.mapbtn, 7, 0)
-        # self.topgrid.addWidget(self.calculationbtn, 8, 0)
-        self.topgrid.addWidget(self.aboutbtn, 8, 0)
+        self.topgrid.addWidget(self.calculationbtn, 8, 0)
+        self.topgrid.addWidget(self.aboutbtn, 9, 0)
 
         # banner窗体
         self.bannerwiget = QtGui.QWidget()
@@ -787,20 +787,29 @@ class MainProject(QtGui.QMainWindow):
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
         # self.kuanggrid.setSpacing(0)  # 设置控件间隔
 
+        self.levelBox = QtGui.QGroupBox(u"等级计算")
+        self.levelBoxGrid = QtGui.QGridLayout()
+        self.levelBox.setLayout(self.levelBoxGrid)
 
-        self.leveljs = QtGui.QLabel(u"经验计算")
+        self.equipBox = QtGui.QGroupBox(u"装备计算")
+        self.equipBoxGrid = QtGui.QGridLayout()
+        self.equipBox.setLayout(self.equipBoxGrid)
+
+        self.equipChooseBox = QtGui.QGroupBox(u"装备选择")
+        self.equipChooseGrid = QtGui.QGridLayout()
+        self.equipChooseBox.setLayout(self.equipChooseGrid)
+        self.equipChooseBox.setMinimumWidth(800)  # 后面会注释
+
         self.nowlevLabel = QtGui.QLabel(u"当前等级")
         self.taglevLabel = QtGui.QLabel(u"目标等级")
         self.expLabel = QtGui.QLabel(u"每局经验")
 
-        self.levelzbjs = QtGui.QLabel(u"装备经验计算")
         self.nowlevLabel2 = QtGui.QLabel(u"当前等级")
         self.taglevLabel2 = QtGui.QLabel(u"目标等级")
-        self.leveljs.setObjectName("calculationLabelHead")
+
         self.nowlevLabel.setObjectName("calculationLabel")
         self.taglevLabel.setObjectName("calculationLabel")
         self.expLabel.setObjectName("calculationLabel")
-        self.levelzbjs.setObjectName("calculationLabelHead")
         self.nowlevLabel2.setObjectName("calculationLabel")
         self.taglevLabel2.setObjectName("calculationLabel")
 
@@ -818,23 +827,24 @@ class MainProject(QtGui.QMainWindow):
 
         self.jsgo = QtGui.QPushButton("Go!")
         self.jsgo2 = QtGui.QPushButton("Go!")
-        self.jsgo2.setFont(QtGui.QFont(self.diyfont))
 
-        self.kuanggrid.addWidget(self.leveljs, 0, 0)
-        self.kuanggrid.addWidget(self.jsgo, 0, 1)
-        self.kuanggrid.addWidget(self.nowlevLabel, 1, 0)
-        self.kuanggrid.addWidget(self.nowlevEntry, 1, 1)
-        self.kuanggrid.addWidget(self.taglevLabel, 1, 2)
-        self.kuanggrid.addWidget(self.taglevpEntry, 1, 3)
-        self.kuanggrid.addWidget(self.expLabel, 2, 0)
-        self.kuanggrid.addWidget(self.expEntry, 2, 1)
+        self.kuanggrid.addWidget(self.levelBox, 0, 0)
+        self.kuanggrid.addWidget(self.equipBox, 1, 0)
+        self.kuanggrid.addWidget(self.equipChooseBox, 0, 1, 0, 1)
 
-        self.kuanggrid.addWidget(self.levelzbjs, 3, 0)
-        self.kuanggrid.addWidget(self.jsgo2, 3, 1)
-        self.kuanggrid.addWidget(self.nowlevLabel2, 4, 0)
-        self.kuanggrid.addWidget(self.nowlevEntry2, 4, 1)
-        self.kuanggrid.addWidget(self.taglevLabel2, 4, 2)
-        self.kuanggrid.addWidget(self.taglevpEntry2, 4, 3)
+        self.levelBoxGrid.addWidget(self.nowlevLabel, 0, 0)
+        self.levelBoxGrid.addWidget(self.nowlevEntry, 0, 1)
+        self.levelBoxGrid.addWidget(self.taglevLabel, 1, 0)
+        self.levelBoxGrid.addWidget(self.taglevpEntry, 1, 1)
+        self.levelBoxGrid.addWidget(self.expLabel, 2, 0)
+        self.levelBoxGrid.addWidget(self.expEntry, 2, 1)
+        self.levelBoxGrid.addWidget(self.jsgo, 3, 0)
+
+        self.equipBoxGrid.addWidget(self.nowlevLabel2, 0, 0)
+        self.equipBoxGrid.addWidget(self.nowlevEntry2, 0, 1)
+        self.equipBoxGrid.addWidget(self.taglevLabel2, 1, 0)
+        self.equipBoxGrid.addWidget(self.taglevpEntry2, 1, 1)
+        self.equipBoxGrid.addWidget(self.jsgo2, 2, 0)
 
         self.wigetIndex = [self.kuangwidget]
 

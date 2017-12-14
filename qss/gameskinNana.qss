@@ -78,13 +78,8 @@ QLabel#calculationLabel{
     font:75 20pt "Microsoft YaHei";
     }
 
-QLabel#calculationLabelHead{
-    color: rgba(230,216,180);
-    font:100 24pt "Microsoft YaHei";
-    }
-
 QLineEdit#calculationEntry{
-    max-width:50px;
+    /*max-width:50px;*/
     }
 
 QTreeWidget{
@@ -200,6 +195,10 @@ QListWidget:Item#mapList1{
 }
 QListWidget:Item#mapList2{
     height:20px
+}
+QGroupBox{
+    font:16pt "Microsoft YaHei";
+    color:white
 }
 
 /**********滚动条-水平**********/
