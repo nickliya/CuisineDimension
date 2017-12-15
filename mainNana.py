@@ -455,7 +455,7 @@ class MainProject(QtGui.QMainWindow):
         self.music.touchPlay()
         self.inibodywiget()
 
-        sql = "select name,type,size,Desc from fitment order by box,box_max,type"
+        sql = "SELECT name,type,size,Desc FROM fitment ORDER BY box,box_max,type"
         info = ToolFunction.getsqliteInfo(sql, "llcy")
 
         sql2 = ToolFunction.getsql("sql/dinerList.sql")
@@ -463,7 +463,7 @@ class MainProject(QtGui.QMainWindow):
 
         self.bgkuang()
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
-        #self.kuanggrid.setSpacing(0)  # 设置控件间隔
+        # self.kuanggrid.setSpacing(0)  # 设置控件间隔
 
         rowcount = len(info2)
         self.tablewiget = QtGui.QTableWidget(rowcount, 7)
@@ -795,11 +795,6 @@ class MainProject(QtGui.QMainWindow):
         self.equipBoxGrid = QtGui.QGridLayout()
         self.equipBox.setLayout(self.equipBoxGrid)
 
-        self.equipChooseBox = QtGui.QGroupBox(u"装备选择")
-        self.equipChooseGrid = QtGui.QGridLayout()
-        self.equipChooseBox.setLayout(self.equipChooseGrid)
-        self.equipChooseBox.setMinimumWidth(800)  # 后面会注释
-
         self.nowlevLabel = QtGui.QLabel(u"当前等级")
         self.taglevLabel = QtGui.QLabel(u"目标等级")
         self.expLabel = QtGui.QLabel(u"每局经验")
@@ -830,7 +825,6 @@ class MainProject(QtGui.QMainWindow):
 
         self.kuanggrid.addWidget(self.levelBox, 0, 0)
         self.kuanggrid.addWidget(self.equipBox, 1, 0)
-        self.kuanggrid.addWidget(self.equipChooseBox, 0, 1, 0, 1)
 
         self.levelBoxGrid.addWidget(self.nowlevLabel, 0, 0)
         self.levelBoxGrid.addWidget(self.nowlevEntry, 0, 1)
@@ -845,6 +839,29 @@ class MainProject(QtGui.QMainWindow):
         self.equipBoxGrid.addWidget(self.taglevLabel2, 1, 0)
         self.equipBoxGrid.addWidget(self.taglevpEntry2, 1, 1)
         self.equipBoxGrid.addWidget(self.jsgo2, 2, 0)
+
+        # 右侧装备选择
+        self.equipChooseBox = QtGui.QGroupBox(u"装备选择")
+        self.equipChooseGrid = QtGui.QGridLayout()
+        self.equipChooseBox.setLayout(self.equipChooseGrid)
+        self.equipChooseBox.setMinimumWidth(800)  # 后面会注释
+
+        self.typeCombox = QtGui.QComboBox()
+        self.typeCombox.addItems([u"主食", u"主菜", u"副菜", u"甜点", u"头盘", u"汤饮"])
+
+        self.slCombox = QtGui.QComboBox()
+        self.slCombox.addItems([u"主食", u"主菜", u"副菜", u"甜点", u"头盘", u"汤饮"])
+
+        self.equipSetCombox = QtGui.QComboBox()
+        equipSql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
+        info = ToolFunction.getsqliteInfo(equipSql, "llcy")
+        for name in info:
+            self.equipSetCombox.addItem(name[0])
+
+        self.kuanggrid.addWidget(self.equipChooseBox, 0, 1, 0, 1)
+        self.equipChooseGrid.addWidget(self.typeCombox, 0, 0)
+        self.equipChooseGrid.addWidget(self.slCombox, 0, 1)
+        self.equipChooseGrid.addWidget(self.equipSetCombox, 0, 2)
 
         self.wigetIndex = [self.kuangwidget]
 
