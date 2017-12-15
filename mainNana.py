@@ -342,6 +342,9 @@ class MainProject(QtGui.QMainWindow):
                     self.lbp.setPixmap(QtGui.QPixmap('ui/hero/' + info + '.png'))
                     self.tablewiget.setCellWidget(rowindex, columnindex, self.lbp)
                     columnindex += 1
+                    # typeIndex = {"1": u"主食", "2": u"主菜", "3": u"副菜", "4": u"甜点", "5": u"头盘", "6": u"汤饮"}
+                    # typeName = typeIndex[info]
+                    # self.newItem.setWhatsThis(typeName)
                 else:
                     try:
                         self.newItem = QtGui.QTableWidgetItem(info)
@@ -353,9 +356,11 @@ class MainProject(QtGui.QMainWindow):
                     self.newItem.setWhatsThis(info)
             rowindex += 1
 
-        # asd = self.tablewiget.findItems(u"龙须糖", QtCore.Qt.MatchContains)
-        # self.tablewiget.clear()
-        # self.tablewiget.setItem(0,0,asd[0])
+        # asd = self.tablewiget.findItems(u"主食", QtCore.Qt.MatchExactly)
+        # # self.tablewiget.clear()
+        # print asd[0].row()
+        # self.tablewiget.setRowHidden(asd[0].row(), True)
+
         self.tablewiget.setSortingEnabled(True)
         self.kuanggrid.addWidget(self.tablewiget, 0, 0)
         self.wigetIndex = [self.tablewiget, self.kuangwidget]
