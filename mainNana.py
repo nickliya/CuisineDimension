@@ -320,6 +320,10 @@ class MainProject(QtGui.QMainWindow):
                 else:
                     info = x
 
+                # if info is None:  # 调试专用
+                #     print "调试用"
+                #     print "213"
+
                 if columnindex == 0:
                     self.lbp = QtGui.QLabel()
                     self.lbp.setPixmap(QtGui.QPixmap(info))
@@ -1088,7 +1092,7 @@ class MainProject(QtGui.QMainWindow):
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
         self.attributeList.setItem(11, 0, self.newItem)
 
-        self.newItem = QtGui.QTableWidgetItem(u"食灵故事")
+        self.newItem = QtGui.QTableWidgetItem(u"食灵简介")
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
         self.newItem.setFont(QtGui.QFont("youyuan", 14, 100))
         self.attributeList.setItem(13, 0, self.newItem)
