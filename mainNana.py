@@ -807,15 +807,19 @@ class MainProject(QtGui.QMainWindow):
         self.nowlevLabel = QtGui.QLabel(u"当前等级")
         self.taglevLabel = QtGui.QLabel(u"目标等级")
         self.expLabel = QtGui.QLabel(u"每局经验")
+        self.expResultText = QtGui.QTextBrowser()
 
         self.nowlevLabel2 = QtGui.QLabel(u"当前等级")
         self.taglevLabel2 = QtGui.QLabel(u"目标等级")
+        self.equipNumResultText = QtGui.QTextBrowser()
 
         self.nowlevLabel.setObjectName("calculationLabel")
         self.taglevLabel.setObjectName("calculationLabel")
         self.expLabel.setObjectName("calculationLabel")
         self.nowlevLabel2.setObjectName("calculationLabel")
         self.taglevLabel2.setObjectName("calculationLabel")
+        self.expResultText.setObjectName("calculationText")
+        self.equipNumResultText.setObjectName("calculationText")
 
         self.nowlevEntry = QtGui.QLineEdit()
         self.taglevpEntry = QtGui.QLineEdit()
@@ -831,6 +835,8 @@ class MainProject(QtGui.QMainWindow):
 
         self.jsgo = QtGui.QPushButton("Go!")
         self.jsgo2 = QtGui.QPushButton("Go!")
+        self.jsgo.clicked.connect(self.calculation_go1)
+        self.jsgo2.clicked.connect(self.calculation_go2)
 
         self.kuanggrid.addWidget(self.levelBox, 0, 0)
         self.kuanggrid.addWidget(self.equipBox, 1, 0)
@@ -842,12 +848,14 @@ class MainProject(QtGui.QMainWindow):
         self.levelBoxGrid.addWidget(self.expLabel, 2, 0)
         self.levelBoxGrid.addWidget(self.expEntry, 2, 1)
         self.levelBoxGrid.addWidget(self.jsgo, 3, 0)
+        self.levelBoxGrid.addWidget(self.expResultText, 4, 0, 1, 0)
 
         self.equipBoxGrid.addWidget(self.nowlevLabel2, 0, 0)
         self.equipBoxGrid.addWidget(self.nowlevEntry2, 0, 1)
         self.equipBoxGrid.addWidget(self.taglevLabel2, 1, 0)
         self.equipBoxGrid.addWidget(self.taglevpEntry2, 1, 1)
         self.equipBoxGrid.addWidget(self.jsgo2, 2, 0)
+        self.equipBoxGrid.addWidget(self.equipNumResultText, 3, 0, 1, 0)
 
         # 右侧装备选择
         self.equipChooseBox = QtGui.QGroupBox(u"装备选择")
@@ -873,6 +881,39 @@ class MainProject(QtGui.QMainWindow):
         self.equipChooseGrid.addWidget(self.equipSetCombox, 0, 2)
 
         self.wigetIndex = [self.kuangwidget]
+
+    def calculation_go1(self):
+        nowlevel = self.nowlevEntry.text()
+        taglevel = self.taglevpEntry.text()
+        exp = self.expEntry.text()
+        if str(nowlevel) == '' or str(taglevel) == '' or str(exp) == '':
+            self.expResultText.clear()
+            self.expResultText.append(u"请在上面输入数字")
+            return
+        sql = "select sum(fairy_exp)/" + str(exp) + " from (select fairy_exp from level_exp where level >= '" + str(
+            nowlevel) + "' and level <'" + str(taglevel) + "')"
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
+        result = u"大约需要" + str(info[0][0]) + u"场战斗"
+        self.expResultText.clear()
+        self.expResultText.append(result)
+
+    def calculation_go2(self):
+        nowlevel = self.nowlevEntry2.text()
+        taglevel = self.taglevpEntry2.text()
+        if str(nowlevel) == '' or str(taglevel) == '':
+            self.equipNumResultText.clear()
+            self.equipNumResultText.append(u"请合理输入数字")
+            return
+        if int(nowlevel) < 10 and 10 >= int(taglevel) > int(nowlevel):
+            sql = 'SELECT number/40,number/60,number/80 FROM (SELECT ((SELECT equip_exp FROM level_exp WHERE level = ' + str(
+                taglevel) + ")-(SELECT equip_exp FROM level_exp WHERE level = " + str(nowlevel) + ")) AS number)"
+            info = ToolFunction.getsqliteInfo(sql, "llcy")
+            result = u"狗粮大约需要" + str(info[0][0]) + u"个白或" + str(info[0][1]) + u"个蓝或" + str(info[0][2]) + u"个紫"
+            self.equipNumResultText.clear()
+            self.equipNumResultText.append(result)
+            return
+        self.equipNumResultText.clear()
+        self.equipNumResultText.append(u"请合理输入数字")
 
     def aboutinfo(self):
         """关于界面"""

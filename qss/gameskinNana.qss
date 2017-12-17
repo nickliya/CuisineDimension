@@ -75,7 +75,7 @@ QLabel#mapLabel{
 
 QLabel#calculationLabel{
     color: rgba(230,216,180);
-    font:75 20pt "Microsoft YaHei";
+    font:75 16pt "Microsoft YaHei";
     }
 
 QLineEdit#calculationEntry{
@@ -155,6 +155,14 @@ QTextBrowser#historyBrowser{
     background-image:url(ui/main/gengxinrizhi.png);
     background-repeat:no-repeat;
     padding:70px
+    }
+
+QTextBrowser#calculationText{
+    font:75 14pt "Microsoft YaHei";
+    color: rgba(230,216,180);
+    background-color: rgba(255,0,0,0);
+    border:none;
+    max-height:70
     }
 
 QListWidget{
