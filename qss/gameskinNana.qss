@@ -83,6 +83,12 @@ QLabel#calculationLabel{
     font:75 16pt "Microsoft YaHei";
     }
 
+QLabel#calculationLabel2{
+    color: rgba(230,216,180);
+    font:75 12pt "Microsoft YaHei";
+    max-height:20px
+    }
+
 QLineEdit#calculationEntry{
     /*max-width:50px;*/
     }

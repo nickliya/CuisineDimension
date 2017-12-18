@@ -905,21 +905,26 @@ class MainProject(QtGui.QMainWindow):
         self.jsgo3.clicked.connect(self.calculation_go3)
 
         # 筛选表格
-        self.tablewiget = QtGui.QTableWidget(1, 7)
+        self.tableLabel = QtGui.QLabel(u"当前食灵属性:")
+        self.tableLabel.setObjectName("calculationLabel2")
+        self.tablewiget = QtGui.QTableWidget(1, 9)
         # self.tablewiget.setObjectName("dishTabel")
         self.tablewiget.setShowGrid(False)
         self.tablewiget.setHorizontalHeaderLabels(
-            [u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避", u"最终暴击", u"最终暴伤", u"技能"u"固有技能"u"技能"])
+            [u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避", u"暴击值", u"暴伤值", u"技能", u"固有技能"])
         self.tablewiget.verticalHeader().setVisible(False)
         self.tablewiget.horizontalHeader().setStretchLastSection(True)
         self.tablewiget.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
         # 推荐表格
+        self.tableLabel2 = QtGui.QLabel(u"食灵+套装洗练结果汇总:")
+        self.tableLabel2.setObjectName("calculationLabel2")
+
         self.tablewiget2 = QtGui.QTableWidget(18, 7)
         # self.tablewiget.setObjectName("dishTabel")
         self.tablewiget2.setShowGrid(False)
         self.tablewiget2.setHorizontalHeaderLabels(
-            [u"百分比攻击个数", u"百分比暴击个数", u"百分比暴伤", u"最终暴击", u"实际攻击", u"期望伤害", u"最高伤害"])
+            [u"百分比攻击个数", u"百分比暴击个数", u"百分比暴伤", u"最终暴击百分比", u"实际攻击", u"期望伤害", u"最高伤害"])
         self.tablewiget2.verticalHeader().setVisible(False)
         self.tablewiget2.horizontalHeader().setStretchLastSection(True)
         self.tablewiget2.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
@@ -931,8 +936,10 @@ class MainProject(QtGui.QMainWindow):
         self.equipChooseGrid.addWidget(self.equipSetCombox, 0, 3)
         self.equipChooseGrid.addWidget(self.dcCombox, 0, 4)
         self.equipChooseGrid.addWidget(self.jsgo3, 0, 5)
-        self.equipChooseGrid.addWidget(self.tablewiget, 1, 0, 6, 0)
-        self.equipChooseGrid.addWidget(self.tablewiget2, 2, 0, 6, 0)
+        self.equipChooseGrid.addWidget(self.tableLabel, 1, 0)
+        self.equipChooseGrid.addWidget(self.tablewiget, 2, 0, 6, 0)
+        self.equipChooseGrid.addWidget(self.tableLabel2, 3, 0)
+        self.equipChooseGrid.addWidget(self.tablewiget2, 4, 0, 6, 0)
 
         self.wigetIndex = [self.kuangwidget]
 
@@ -993,11 +1000,11 @@ class MainProject(QtGui.QMainWindow):
         slno = info[0][0]
 
         if self.dcCombox.currentIndex() == 0:
-            bj = 80
-            bs = 120
-        elif self.dcCombox.currentIndex() == 1:
             bj = 100
             bs = 50
+        elif self.dcCombox.currentIndex() == 1:
+            bj = 80
+            bs = 120
         else:
             print u"筷叉读取错误"
             return
@@ -1006,7 +1013,7 @@ class MainProject(QtGui.QMainWindow):
         infoIndex = ToolFunction.getsqliteInfo(sql, "llcy")
         self.tablewiget.clear()
         self.tablewiget.setHorizontalHeaderLabels(
-            [u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避", u"最终暴击", u"最终暴伤", u"技能"u"固有技能"u"技能"])
+            [u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避", u"暴击值", u"暴伤值", u"技能", u"固有技能"])
 
         columnindex = 0
         for i in infoIndex[0]:
@@ -1037,7 +1044,7 @@ class MainProject(QtGui.QMainWindow):
         info = ToolFunction.getsqliteInfo(sql, "llcy")
         self.tablewiget2.clear()
         self.tablewiget2.setHorizontalHeaderLabels(
-            [u"百分比攻击个数", u"百分比暴击个数", u"百分比暴伤", u"最终暴击", u"实际攻击", u"期望伤害", u"最高伤害"])
+            [u"百分比攻击个数", u"百分比暴击个数", u"百分比暴伤", u"最终暴击百分比", u"实际攻击", u"期望伤害", u"最高伤害"])
         self.tablewiget2.setSortingEnabled(False)
         rowindex = 0
         for i in info:
