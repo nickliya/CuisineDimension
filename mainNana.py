@@ -858,7 +858,7 @@ class MainProject(QtGui.QMainWindow):
         self.equipBoxGrid.addWidget(self.equipNumResultText, 3, 0, 1, 0)
 
         # 右侧装备选择
-        sql = ToolFunction.getsql("sql/jsfindsl.sql")
+        sql = ToolFunction.getsql("sql/calculation/jsfindsl.sql")
         info = ToolFunction.getsqliteInfo(sql, "llcy")
 
         self.equipChooseBox = QtGui.QGroupBox(u"装备选择")
@@ -877,15 +877,15 @@ class MainProject(QtGui.QMainWindow):
         typeList2 = []
         for index in typeList:
             typeList2.append(slTpyeDictory[index])
-        print typeList2
 
         self.typeCombox = QtGui.QComboBox()
         self.typeCombox.addItems(typeList2)
+        self.typeCombox.currentIndexChanged.connect(self.calculationNameEdit)
 
         # 名字下拉框
-        nameList = []
-        for nameIndex in info:
-            nameList.append(nameIndex[1])
+        nameList = [u"扬州炒饭", u"方包", u"馄饨"]
+        # for nameIndex in info:
+        #     nameList.append(nameIndex[1])
         self.slCombox = QtGui.QComboBox()
         self.slCombox.addItems(nameList)
 
@@ -898,8 +898,8 @@ class MainProject(QtGui.QMainWindow):
 
         # 刀叉下拉框
         self.dcCombox = QtGui.QComboBox()
-        self.equipSetCombox.addItem(u"刀子")
-        self.equipSetCombox.addItem(u"叉子")
+        self.dcCombox.addItem(u"筷子")
+        self.dcCombox.addItem(u"叉子")
 
         self.jsgo3 = QtGui.QPushButton("Go!")
         self.jsgo3.clicked.connect(self.calculation_go3)
@@ -911,14 +911,18 @@ class MainProject(QtGui.QMainWindow):
         self.tablewiget.setHorizontalHeaderLabels(
             [u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避", u"最终暴击", u"最终暴伤", u"技能"u"固有技能"u"技能"])
         self.tablewiget.verticalHeader().setVisible(False)
+        self.tablewiget.horizontalHeader().setStretchLastSection(True)
+        self.tablewiget.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
         # 推荐表格
-        self.tablewiget2 = QtGui.QTableWidget(4, 7)
+        self.tablewiget2 = QtGui.QTableWidget(18, 7)
         # self.tablewiget.setObjectName("dishTabel")
         self.tablewiget2.setShowGrid(False)
         self.tablewiget2.setHorizontalHeaderLabels(
             [u"百分比攻击个数", u"百分比暴击个数", u"百分比暴伤", u"最终暴击", u"实际攻击", u"期望伤害", u"最高伤害"])
         self.tablewiget2.verticalHeader().setVisible(False)
+        self.tablewiget2.horizontalHeader().setStretchLastSection(True)
+        self.tablewiget2.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
         self.kuanggrid.addWidget(self.equipChooseBox, 0, 1, 0, 1)
         self.equipChooseGrid.addWidget(self.hpcheck, 0, 0)
@@ -931,6 +935,18 @@ class MainProject(QtGui.QMainWindow):
         self.equipChooseGrid.addWidget(self.tablewiget2, 2, 0, 6, 0)
 
         self.wigetIndex = [self.kuangwidget]
+
+    def calculationNameEdit(self):
+        slnumb = self.typeCombox.currentIndex() + 1
+        if slnumb == 4 or slnumb == 5:
+            slnumb += 1
+        sql = ToolFunction.getsql("sql/calculation/jsfindsl2.sql") % slnumb
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
+        nameList = []
+        for nameIndex in info:
+            nameList.append(nameIndex[1])
+        self.slCombox.clear()
+        self.slCombox.addItems(nameList)
 
     def calculation_go1(self):
         nowlevel = self.nowlevEntry.text()
@@ -966,8 +982,85 @@ class MainProject(QtGui.QMainWindow):
         self.equipNumResultText.append(u"请合理输入数字")
 
     def calculation_go3(self):
-        sql = ToolFunction.getsql("sql/calculationResult.sql") % (4, 84, 80, 7, 60, 80)
+        tzName = self.equipSetCombox.currentText()
+        sql = "SELECT TZ_NO FROM equip_suit WHERE TZ_NAME=\'" + unicode(tzName) + "\';"
         info = ToolFunction.getsqliteInfo(sql, "llcy")
+        tzno = info[0][0]
+
+        slName = self.slCombox.currentText()
+        sql = "SELECT SL_NO FROM fairy_detail WHERE SL_NAME=\'" + unicode(slName) + "\';"
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
+        slno = info[0][0]
+
+        if self.dcCombox.currentIndex() == 0:
+            bj = 80
+            bs = 120
+        elif self.dcCombox.currentIndex() == 1:
+            bj = 100
+            bs = 50
+        else:
+            print u"筷叉读取错误"
+            return
+
+        sql = ToolFunction.getsql("sql/calculation/calculationResult.sql") % (tzno, slno, slno, slno, bj, bs)
+        infoIndex = ToolFunction.getsqliteInfo(sql, "llcy")
+        self.tablewiget.clear()
+        self.tablewiget.setHorizontalHeaderLabels(
+            [u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避", u"最终暴击", u"最终暴伤", u"技能"u"固有技能"u"技能"])
+
+        columnindex = 0
+        for i in infoIndex[0]:
+            if type(i) == int:
+                info = str(i)
+            else:
+                info = i
+            try:
+                self.newItem = QtGui.QTableWidgetItem(info)
+            except TypeError, msg:
+                print msg
+            self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+            self.tablewiget.setItem(0, columnindex, self.newItem)
+            columnindex += 1
+            self.newItem.setWhatsThis(info)
+
+        sl_BJ = infoIndex[0][5]
+        sl_BS = infoIndex[0][6]
+        max_GJ = infoIndex[0][1]
+        skill = infoIndex[0][9]
+
+        if self.hpcheck.isChecked():
+            sl_HP = 2
+        else:
+            sl_HP = 0
+
+        sql = ToolFunction.getsql("sql/calculation/xljgResult.sql") % (sl_HP, sl_BJ, sl_BS, max_GJ, skill)
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
+        self.tablewiget2.clear()
+        self.tablewiget2.setHorizontalHeaderLabels(
+            [u"百分比攻击个数", u"百分比暴击个数", u"百分比暴伤", u"最终暴击", u"实际攻击", u"期望伤害", u"最高伤害"])
+        self.tablewiget2.setSortingEnabled(False)
+        rowindex = 0
+        for i in info:
+            columnindex = 0
+            for x in i:
+                if type(x) == int:
+                    info = str(x)
+                else:
+                    info = x
+
+                # if info is None:  # 调试专用
+                #     print "调试用"
+                #     print "213"
+                try:
+                    self.newItem = QtGui.QTableWidgetItem(info)
+                except TypeError, msg:
+                    print msg
+                self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                self.tablewiget2.setItem(rowindex, columnindex, self.newItem)
+                columnindex += 1
+                self.newItem.setWhatsThis(info)
+            rowindex += 1
+        self.tablewiget2.setSortingEnabled(True)
 
     def aboutinfo(self):
         """关于界面"""
