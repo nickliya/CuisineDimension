@@ -866,6 +866,9 @@ class MainProject(QtGui.QMainWindow):
         self.equipChooseBox.setLayout(self.equipChooseGrid)
         self.equipChooseBox.setMinimumWidth(800)  # 后面会注释
 
+        self.hpcheck = QtGui.QCheckBox(u"2百分比生命")
+        self.hpcheck.setObjectName("hpcheck")
+
         # 类型下拉框
         typeList = []
         for typeIndex in info:
@@ -886,12 +889,17 @@ class MainProject(QtGui.QMainWindow):
         self.slCombox = QtGui.QComboBox()
         self.slCombox.addItems(nameList)
 
-        # 套装
+        # 套装下拉框
         self.equipSetCombox = QtGui.QComboBox()
         equipSql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
         info = ToolFunction.getsqliteInfo(equipSql, "llcy")
         for name in info:
             self.equipSetCombox.addItem(name[0])
+
+        # 刀叉下拉框
+        self.dcCombox = QtGui.QComboBox()
+        self.equipSetCombox.addItem(u"刀子")
+        self.equipSetCombox.addItem(u"叉子")
 
         self.jsgo3 = QtGui.QPushButton("Go!")
         self.jsgo3.clicked.connect(self.calculation_go3)
@@ -909,16 +917,18 @@ class MainProject(QtGui.QMainWindow):
         # self.tablewiget.setObjectName("dishTabel")
         self.tablewiget2.setShowGrid(False)
         self.tablewiget2.setHorizontalHeaderLabels(
-            [u"百分比生命个数", u"百分比攻击个数", u"百分比暴击个数", u"百分比暴伤", u"最终暴击", u"实际攻击", u"期望伤害", u"最高伤害"])
+            [u"百分比攻击个数", u"百分比暴击个数", u"百分比暴伤", u"最终暴击", u"实际攻击", u"期望伤害", u"最高伤害"])
         self.tablewiget2.verticalHeader().setVisible(False)
 
         self.kuanggrid.addWidget(self.equipChooseBox, 0, 1, 0, 1)
-        self.equipChooseGrid.addWidget(self.typeCombox, 0, 0)
-        self.equipChooseGrid.addWidget(self.slCombox, 0, 1)
-        self.equipChooseGrid.addWidget(self.equipSetCombox, 0, 2)
-        self.equipChooseGrid.addWidget(self.jsgo3, 0, 3)
-        self.equipChooseGrid.addWidget(self.tablewiget, 1, 0, 4, 0)
-        self.equipChooseGrid.addWidget(self.tablewiget2, 2, 0, 4, 0)
+        self.equipChooseGrid.addWidget(self.hpcheck, 0, 0)
+        self.equipChooseGrid.addWidget(self.typeCombox, 0, 1)
+        self.equipChooseGrid.addWidget(self.slCombox, 0, 2)
+        self.equipChooseGrid.addWidget(self.equipSetCombox, 0, 3)
+        self.equipChooseGrid.addWidget(self.dcCombox, 0, 4)
+        self.equipChooseGrid.addWidget(self.jsgo3, 0, 5)
+        self.equipChooseGrid.addWidget(self.tablewiget, 1, 0, 6, 0)
+        self.equipChooseGrid.addWidget(self.tablewiget2, 2, 0, 6, 0)
 
         self.wigetIndex = [self.kuangwidget]
 

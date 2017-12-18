@@ -55,6 +55,11 @@ QPushButton#sybtn{
     font:75 14pt "Microsoft YaHei";
     }
 
+QCheckBox#hpcheck{
+    color:rgba(230,216,180);
+    font:75 12pt "Microsoft YaHei";
+    }
+
 QLabel#lhLabel{
     background-color: rgba(255,0,0,0);
     }
