@@ -858,27 +858,67 @@ class MainProject(QtGui.QMainWindow):
         self.equipBoxGrid.addWidget(self.equipNumResultText, 3, 0, 1, 0)
 
         # 右侧装备选择
+        sql = ToolFunction.getsql("sql/jsfindsl.sql")
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
+
         self.equipChooseBox = QtGui.QGroupBox(u"装备选择")
         self.equipChooseGrid = QtGui.QGridLayout()
         self.equipChooseBox.setLayout(self.equipChooseGrid)
         self.equipChooseBox.setMinimumWidth(800)  # 后面会注释
 
+        # 类型下拉框
+        typeList = []
+        for typeIndex in info:
+            typeList.append(typeIndex[0])
+        typeList = list(set(typeList))
+        typeList2 = []
+        for index in typeList:
+            typeList2.append(slTpyeDictory[index])
+        print typeList2
+
         self.typeCombox = QtGui.QComboBox()
-        self.typeCombox.addItems([u"主食", u"主菜", u"副菜", u"甜点", u"头盘", u"汤饮"])
+        self.typeCombox.addItems(typeList2)
 
+        # 名字下拉框
+        nameList = []
+        for nameIndex in info:
+            nameList.append(nameIndex[1])
         self.slCombox = QtGui.QComboBox()
-        self.slCombox.addItems([u"主食", u"主菜", u"副菜", u"甜点", u"头盘", u"汤饮"])
+        self.slCombox.addItems(nameList)
 
+        # 套装
         self.equipSetCombox = QtGui.QComboBox()
         equipSql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
         info = ToolFunction.getsqliteInfo(equipSql, "llcy")
         for name in info:
             self.equipSetCombox.addItem(name[0])
 
+        self.jsgo3 = QtGui.QPushButton("Go!")
+        self.jsgo3.clicked.connect(self.calculation_go3)
+
+        # 筛选表格
+        self.tablewiget = QtGui.QTableWidget(1, 7)
+        # self.tablewiget.setObjectName("dishTabel")
+        self.tablewiget.setShowGrid(False)
+        self.tablewiget.setHorizontalHeaderLabels(
+            [u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避", u"最终暴击", u"最终暴伤", u"技能"u"固有技能"u"技能"])
+        self.tablewiget.verticalHeader().setVisible(False)
+
+        # 推荐表格
+        self.tablewiget2 = QtGui.QTableWidget(4, 7)
+        # self.tablewiget.setObjectName("dishTabel")
+        self.tablewiget2.setShowGrid(False)
+        self.tablewiget2.setHorizontalHeaderLabels(
+            [u"百分比生命个数", u"百分比攻击个数", u"百分比暴击个数", u"百分比暴伤", u"最终暴击", u"实际攻击", u"期望伤害", u"最高伤害"])
+        self.tablewiget2.verticalHeader().setVisible(False)
+
         self.kuanggrid.addWidget(self.equipChooseBox, 0, 1, 0, 1)
         self.equipChooseGrid.addWidget(self.typeCombox, 0, 0)
         self.equipChooseGrid.addWidget(self.slCombox, 0, 1)
         self.equipChooseGrid.addWidget(self.equipSetCombox, 0, 2)
+        self.equipChooseGrid.addWidget(self.jsgo3, 0, 3)
+        self.equipChooseGrid.addWidget(self.tablewiget, 1, 0, 4, 0)
+        self.equipChooseGrid.addWidget(self.tablewiget2, 2, 0, 4, 0)
 
         self.wigetIndex = [self.kuangwidget]
 
@@ -914,6 +954,10 @@ class MainProject(QtGui.QMainWindow):
             return
         self.equipNumResultText.clear()
         self.equipNumResultText.append(u"请合理输入数字")
+
+    def calculation_go3(self):
+        sql = ToolFunction.getsql("sql/calculationResult.sql") % (4, 84, 80, 7, 60, 80)
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
 
     def aboutinfo(self):
         """关于界面"""
@@ -1232,6 +1276,10 @@ def main():
 
 
 encrypt_key = 95
+slTpyeDictory = {
+    "1": u"主食", "2": u"主菜", "3": u"副菜", "4": u"甜点", "5": u"头盘", "6": u"汤饮",
+    1: u"主食", 2: u"主菜", 3: u"副菜", 4: u"甜点", 5: u"头盘", 6: u"汤饮",
+}
 
 if __name__ == '__main__':
     main()
