@@ -809,6 +809,7 @@ class MainProject(QtGui.QMainWindow):
         self.equipBox.setLayout(self.equipBoxGrid)
 
         self.nowlevLabel = QtGui.QLabel(u"当前等级")
+        self.nowexpLabel = QtGui.QLabel(u"当前经验")
         self.taglevLabel = QtGui.QLabel(u"目标等级")
         self.expLabel = QtGui.QLabel(u"每局经验")
         self.expResultText = QtGui.QTextBrowser()
@@ -818,6 +819,7 @@ class MainProject(QtGui.QMainWindow):
         self.equipNumResultText = QtGui.QTextBrowser()
 
         self.nowlevLabel.setObjectName("calculationLabel")
+        self.nowexpLabel.setObjectName("calculationLabel")
         self.taglevLabel.setObjectName("calculationLabel")
         self.expLabel.setObjectName("calculationLabel")
         self.nowlevLabel2.setObjectName("calculationLabel")
@@ -826,9 +828,11 @@ class MainProject(QtGui.QMainWindow):
         self.equipNumResultText.setObjectName("calculationText")
 
         self.nowlevEntry = QtGui.QLineEdit()
+        self.nowexpEntry = QtGui.QLineEdit()
         self.taglevpEntry = QtGui.QLineEdit()
         self.expEntry = QtGui.QLineEdit()
         self.nowlevEntry.setObjectName("calculationEntry")
+        self.nowexpEntry.setObjectName("calculationEntry")
         self.taglevpEntry.setObjectName("calculationEntry")
         self.expEntry.setObjectName("calculationEntry")
 
@@ -845,14 +849,16 @@ class MainProject(QtGui.QMainWindow):
         self.kuanggrid.addWidget(self.levelBox, 0, 0)
         self.kuanggrid.addWidget(self.equipBox, 1, 0)
 
-        self.levelBoxGrid.addWidget(self.nowlevLabel, 0, 0)
-        self.levelBoxGrid.addWidget(self.nowlevEntry, 0, 1)
-        self.levelBoxGrid.addWidget(self.taglevLabel, 1, 0)
-        self.levelBoxGrid.addWidget(self.taglevpEntry, 1, 1)
-        self.levelBoxGrid.addWidget(self.expLabel, 2, 0)
-        self.levelBoxGrid.addWidget(self.expEntry, 2, 1)
-        self.levelBoxGrid.addWidget(self.jsgo, 3, 0)
-        self.levelBoxGrid.addWidget(self.expResultText, 4, 0, 1, 0)
+        self.levelBoxGrid.addWidget(self.nowexpLabel, 0, 0)
+        self.levelBoxGrid.addWidget(self.nowexpEntry, 0, 1)
+        self.levelBoxGrid.addWidget(self.nowlevLabel, 1, 0)
+        self.levelBoxGrid.addWidget(self.nowlevEntry, 1, 1)
+        self.levelBoxGrid.addWidget(self.taglevLabel, 2, 0)
+        self.levelBoxGrid.addWidget(self.taglevpEntry, 2, 1)
+        self.levelBoxGrid.addWidget(self.expLabel, 3, 0)
+        self.levelBoxGrid.addWidget(self.expEntry, 3, 1)
+        self.levelBoxGrid.addWidget(self.jsgo, 4, 0)
+        self.levelBoxGrid.addWidget(self.expResultText, 5, 0, 1, 0)
 
         self.equipBoxGrid.addWidget(self.nowlevLabel2, 0, 0)
         self.equipBoxGrid.addWidget(self.nowlevEntry2, 0, 1)
@@ -963,13 +969,14 @@ class MainProject(QtGui.QMainWindow):
 
     def calculation_go1(self):
         nowlevel = self.nowlevEntry.text()
+        nowexp = self.nowexpEntry.text()
         taglevel = self.taglevpEntry.text()
         exp = self.expEntry.text()
         if str(nowlevel) == '' or str(taglevel) == '' or str(exp) == '':
             self.expResultText.clear()
             self.expResultText.append(u"请在上面输入数字")
             return
-        sql = "select sum(fairy_exp)/" + str(exp) + " from (select fairy_exp from level_exp where level >= '" + str(
+        sql = "select (sum(fairy_exp)-(" + str(nowexp) + "0/10)) / " + str(exp) + "+1 from (select fairy_exp from level_exp where level >= '" + str(
             nowlevel) + "' and level <'" + str(taglevel) + "')"
         info = ToolFunction.getsqliteInfo(sql, "llcy")
         result = u"大约需要" + str(info[0][0]) + u"场战斗"
