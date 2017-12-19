@@ -905,9 +905,11 @@ class MainProject(QtGui.QMainWindow):
         self.jsgo3.clicked.connect(self.calculation_go3)
 
         # 筛选表格
+        self.skillText = QtGui.QTextBrowser()
+        self.skillText.setObjectName("skillText")
         self.tableLabel = QtGui.QLabel(u"当前食灵属性:")
         self.tableLabel.setObjectName("calculationLabel2")
-        self.tablewiget = QtGui.QTableWidget(1, 9)
+        self.tablewiget = QtGui.QTableWidget(1, 7)
         # self.tablewiget.setObjectName("dishTabel")
         self.tablewiget.setShowGrid(False)
         self.tablewiget.setHorizontalHeaderLabels(
@@ -937,9 +939,10 @@ class MainProject(QtGui.QMainWindow):
         self.equipChooseGrid.addWidget(self.dcCombox, 0, 4)
         self.equipChooseGrid.addWidget(self.jsgo3, 0, 5)
         self.equipChooseGrid.addWidget(self.tableLabel, 1, 0)
-        self.equipChooseGrid.addWidget(self.tablewiget, 2, 0, 6, 0)
-        self.equipChooseGrid.addWidget(self.tableLabel2, 3, 0)
-        self.equipChooseGrid.addWidget(self.tablewiget2, 4, 0, 6, 0)
+        self.equipChooseGrid.addWidget(self.skillText, 2, 0,1,6)
+        self.equipChooseGrid.addWidget(self.tablewiget, 3, 0, 6, 0)
+        self.equipChooseGrid.addWidget(self.tableLabel2, 4, 0)
+        self.equipChooseGrid.addWidget(self.tablewiget2, 5, 0, 6, 0)
 
         self.wigetIndex = [self.kuangwidget]
 
@@ -1009,11 +1012,16 @@ class MainProject(QtGui.QMainWindow):
             print u"筷叉读取错误"
             return
 
+        # 筛选表格填充
         sql = ToolFunction.getsql("sql/calculation/calculationResult.sql") % (tzno, slno, slno, slno, bj, bs)
         infoIndex = ToolFunction.getsqliteInfo(sql, "llcy")
         self.tablewiget.clear()
         self.tablewiget.setHorizontalHeaderLabels(
             [u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避", u"暴击值", u"暴伤值", u"技能", u"固有技能"])
+
+        self.skillText.clear()
+        self.skillText.append(infoIndex[0][7])
+        self.skillText.append(infoIndex[0][8])
 
         columnindex = 0
         for i in infoIndex[0]:
@@ -1030,6 +1038,7 @@ class MainProject(QtGui.QMainWindow):
             columnindex += 1
             self.newItem.setWhatsThis(info)
 
+        # 推荐表格填充
         sl_BJ = infoIndex[0][5]
         sl_BS = infoIndex[0][6]
         max_GJ = infoIndex[0][1]
