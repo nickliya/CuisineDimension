@@ -894,7 +894,7 @@ class MainProject(QtGui.QMainWindow):
 
         # 套装下拉框
         self.equipSetCombox = QtGui.QComboBox()
-        equipSql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
+        equipSql = 'SELECT TZ_NAME FROM "equip_suit" where tz_level = 5 ORDER BY tz_level DESC, limit_flag;'
         info = ToolFunction.getsqliteInfo(equipSql, "llcy")
         for name in info:
             self.equipSetCombox.addItem(name[0])
