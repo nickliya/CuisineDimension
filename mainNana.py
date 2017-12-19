@@ -793,6 +793,10 @@ class MainProject(QtGui.QMainWindow):
         self.bodygrid.setColumnStretch(1, 0)
 
         self.bgkuang()
+
+        self.kuanggrid.setColumnStretch(0, 1)
+        self.kuanggrid.setColumnStretch(1, 4)
+
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
         # self.kuanggrid.setSpacing(0)  # 设置控件间隔
 
@@ -864,7 +868,6 @@ class MainProject(QtGui.QMainWindow):
         self.equipChooseBox = QtGui.QGroupBox(u"装备选择")
         self.equipChooseGrid = QtGui.QGridLayout()
         self.equipChooseBox.setLayout(self.equipChooseGrid)
-        self.equipChooseBox.setMinimumWidth(800)  # 后面会注释
 
         self.hpcheck = QtGui.QCheckBox(u"2百分比生命")
         self.hpcheck.setObjectName("hpcheck")
