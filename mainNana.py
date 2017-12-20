@@ -331,7 +331,7 @@ class MainProject(QtGui.QMainWindow):
                     columnindex += 1
                 elif columnindex == 1:
                     try:
-                        self.newItem = QtGui.QTableWidgetItem(info.rjust(3))
+                        self.newItem = QtGui.QTableWidgetItem(info)
                     except TypeError, msg:
                         print msg
                     self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
@@ -580,7 +580,7 @@ class MainProject(QtGui.QMainWindow):
         # self.tablewiget.verticalHeader().setVisible(False)
         # self.tablewiget.horizontalHeader().setVisible(False)
         self.tablewiget.setHorizontalHeaderLabels(
-            [u"地图", u"时长", u"食油", u"魔力", u"食材", u"调料", u"获得经验", u"其他", u"大成功条件", u"每小时总量",
+            [u"地图", u"时长", u"食油", u"魔力", u"食材", u"调料", u"获得经验", u"其他", u"大成功条件；基础条件", u"每小时总量",
              u"食油", u"魔力", u"食材", u"调料", u"经验"])
 
         for x in range(self.tablewiget.columnCount()):
@@ -605,26 +605,26 @@ class MainProject(QtGui.QMainWindow):
         # self.tablewiget.resizeColumnToContents(3)
         # self.tablewiget.resizeColumnToContents(4)
 
-        self.tablewiget.setColumnWidth(0, 50)
-        self.tablewiget.setColumnWidth(1, 80)
-        self.tablewiget.setColumnWidth(2, 60)
-        self.tablewiget.setColumnWidth(3, 60)
-        self.tablewiget.setColumnWidth(4, 60)
-        self.tablewiget.setColumnWidth(5, 60)
-        self.tablewiget.setColumnWidth(6, 100)
-        self.tablewiget.setColumnWidth(8, 150)
+        self.tablewiget.setColumnWidth(0, 40)
+        self.tablewiget.setColumnWidth(1, 70)
+        self.tablewiget.setColumnWidth(2, 50)
+        self.tablewiget.setColumnWidth(3, 50)
+        self.tablewiget.setColumnWidth(4, 50)
+        self.tablewiget.setColumnWidth(5, 50)
+        self.tablewiget.setColumnWidth(6, 80)
+        self.tablewiget.setColumnWidth(8, 200)
         self.tablewiget.setColumnWidth(10, 50)
         self.tablewiget.setColumnWidth(11, 50)
         self.tablewiget.setColumnWidth(12, 50)
         self.tablewiget.setColumnWidth(13, 50)
-        self.tablewiget.setColumnWidth(14, 80)
+        self.tablewiget.setColumnWidth(14, 70)
 
         rowindex = 0
         for i in info:
             columnindex = 0
             for x in i:
                 if type(x) == int:
-                    info = str(x).rjust(5)
+                    info = str(x)
                 else:
                     info = x
 
@@ -1247,7 +1247,7 @@ class MainProject(QtGui.QMainWindow):
             return
         indexRow = self.tablewiget.currentRow()
         slnumb = self.tablewiget.item(indexRow, 1).text()
-        sql = 'SELECT URL_LH,URL_LH2,"   "||SL_NAME,SL_LEVEL,TJ_JN,TJ_ZP,TJ_HP,TJ_GJ,TJ_GS,TJ_MZ,TJ_FY,TJ_SB,SKILL_NAME,SKILL_DESC,SKILL_GY_NAME,SKILL_GY_DESC,GROUP_DECS,SL_TYPE,ifnull(SL_STORY,"") FROM "fairy_detail" WHERE SL_NO = ' + str(
+        sql = 'SELECT URL_LH,URL_LH2,"   "||SL_NAME,SL_LEVEL,TJ_JN,TJ_ZP,TJ_HP,TJ_GJ,TJ_GS,TJ_MZ,TJ_FY,TJ_SB,SKILL_NAME,SKILL_DESC,SKILL_GY_NAME,SKILL_GY_DESC,GROUP_DECS,SL_TYPE,ifnull(SL_STORY,""),"次数："||SKILL_COUNT,"消耗："||SKILL_CONS FROM "fairy_detail" WHERE SL_NO = ' + str(
             slnumb) + ';'
         # print sql
         info = ToolFunction.getsqliteInfo(sql, "llcy")
@@ -1319,6 +1319,14 @@ class MainProject(QtGui.QMainWindow):
         self.newItem = QtGui.QTableWidgetItem(info[0][12])
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
         self.attributeList.setItem(4, 1, self.newItem)
+
+        self.newItem = QtGui.QTableWidgetItem(info[0][19])
+        self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
+        self.attributeList.setItem(4, 2, self.newItem)
+
+        self.newItem = QtGui.QTableWidgetItem(info[0][20])
+        self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
+        self.attributeList.setItem(4, 3, self.newItem)
 
         self.newItem = QtGui.QTableWidgetItem(info[0][13])
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)

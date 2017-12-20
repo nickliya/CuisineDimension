@@ -1,5 +1,5 @@
 select
-REFINE_GJ,REFINE_BJ,REFINE_BS,zz_bj,szgj,
+REFINE_GJ,REFINE_BJ,REFINE_BS,substr("  "||zz_bj,-3),szgj,
 szgj*((zz_bs*zz_bj)+(100-zz_bj)*100)*skill/1000000
 ,szgj*zz_bs*skill/10000
 from (select REFINE_GJ,REFINE_BJ,REFINE_BS,skill,bs,
