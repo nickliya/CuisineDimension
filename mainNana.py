@@ -274,7 +274,7 @@ class MainProject(QtGui.QMainWindow):
 
         self.tablewiget = QtGui.QTableWidget(rowcount, 21)
         self.tablewiget.verticalHeader().setVisible(False)
-        self.tablewiget.itemClicked.connect(self.slDetail)  # 表格信号
+        self.tablewiget.cellClicked.connect(self.slDetail)  # 表格信号
         # self.tablewiget.horizontalHeader().sectionClicked.connect(self.fortest2)  # 表头信号
 
         # self.tablewiget.verticalHeader().setVisible(False)
@@ -351,6 +351,7 @@ class MainProject(QtGui.QMainWindow):
                     except TypeError, msg:
                         print msg
                     self.newItem.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
+                    self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
                     self.tablewiget.setItem(rowindex, columnindex, self.newItem)
                     columnindex += 1
                     self.newItem.setWhatsThis(info)
@@ -775,7 +776,7 @@ class MainProject(QtGui.QMainWindow):
             pass
             mapurl = None
         else:
-            mapurl = "map/" + unicode(listRow1) + "/" + unicode(listRow2) + ".jpg"
+            mapurl = "map/" + unicode(listRow1) + "/" + unicode(listRow2) + ".png"
 
         if listRow1 == 6 or mapurl is None:
             pass
@@ -904,11 +905,14 @@ class MainProject(QtGui.QMainWindow):
         info = ToolFunction.getsqliteInfo(equipSql, "llcy")
         for name in info:
             self.equipSetCombox.addItem(name[0])
+        self.equipSetCombox.currentIndexChanged.connect(self.tableWareEdit)
 
         # 刀叉下拉框
         self.dcCombox = QtGui.QComboBox()
-        self.dcCombox.addItem(u"筷子")
-        self.dcCombox.addItem(u"叉子")
+        self.dcCombox.addItem(u"【望月叉】0暴")
+        self.dcCombox.addItem(u"【望月叉】80暴")
+        # self.dcCombox.addItem(u"【金勺】0暴")
+        self.dcCombox.setMinimumWidth(150)
 
         self.jsgo3 = QtGui.QPushButton("Go!")
         self.jsgo3.clicked.connect(self.calculation_go3)
@@ -948,7 +952,7 @@ class MainProject(QtGui.QMainWindow):
         self.equipChooseGrid.addWidget(self.dcCombox, 0, 4)
         self.equipChooseGrid.addWidget(self.jsgo3, 0, 5)
         self.equipChooseGrid.addWidget(self.tableLabel, 1, 0)
-        self.equipChooseGrid.addWidget(self.skillText, 2, 0,1,6)
+        self.equipChooseGrid.addWidget(self.skillText, 2, 0, 1, 6)
         self.equipChooseGrid.addWidget(self.tablewiget, 3, 0, 6, 0)
         self.equipChooseGrid.addWidget(self.tableLabel2, 4, 0)
         self.equipChooseGrid.addWidget(self.tablewiget2, 5, 0, 6, 0)
@@ -966,6 +970,17 @@ class MainProject(QtGui.QMainWindow):
             nameList.append(nameIndex[1])
         self.slCombox.clear()
         self.slCombox.addItems(nameList)
+
+    def tableWareEdit(self):
+        tzName = unicode(self.equipSetCombox.currentText())
+
+        sql = ToolFunction.getsql("sql/calculation/jsfindsl3.sql") % tzName.encode("utf-8")
+        info = ToolFunction.getsqliteInfo(sql, "llcy")
+        nameList = []
+        for nameIndex in info:
+            nameList.append(nameIndex[0])
+        self.dcCombox.clear()
+        self.dcCombox.addItems(nameList)
 
     def calculation_go1(self):
         nowlevel = self.nowlevEntry.text()
@@ -1012,12 +1027,27 @@ class MainProject(QtGui.QMainWindow):
         info = ToolFunction.getsqliteInfo(sql, "llcy")
         slno = info[0][0]
 
-        if self.dcCombox.currentIndex() == 0:
-            bj = 100
-            bs = 50
-        elif self.dcCombox.currentIndex() == 1:
+        if u"金叉" in self.dcCombox.currentText():
             bj = 80
             bs = 120
+        elif u"金筷" in self.dcCombox.currentText():
+            bj = 100
+            bs = 50
+        elif u"金勺" in self.dcCombox.currentText():
+            bj = 0
+            bs = 0
+        elif u"蝠" in self.dcCombox.currentText():
+            bj = 80
+            bs = 120
+        elif u"【望月叉】0暴" in self.dcCombox.currentText():
+            bj = 0
+            bs = 50
+        elif u"【望月叉】80暴" in self.dcCombox.currentText():
+            bj = 80
+            bs = 120
+        elif u"琴" in self.dcCombox.currentText():
+            bj = 0
+            bs = 0
         else:
             print u"筷叉读取错误"
             return
@@ -1210,6 +1240,11 @@ class MainProject(QtGui.QMainWindow):
 
     def slDetail(self):
         """食灵详情"""
+        indexColumn = self.tablewiget.currentColumn()
+        if indexColumn == 0:
+            pass
+        else:
+            return
         indexRow = self.tablewiget.currentRow()
         slnumb = self.tablewiget.item(indexRow, 1).text()
         sql = 'SELECT URL_LH,URL_LH2,"   "||SL_NAME,SL_LEVEL,TJ_JN,TJ_ZP,TJ_HP,TJ_GJ,TJ_GS,TJ_MZ,TJ_FY,TJ_SB,SKILL_NAME,SKILL_DESC,SKILL_GY_NAME,SKILL_GY_DESC,GROUP_DECS,SL_TYPE,ifnull(SL_STORY,"") FROM "fairy_detail" WHERE SL_NO = ' + str(
