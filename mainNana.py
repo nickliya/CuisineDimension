@@ -282,7 +282,7 @@ class MainProject(QtGui.QMainWindow):
         self.tablewiget.setHorizontalHeaderLabels(
             [u"头像", u"No", u"食灵", u"类型", u"烹饪时间", u"生命", u"攻击", u"防御", u"命中", u"闪避",
              u"暴击", u"攻速", u"石油", u"魔力", u"满生命", u"满攻击", u"满防御", u"满命中", u"满闪避",
-             u"满石油", u"满魔力"])
+             u"石油", u"魔力"])
 
         for x in range(self.tablewiget.columnCount()):
             headItem = self.tablewiget.horizontalHeaderItem(x)  # 获得水平方向表头的Item对象
@@ -306,10 +306,10 @@ class MainProject(QtGui.QMainWindow):
         # self.tablewiget.resizeColumnToContents(3)
         # self.tablewiget.resizeColumnToContents(4)
 
-        self.tablewiget.setColumnWidth(0, 200)
+        self.tablewiget.setColumnWidth(0, 190)
         self.tablewiget.setColumnWidth(1, 28)
-        self.tablewiget.setColumnWidth(2, 140)
-        self.tablewiget.setColumnWidth(4, 130)
+        self.tablewiget.setColumnWidth(2, 120)
+        self.tablewiget.setColumnWidth(4, 120)
 
         rowindex = 0
         for i in info:
@@ -1163,7 +1163,7 @@ class MainProject(QtGui.QMainWindow):
 
         self.sybtn1 = setsybtn(self.sygrid, u"声  明", 1, 0)
         self.sybtn2 = setsybtn(self.sygrid, u"食灵说明", 1, 1)
-        self.sybtn3 = setsybtn(self.sygrid, u"装备说明", 1, 2)
+        self.sybtn3 = setsybtn(self.sygrid, u"计算说明", 1, 2)
         self.sybtn4 = setsybtn(self.sygrid, u"狙击说明", 1, 3)
         self.sybtn5 = setsybtn(self.sygrid, u"地图说明", 1, 4)
         self.sybtn1.clicked.connect(lambda: self.aboutViewEdit(1))
@@ -1223,20 +1223,30 @@ class MainProject(QtGui.QMainWindow):
         elif index == 2:
             self.syText.clear()
             self.syText.append(u"\n◆食灵界面目前提供食灵列表和食灵详细信息查看")
+            self.syText.append(u"◆食灵列表的满级数据为满品满强化满好感数据")
             self.syText.append(u"◆食灵列表的满级数据由推算得出，如有较大误差，请向制作组反馈")
             self.syText.append(u"◆搜索功能少女祈祷中...")
         elif index == 3:
             self.syText.clear()
-            self.syText.append(u"\n◆装备界面提供一个比较自由的功能，请先选择左侧套装，右边即会显示相关信息")
+            self.syText.append(u"\n◆等级计算中，当前经验非必填项，填写完等级和每局经验即可计算")
+            self.syText.append(u"◆装备计算中，提供等级即可计算")
+            self.syText.append(u"◆装备选择仅作一个粗略的计算，其中：")
+            self.syText.append(u"　装备中非暴击和暴伤的加成将被忽略")
+            self.syText.append(u"　装备对料理技的增益将被考虑，固有技仅显示，未计入")
+            self.syText.append(u"　神厨7%加成应生效，未计入，在最终结果之后再乘1.07为正确结果")
+            self.syText.append(u"　最高伤害计算方式为：面板攻击 *（暴击 * 暴伤）* 技能伤害")
+            self.syText.append(u"　期望伤害计算方式为：面板攻击 *（（1-暴击）+ 暴击 * 暴伤）* 技能伤害")
         elif index == 4:
             self.syText.clear()
             self.syText.append(u"\n◆狙击公式大致提供了自由狙击供玩家使用")
             self.syText.append(u"◆狙击公式提供数值为最低出货数值，不保证概率，请洗脸后尝试")
         else:
             self.syText.clear()
-            self.syText.append(u"\n◆地图攻略地图以及内容摘自萌百")
-            self.syText.append(u"◆最终生成地图由小四制作")
-            self.syText.append(u"◆更多地图攻略可参见萌百")
+            self.syText.append(u"\n◆该攻略为【使用最短天数通关攻略】，不一定适合开荒")
+            self.syText.append(u"◆最短天数不一定意味着最低耗")
+            self.syText.append(u"◆意在高效完成魔力炉和每日，治好多年强迫症")
+            self.syText.append(u"◆速推攻略由小四制图，文字内容由萌百pai提供，感激~")
+            self.syText.append(u"◆三蛋糕攻略已在【萌娘百科 料理次元】登陆，如有需要可前往萌百查询")
 
     def slDetail(self):
         """食灵详情"""

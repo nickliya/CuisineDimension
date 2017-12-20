@@ -2,15 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d577308-d037-4a8c-a5eb-1f685b3d0723" name="默认的" comment="详情增加mana，count；计算增加套装效果，委托等使用sql对齐，增加猪扒内容，洛天依修正技能，显示委托大成功">
-      <change beforePath="$PROJECT_DIR$/.idea/CuisineDimension.iml" afterPath="$PROJECT_DIR$/.idea/CuisineDimension.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/llcy" afterPath="$PROJECT_DIR$/llcy" />
       <change beforePath="$PROJECT_DIR$/mainNana.py" afterPath="$PROJECT_DIR$/mainNana.py" />
-      <change beforePath="$PROJECT_DIR$/sql/calculation/calculationResult.sql" afterPath="$PROJECT_DIR$/sql/calculation/calculationResult.sql" />
-      <change beforePath="$PROJECT_DIR$/sql/calculation/xljgResult.sql" afterPath="$PROJECT_DIR$/sql/calculation/xljgResult.sql" />
-      <change beforePath="$PROJECT_DIR$/sql/slList.sql" afterPath="$PROJECT_DIR$/sql/slList.sql" />
-      <change beforePath="$PROJECT_DIR$/sql/wtList.sql" afterPath="$PROJECT_DIR$/sql/wtList.sql" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,8 +18,8 @@
       <file leaf-file-name="mainNana.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mainNana.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="584" column="0" lean-forward="true" selection-start-line="584" selection-start-column="0" selection-end-line="584" selection-end-column="0" />
+            <state relative-caret-position="-35">
+              <caret line="1228" column="24" lean-forward="true" selection-start-line="1228" selection-start-column="24" selection-end-line="1228" selection-end-column="24" />
               <folding>
                 <element signature="n#!!doc" expanded="false" />
                 <element signature="e#404#606#0" expanded="false" />
@@ -159,10 +153,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="46" />
-    <option name="y" value="260" />
-    <option name="width" value="1625" />
-    <option name="height" value="852" />
+    <option name="x" value="263" />
+    <option name="y" value="190" />
+    <option name="width" value="1167" />
+    <option name="height" value="947" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -381,7 +375,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513693811163</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="详情增加mana，count；计算增加套装效果，委托等使用sql对齐，增加猪扒内容，洛天依修正技能，显示委托大成功">
+      <created>1513769186159</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1513769186159</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView">
@@ -394,18 +395,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="46" y="260" width="1625" height="852" extended-state="0" />
+    <frame x="263" y="190" width="1167" height="947" extended-state="0" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14807813" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2081488" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917705" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2979021" sideWeight="0.5652174" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26296297" sideWeight="0.5668733" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32793018" sideWeight="0.49045345" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917705" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="消息" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32867134" sideWeight="0.49481866" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917705" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2979021" sideWeight="0.4347826" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26296297" sideWeight="0.43312666" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -460,7 +461,8 @@
     <MESSAGE value="修改计算错误。" />
     <MESSAGE value="装备计算仅限于紫色装备" />
     <MESSAGE value="修改部分数据，计算增加当前经验" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改部分数据，计算增加当前经验" />
+    <MESSAGE value="详情增加mana，count；计算增加套装效果，委托等使用sql对齐，增加猪扒内容，洛天依修正技能，显示委托大成功" />
+    <option name="LAST_COMMIT_MESSAGE" value="详情增加mana，count；计算增加套装效果，委托等使用sql对齐，增加猪扒内容，洛天依修正技能，显示委托大成功" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -921,8 +923,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mainNana.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="584" column="0" lean-forward="true" selection-start-line="584" selection-start-column="0" selection-end-line="584" selection-end-column="0" />
+        <state relative-caret-position="-35">
+          <caret line="1228" column="24" lean-forward="true" selection-start-line="1228" selection-start-column="24" selection-end-line="1228" selection-end-column="24" />
           <folding>
             <element signature="n#!!doc" expanded="false" />
             <element signature="e#404#606#0" expanded="false" />
