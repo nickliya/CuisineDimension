@@ -961,8 +961,8 @@ class MainProject(QtGui.QMainWindow):
 
     def calculationNameEdit(self):
         slnumb = self.typeCombox.currentIndex() + 1
-        if slnumb == 4 or slnumb == 5:
-            slnumb += 1
+        if slnumb == 3 or slnumb == 4:
+            slnumb += 2
         sql = ToolFunction.getsql("sql/calculation/jsfindsl2.sql") % slnumb
         info = ToolFunction.getsqliteInfo(sql, "llcy")
         nameList = []
