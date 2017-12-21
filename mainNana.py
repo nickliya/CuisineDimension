@@ -40,8 +40,8 @@ class MainProject(QtGui.QMainWindow):
     def initUI(self):
         self.resize(1180, 650)
         self.center()
-        self.setWindowTitle(u'りりこの料理教室 version:2017.12.11')
-        self.setWindowIcon(QtGui.QIcon('web.png'))
+        self.setWindowTitle(u'りりこの料理教室 version:2017.12.21')
+        self.setWindowIcon(QtGui.QIcon('ui/icon.ico'))
         self.setObjectName("mainwindow")
         self.mainwidget = QtGui.QWidget()
         self.mainwidget.setObjectName("mainWidget")
@@ -237,12 +237,11 @@ class MainProject(QtGui.QMainWindow):
         self.historyTextBrowser.setMinimumWidth(450)
         # self.historyTextBrowser.setFont(QtGui.QFont(self.diyfont))
         self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
-        self.historyTextBrowser.append(u"\n◆工具改版啦!欢迎各位主厨\n品尝新皮肤,现在工具会随机\n渲染背景哟~")
-        self.historyTextBrowser.append(u"◆食灵新增猪扒丼之前各个小\n姐姐资料!")
-        self.historyTextBrowser.append(u"◆食灵列表添加烹饪时间!")
-        self.historyTextBrowser.append(u"◆食灵明细新增食灵故事!")
-        self.historyTextBrowser.append(u"◆新增委托大成功数据和餐车\n数据!")
-        self.historyTextBrowser.append(u"◆增加地图速推攻略（来自萌\n百),更多地图攻略可参见萌百!")
+        self.historyTextBrowser.append(u"\n◆修复食灵详细信息攻速\n错误问题，显示料理技次\n数、消耗。")
+        self.historyTextBrowser.append(u"◆修改图鉴排版，补全技\n能和食灵简介。")
+        self.historyTextBrowser.append(u"◆食灵列表更改为点头像\n查看详细信息。")
+        self.historyTextBrowser.append(u"◆开放所有列表的排序功\n能，点击表头即可排序。")
+        self.historyTextBrowser.append(u"◆新增计算功能：具体可\n看说明。")
 
         self.bodygrid.addWidget(self.sylhLabel, 0, 0)
         self.bodygrid.addWidget(self.historyTextBrowser, 0, 1)
