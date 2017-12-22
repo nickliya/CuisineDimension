@@ -207,7 +207,7 @@ class MainProject(QtGui.QMainWindow):
 
     def mainView(self):
         """首页"""
-        self.music.touchPlay()
+        self.music.touchPlay2()
         self.inibodywiget()
         self.bodygrid.setRowStretch(0, 0)
         self.bodygrid.setRowStretch(1, 0)
@@ -1395,10 +1395,20 @@ class Music:
     def __init__(self):
         path = "music/ui/se_ui_001_x_2.mp3"
         self.touth = Phonon.createPlayer(Phonon.MusicCategory, Phonon.MediaSource(path))
+        outputDevices = Phonon.BackendCapabilities.availableAudioOutputDevices()
+        self.mediaObject = Phonon.MediaObject()
+        self.audioOutput = Phonon.AudioOutput(Phonon.MusicCategory)
+        Phonon.createPath(self.mediaObject, self.audioOutput)
+        newpath = "music/rose.mp3"
+        self.mediaObject.setCurrentSource(Phonon.MediaSource(newpath))
 
     def touchPlay(self):
         self.touth.stop()
         self.touth.play()
+
+    def touchPlay2(self):
+        self.mediaObject.stop()
+        self.mediaObject.play()
 
 
 class ToolFunction:
