@@ -722,9 +722,14 @@ class MainProject(QtGui.QMainWindow):
         sql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
         info = ToolFunction.getsqliteInfo(sql, "llcy")
 
+        self.maptabwidget = QtGui.QTabWidget()
+        self.maptabwidget.setObjectName("maptabwidget")
+        self.kuanggrid.addWidget(self.maptabwidget, 0, 1, 0, 1)
+
         self.mapLabel = QtGui.QLabel()
         self.mapLabel.setObjectName("mapLabel")
-        self.kuanggrid.addWidget(self.mapLabel, 0, 1, 0, 1)
+        self.maptabwidget.addTab(self.mapLabel, u"离线攻略")
+        # self.kuanggrid.addWidget(self.mapLabel, 0, 1, 0, 1)
 
         self.mapList1 = QtGui.QListWidget()
         self.mapList1.setObjectName("mapList1")
@@ -1233,7 +1238,7 @@ class MainProject(QtGui.QMainWindow):
             self.syText.append(u"　装备中非暴击和暴伤的加成将被忽略")
             self.syText.append(u"　装备对料理技的增益将被考虑，固有技仅显示，未计入")
             self.syText.append(u"　神厨7%加成应生效，未计入，在最终结果之后再乘1.07为正确结果")
-            self.syText.append(u"　最高伤害计算方式为：面板攻击 *（暴击 * 暴伤）* 技能伤害")
+            self.syText.append(u"　最高伤害计算方式为：面板攻击 * 暴伤 * 技能伤害")
             self.syText.append(u"　期望伤害计算方式为：面板攻击 *（（1-暴击）+ 暴击 * 暴伤）* 技能伤害")
         elif index == 4:
             self.syText.clear()

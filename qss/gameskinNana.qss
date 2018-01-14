@@ -232,6 +232,12 @@ QComboBox{
     font:75 10pt "Microsoft YaHei";
 }
 
+QTabWidget::pane{
+    background: rgba(255,0,0,0);
+    border:solid rgba(255,0,0,0);
+}
+
+
 /**********滚动条-水平**********/
 QScrollBar:horizontal {
         height: 20px;
