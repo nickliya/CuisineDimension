@@ -235,11 +235,10 @@ class MainProject(QtGui.QMainWindow):
 
         self.historyTextBrowser = QtGui.QTextBrowser()
         self.historyTextBrowser.setMinimumWidth(450)
-        # self.historyTextBrowser.setFont(QtGui.QFont(self.diyfont))
+        # self.historyTextBrowser.setFont(QtGui.QFont(self.diyfont))n
         self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
-        self.historyTextBrowser.append(u"\n◆修复食灵详细信息攻速\n错误问题，显示料理技次\n数、消耗。")
-        self.historyTextBrowser.append(u"◆修改图鉴排版，补全技\n能和食灵简介。")
-        self.historyTextBrowser.append(u"◆食灵列表更改为点头像\n查看详细信息。")
+        self.historyTextBrowser.append(u"\n◆新增7图委托相关信息。")
+        self.historyTextBrowser.append(u"◆食灵信息更新至黑布丁。")
         self.historyTextBrowser.append(u"◆开放所有列表的排序功\n能，点击表头即可排序。")
         self.historyTextBrowser.append(u"◆新增计算功能：具体可\n看说明。")
 
