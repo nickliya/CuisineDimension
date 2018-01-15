@@ -912,7 +912,7 @@ class MainProject(QtGui.QMainWindow):
 
         # 套装下拉框
         self.equipSetCombox = QtGui.QComboBox()
-        equipSql = 'SELECT TZ_NAME FROM "equip_suit" where tz_level = 5 ORDER BY tz_level DESC, limit_flag;'
+        equipSql = 'SELECT TZ_NAME FROM "equip_suit" WHERE tz_level = 5 ORDER BY tz_level DESC, limit_flag;'
         info = ToolFunction.getsqliteInfo(equipSql, "llcy")
         for name in info:
             self.equipSetCombox.addItem(name[0])
@@ -1002,7 +1002,8 @@ class MainProject(QtGui.QMainWindow):
             self.expResultText.clear()
             self.expResultText.append(u"请在上面输入数字")
             return
-        sql = "select (sum(fairy_exp)-(" + str(nowexp) + "0/10)) / " + str(exp) + "+1 from (select fairy_exp from level_exp where level >= '" + str(
+        sql = "select (sum(fairy_exp)-(" + str(nowexp) + "0/10)) / " + str(
+            exp) + "+1 from (select fairy_exp from level_exp where level >= '" + str(
             nowlevel) + "' and level <'" + str(taglevel) + "')"
         info = ToolFunction.getsqliteInfo(sql, "llcy")
         result = u"大约需要" + str(info[0][0]) + u"场战斗"
@@ -1328,14 +1329,17 @@ class MainProject(QtGui.QMainWindow):
         self.lbp2.setPixmap(QtGui.QPixmap('ui/hero/star' + str(info[0][3]) + '.png'))
         self.attributeList.setCellWidget(1, 0, self.lbp2)
 
-        self.slDetailEdit(u'技能', info[0][4], 2, 0)
-        self.slDetailEdit(u'生命', info[0][6], 2, 1)
-        self.slDetailEdit(u'攻速', info[0][8], 2, 2)
-        self.slDetailEdit(u'防御', info[0][10], 2, 3)
-        self.slDetailEdit(u'装盘', info[0][5], 3, 0)
-        self.slDetailEdit(u'攻击', info[0][7], 3, 1)
-        self.slDetailEdit(u'命中', info[0][9], 3, 2)
-        self.slDetailEdit(u'闪避', info[0][11], 3, 3)
+        skillindex = {
+            "1": "S", "2": "A", "3": "B", "4": "C", "5": "D"
+        }
+        self.slDetailEdit(u'技能', skillindex[info[0][4]], 2, 0)
+        self.slDetailEdit(u'生命', skillindex[info[0][6]], 2, 1)
+        self.slDetailEdit(u'攻速', skillindex[info[0][8]], 2, 2)
+        self.slDetailEdit(u'防御', skillindex[info[0][10]], 2, 3)
+        self.slDetailEdit(u'装盘', skillindex[info[0][5]], 3, 0)
+        self.slDetailEdit(u'攻击', skillindex[info[0][7]], 3, 1)
+        self.slDetailEdit(u'命中', skillindex[info[0][9]], 3, 2)
+        self.slDetailEdit(u'闪避', skillindex[info[0][11]], 3, 3)
 
         self.newItem = QtGui.QTableWidgetItem(u"料理技")
         self.newItem.setFlags(QtCore.Qt.ItemIsEnabled)
