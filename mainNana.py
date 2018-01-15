@@ -8,7 +8,7 @@
 #
 # vervion:2017.11.03
 
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtGui, QtCore, QtWebKit
 from PyQt4.phonon import Phonon
 import sys
 import sqlite3
@@ -40,7 +40,7 @@ class MainProject(QtGui.QMainWindow):
     def initUI(self):
         self.resize(1180, 650)
         self.center()
-        self.setWindowTitle(u'りりこの料理教室 version:2017.12.21')
+        self.setWindowTitle(u'りりこの料理教室 version:2018.01.15')
         self.setWindowIcon(QtGui.QIcon('ui/icon.ico'))
         self.setObjectName("mainwindow")
         self.mainwidget = QtGui.QWidget()
@@ -73,10 +73,10 @@ class MainProject(QtGui.QMainWindow):
         self.setWindowOpacity(0.96)
 
         # 新增字体咪咪体
-        mimitiid = QtGui.QFontDatabase.addApplicationFont('font/liyifeng.ttf')
-        fontInfoList = QtGui.QFontDatabase.applicationFontFamilies(mimitiid)
-        fontName = fontInfoList[0]
-        self.diyfont = QtGui.QFont(fontName)
+        # mimitiid = QtGui.QFontDatabase.addApplicationFont('font/liyifeng.ttf')
+        # fontInfoList = QtGui.QFontDatabase.applicationFontFamilies(mimitiid)
+        # fontName = fontInfoList[0]
+        # self.diyfont = QtGui.QFont(fontName)
 
         self.groupbtn = QtGui.QPushButton()
         self.groupbtn.setObjectName("headbtn")
@@ -235,12 +235,11 @@ class MainProject(QtGui.QMainWindow):
 
         self.historyTextBrowser = QtGui.QTextBrowser()
         self.historyTextBrowser.setMinimumWidth(450)
-        # self.historyTextBrowser.setFont(QtGui.QFont(self.diyfont))n
+        # self.historyTextBrowser.setFont(QtGui.QFont(self.diyfont))
         self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
         self.historyTextBrowser.append(u"\n◆新增7图委托相关信息。")
         self.historyTextBrowser.append(u"◆食灵信息更新至黑布丁。")
-        self.historyTextBrowser.append(u"◆开放所有列表的排序功\n能，点击表头即可排序。")
-        self.historyTextBrowser.append(u"◆新增计算功能：具体可\n看说明。")
+        self.historyTextBrowser.append(u"◆地图攻略新增在线攻略。")
 
         self.bodygrid.addWidget(self.sylhLabel, 0, 0)
         self.bodygrid.addWidget(self.historyTextBrowser, 0, 1)
@@ -718,17 +717,26 @@ class MainProject(QtGui.QMainWindow):
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
         self.kuanggrid.setSpacing(0)  # 设置控件间隔
 
-        sql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
-        info = ToolFunction.getsqliteInfo(sql, "llcy")
-
         self.maptabwidget = QtGui.QTabWidget()
         self.maptabwidget.setObjectName("maptabwidget")
-        self.kuanggrid.addWidget(self.maptabwidget, 0, 1, 0, 1)
+        self.kuanggrid.addWidget(self.maptabwidget, 0, 0)
+
+        self.offlinePage = QtGui.QWidget()
+        self.offlinePage.setObjectName("offlinePage")
+        self.offlinePagegrid = QtGui.QGridLayout()
+        self.offlinePage.setLayout(self.offlinePagegrid)
+        self.maptabwidget.addTab(self.offlinePage, u"离线攻略")
+
+        self.mapweb = QtWebKit.QWebView()
+        self.mapweb.setObjectName("mapweb")
+        self.maptabwidget.addTab(self.mapweb, u"在线攻略")
+        url = QtCore.QUrl(u"https://zh.moegirl.org/料理次元/蔷薇王朝")
+        self.mapweb.load(url)
 
         self.mapLabel = QtGui.QLabel()
         self.mapLabel.setObjectName("mapLabel")
-        self.maptabwidget.addTab(self.mapLabel, u"离线攻略")
-        # self.kuanggrid.addWidget(self.mapLabel, 0, 1, 0, 1)
+        # self.maptabwidget.addTab(self.mapLabel, u"离线攻略")
+        self.offlinePagegrid.addWidget(self.mapLabel, 0, 1, 0, 1)
 
         self.mapList1 = QtGui.QListWidget()
         self.mapList1.setObjectName("mapList1")
@@ -760,11 +768,11 @@ class MainProject(QtGui.QMainWindow):
         self.mapList1.itemClicked.connect(self.getMap)
         self.mapList2.itemClicked.connect(self.getMap)
 
-        self.kuanggrid.addWidget(self.mapList1, 0, 0)
-        self.kuanggrid.addWidget(self.mapList2, 1, 0)
+        self.offlinePagegrid.addWidget(self.mapList1, 0, 0)
+        self.offlinePagegrid.addWidget(self.mapList2, 1, 0)
 
-        self.kuanggrid.setColumnStretch(0, 0)
-        self.kuanggrid.setColumnStretch(1, 1)
+        self.offlinePagegrid.setColumnStretch(0, 0)
+        self.offlinePagegrid.setColumnStretch(1, 1)
 
         qss = "border-image:url(map/mapMain.png);"
         self.mapLabel.setStyleSheet(qss)
@@ -912,9 +920,9 @@ class MainProject(QtGui.QMainWindow):
 
         # 刀叉下拉框
         self.dcCombox = QtGui.QComboBox()
-        self.dcCombox.addItem(u"【望月叉】0暴")
-        self.dcCombox.addItem(u"【望月叉】80暴")
-        # self.dcCombox.addItem(u"【金勺】0暴")
+        # self.dcCombox.addItem(u"【望月叉】0暴")
+        # self.dcCombox.addItem(u"【望月叉】80暴")
+        self.tableWareEdit()
         self.dcCombox.setMinimumWidth(150)
 
         self.jsgo3 = QtGui.QPushButton("Go!")
@@ -978,9 +986,9 @@ class MainProject(QtGui.QMainWindow):
         tzName = unicode(self.equipSetCombox.currentText())
 
         sql = ToolFunction.getsql("sql/calculation/jsfindsl3.sql") % tzName.encode("utf-8")
-        info = ToolFunction.getsqliteInfo(sql, "llcy")
+        self.cjinfo = ToolFunction.getsqliteInfo(sql, "llcy")
         nameList = []
-        for nameIndex in info:
+        for nameIndex in self.cjinfo:
             nameList.append(nameIndex[0])
         self.dcCombox.clear()
         self.dcCombox.addItems(nameList)
@@ -1030,30 +1038,34 @@ class MainProject(QtGui.QMainWindow):
         info = ToolFunction.getsqliteInfo(sql, "llcy")
         slno = info[0][0]
 
-        if u"金叉" in self.dcCombox.currentText():
-            bj = 80
-            bs = 120
-        elif u"金筷" in self.dcCombox.currentText():
-            bj = 100
-            bs = 50
-        elif u"金勺" in self.dcCombox.currentText():
-            bj = 0
-            bs = 0
-        elif u"蝠" in self.dcCombox.currentText():
-            bj = 80
-            bs = 120
-        elif u"【望月叉】0暴" in self.dcCombox.currentText():
-            bj = 0
-            bs = 50
-        elif u"【望月叉】80暴" in self.dcCombox.currentText():
-            bj = 80
-            bs = 120
-        elif u"琴" in self.dcCombox.currentText():
-            bj = 0
-            bs = 0
-        else:
-            print u"筷叉读取错误"
-            return
+        cjnumber = self.dcCombox.currentIndex()
+        bj = self.cjinfo[cjnumber][1]
+        bs = self.cjinfo[cjnumber][2]
+
+        # if u"金叉" in self.dcCombox.currentText():
+        #     bj = 80
+        #     bs = 120
+        # elif u"金筷" in self.dcCombox.currentText():
+        #     bj = 100
+        #     bs = 50
+        # elif u"金勺" in self.dcCombox.currentText():
+        #     bj = 0
+        #     bs = 0
+        # elif u"蝠" in self.dcCombox.currentText():
+        #     bj = 80
+        #     bs = 120
+        # elif u"【望月叉】0暴" in self.dcCombox.currentText():
+        #     bj = 0
+        #     bs = 50
+        # elif u"【望月叉】80暴" in self.dcCombox.currentText():
+        #     bj = 80
+        #     bs = 120
+        # elif u"琴" in self.dcCombox.currentText():
+        #     bj = 0
+        #     bs = 0
+        # else:
+        #     print u"筷叉读取错误"
+        #     return
 
         # 筛选表格填充
         sql = ToolFunction.getsql("sql/calculation/calculationResult.sql") % (tzno, slno, slno, slno, bj, bs)
@@ -1245,7 +1257,8 @@ class MainProject(QtGui.QMainWindow):
             self.syText.append(u"◆狙击公式提供数值为最低出货数值，不保证概率，请洗脸后尝试")
         else:
             self.syText.clear()
-            self.syText.append(u"\n◆该攻略为【使用最短天数通关攻略】，不一定适合开荒")
+            self.syText.append(u"\n◆板块分为在线和离线，在线攻略直通萌百地图攻略网页")
+            self.syText.append(u"◆该攻略为【使用最短天数通关攻略】，不一定适合开荒")
             self.syText.append(u"◆最短天数不一定意味着最低耗")
             self.syText.append(u"◆意在高效完成魔力炉和每日，治好多年强迫症")
             self.syText.append(u"◆速推攻略由小四制图，文字内容由萌百pai提供，感激~")
@@ -1443,7 +1456,7 @@ class ToolFunction:
                 os.remove(fullpath)
 
 
-def decrypt(images_path, imgUrl):
+def decrypt(images_path, imgurl):
     f = open(images_path, 'rb')
     filedata = f.read()
     filesize = f.tell()
@@ -1458,7 +1471,7 @@ def decrypt(images_path, imgUrl):
         decrypt_file_byte_array.append(decrypt_bype)
 
     # os.remove(images_path)
-    f2 = open(imgUrl, 'wb')
+    f2 = open(imgurl, 'wb')
     f2.write(decrypt_file_byte_array)
     f2.close()
 
