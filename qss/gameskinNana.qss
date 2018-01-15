@@ -28,6 +28,10 @@ QWidget#kuangwidget{
     border-image:url(ui/beijkuang2.png);
     }
 
+QWidget#offlinePage{
+    border-top: 2px solid #FFE08E;
+    }
+
 QTableWidget#sl_Attri{
     font:75 10pt "Microsoft YaHei";
     }
@@ -237,6 +241,23 @@ QTabWidget::pane{
     border:solid rgba(255,0,0,0);
 }
 
+QTabBar::tab{
+min-width:20ex;
+padding:6px;
+font:600 10pt youyuan;
+color:rgba(230,216,180);
+border-top: 1px solid #C4C4C3;
+border-right: 1px solid #C4C4C3;
+border-left: 1px solid #C4C4C3;
+}
+
+QTabBar::tab:selected {
+    border-bottom-color: #C2C7CB; /* same as pane color */
+}
+
+QTabBar::tab:!selected {
+    margin-top: 2px; /* make non-selected tabs look smaller */
+}
 
 /**********滚动条-水平**********/
 QScrollBar:horizontal {
