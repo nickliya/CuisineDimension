@@ -700,7 +700,7 @@ class MainProject(QtGui.QMainWindow):
         self.sniperText.setFixedHeight(100)
         self.sniperText.append(u"◆食油，魔力，食材影响出货种类，调料建议400以上，公式不保证概率，请洗脸后尝试。")
         self.sniperText.append(
-            u"◆烹饪限定食灵：白米饭,热香饼,那不勒斯披萨,佛跳墙,玉子烧,甜甜圈,香菜戚风蛋糕,关东煮,冰糖燕窝,冬荫功,冬瓜盅,叫花鸡,焦糖布丁,提拉米苏,荣耀女仆蛋挞,香槟,西芹百合,苏格兰蛋,罗宋汤,肴肉,猫饭,韩式泡菜")
+            u"◆烹饪限定食灵：白米饭,热香饼,那不勒斯披萨,佛跳墙,玉子烧,甜甜圈,香菜戚风蛋糕,关东煮,冰糖燕窝,冬荫功,冬瓜盅,叫花鸡,提拉米苏,香槟,肴肉,韩式泡菜")
 
         self.wigetIndex = [self.tablewiget, self.sniperText, self.kuangwidget]
 
