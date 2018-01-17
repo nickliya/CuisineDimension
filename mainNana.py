@@ -40,7 +40,7 @@ class MainProject(QtGui.QMainWindow):
     def initUI(self):
         self.resize(1180, 650)
         self.center()
-        self.setWindowTitle(u'りりこの料理教室 version:2018.01.15')
+        self.setWindowTitle(u'りりこの料理教室 version:2018.01.16')
         self.setWindowIcon(QtGui.QIcon('ui/icon.ico'))
         self.setObjectName("mainwindow")
         self.mainwidget = QtGui.QWidget()
