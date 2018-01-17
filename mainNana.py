@@ -1291,6 +1291,9 @@ class MainProject(QtGui.QMainWindow):
         self.detailFrameGrid.setColumnStretch(1, 1)
 
         # 左边贴图
+        ismarried = [2, 15, 35]
+        if int(slnumb) in ismarried:
+            print "ok"
         self.cuisineLable = QtGui.QLabel()
         self.cuisineLable.setObjectName("lhLabel")
         self.detailFrameGrid.addWidget(self.cuisineLable, 0, 0)
