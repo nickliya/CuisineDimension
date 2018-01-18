@@ -372,6 +372,7 @@ class MainProject(QtGui.QMainWindow):
         """装备列表"""
         self.music.touchPlay()
         self.inibodywiget()
+        ToolFunction().deleteFile("temp")
 
         sql = 'SELECT TZ_NAME FROM "equip_suit" ORDER BY tz_level DESC, limit_flag;'
         info = ToolFunction.getsqliteInfo(sql, "llcy")
@@ -465,6 +466,7 @@ class MainProject(QtGui.QMainWindow):
         """餐车数据"""
         self.music.touchPlay()
         self.inibodywiget()
+        ToolFunction().deleteFile("temp")
 
         sql = "SELECT name,type,size,Desc FROM fitment ORDER BY box,box_max,type"
         info = ToolFunction.getsqliteInfo(sql, "llcy")
@@ -657,6 +659,7 @@ class MainProject(QtGui.QMainWindow):
         self.bodygrid.setColumnStretch(0, 0)
         self.bodygrid.setColumnStretch(1, 0)
         self.bgkuang()
+        ToolFunction().deleteFile("temp")
         self.bodygrid.addWidget(self.kuangwidget, 0, 0)
         # self.kuanggrid.setSpacing(0)  # 设置控件间隔
 
@@ -710,6 +713,7 @@ class MainProject(QtGui.QMainWindow):
 
     def maplist(self):
         """地图列表"""
+        ToolFunction().deleteFile("temp")
         self.music.touchPlay()
         self.inibodywiget()
         self.bodygrid.setRowStretch(0, 0)
@@ -801,6 +805,7 @@ class MainProject(QtGui.QMainWindow):
 
     def calculation(self):
         """计算"""
+        ToolFunction().deleteFile("temp")
         self.music.touchPlay()
         self.inibodywiget()
         self.bodygrid.setRowStretch(0, 0)
@@ -1140,6 +1145,7 @@ class MainProject(QtGui.QMainWindow):
 
     def aboutinfo(self):
         """关于界面"""
+        ToolFunction().deleteFile("temp")
         self.music.touchPlay()
         self.inibodywiget()
 
