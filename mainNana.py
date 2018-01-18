@@ -40,7 +40,7 @@ class MainProject(QtGui.QMainWindow):
     def initUI(self):
         self.resize(1180, 650)
         self.center()
-        self.setWindowTitle(u'りりこの料理教室 version:2018.01.16')
+        self.setWindowTitle(u'りりこの料理教室 version:2018.01.19')
         self.setWindowIcon(QtGui.QIcon('ui/icon.ico'))
         self.setObjectName("mainwindow")
         self.mainwidget = QtGui.QWidget()
@@ -50,10 +50,10 @@ class MainProject(QtGui.QMainWindow):
                   "bg/homeskin/home_4.png", "bg/homeskin/home_5.png", "bg/homeskin/home_6.png"]
         bg = random.choice(bgList)
         try:
-            decrypt(bg, "temp/bg.png")
+            decrypt(bg, "temp/index3")
         except IOError:
             pass
-        stylesheet = "QMainWindow{background-repeat: no-repeat;background-position: center;border-image: url(temp/bg.png);}"
+        stylesheet = "QMainWindow{background-repeat: no-repeat;background-position: center;border-image: url(temp/index3);}"
         self.setStyleSheet(stylesheet)
 
         styleqss = open("qss/gameskinNana.qss", "r")
@@ -196,12 +196,12 @@ class MainProject(QtGui.QMainWindow):
             info.remove((None, None))
         lhurl = random.choice(info)
         try:
-            decrypt(lhurl[0], "temp/index1.png")
-            decrypt(lhurl[1], "temp/index2.png")
+            decrypt(lhurl[0], "temp/index1")
+            decrypt(lhurl[1], "temp/index2")
         except IOError:
             pass
-        stylesheet = "QLabel#sylhLabel{border-image: url('temp/index1.png');}" + \
-                     "QLabel#sylhLabel::hover{border-image: url('temp/index2.png');}"
+        stylesheet = "QLabel#sylhLabel{border-image: url('temp/index1');}" + \
+                     "QLabel#sylhLabel::hover{border-image: url('temp/index2');}"
 
         self.sylhLabel.setStyleSheet(stylesheet)
 
@@ -237,9 +237,13 @@ class MainProject(QtGui.QMainWindow):
         self.historyTextBrowser.setMinimumWidth(450)
         # self.historyTextBrowser.setFont(QtGui.QFont(self.diyfont))
         self.historyTextBrowser.setObjectName("historyBrowser")  # 更新历史
-        self.historyTextBrowser.append(u"\n◆新增7图委托相关信息。")
-        self.historyTextBrowser.append(u"◆食灵信息更新至黑布丁。")
-        self.historyTextBrowser.append(u"◆地图攻略新增在线攻略。")
+        updatefile = open("temp/updateinfo.txt", "rb")
+        info = updatefile.read().decode("gbk")
+        updatefile.close()
+        self.historyTextBrowser.append(info)
+        # self.historyTextBrowser.append(u"\n◆新增7图委托相关信息。")
+        # self.historyTextBrowser.append(u"◆食灵信息更新至黑布丁。")
+        # self.historyTextBrowser.append(u"◆地图攻略新增在线攻略。")
 
         self.bodygrid.addWidget(self.sylhLabel, 0, 0)
         self.bodygrid.addWidget(self.historyTextBrowser, 0, 1)
@@ -1291,20 +1295,54 @@ class MainProject(QtGui.QMainWindow):
         self.detailFrameGrid.setColumnStretch(1, 1)
 
         # 左边贴图
-        ismarried = [2, 15, 35]
-        if int(slnumb) in ismarried:
-            print "ok"
+        self.sltabwidget = QtGui.QTabWidget()
+        self.sltabwidget.setObjectName("maptabwidget")
+        self.detailFrameGrid.addWidget(self.sltabwidget, 0, 0)
+
         self.cuisineLable = QtGui.QLabel()
         self.cuisineLable.setObjectName("lhLabel")
-        self.detailFrameGrid.addWidget(self.cuisineLable, 0, 0)
+        # self.detailFrameGrid.addWidget(self.cuisineLable, 0, 0)
         try:
-            decrypt(info[0][0], "temp/index1.png")
-            decrypt(info[0][1], "temp/index2.png")
+            decrypt(info[0][0], "temp/index1")
+            decrypt(info[0][1], "temp/index2")
         except IOError:
             pass
-        stylesheet = "QLabel#lhLabel{border-image: url('temp/index1.png');}" + \
-                     "QLabel#lhLabel::hover{border-image: url('temp/index2.png');}"
+        stylesheet = "QLabel#lhLabel{border-image: url('temp/index1');}" + \
+                     "QLabel#lhLabel::hover{border-image: url('temp/index2');}"
         self.cuisineLable.setStyleSheet(stylesheet)
+        self.sltabwidget.addTab(self.cuisineLable, 'Normal')
+
+        skinindex = [2, 5, 7, 14, 19, 21, 23, 28, 29, 57, 60, 61, 65, 85, 86, 87, 93, 94]
+        if int(slnumb) in skinindex:
+            self.cuisineLable2 = QtGui.QLabel()
+            self.cuisineLable2.setObjectName("lhLabel")
+            url1 = info[0][0]
+            url2 = info[0][1]
+            try:
+                decrypt(url1.replace("_n", "_pf_n"), "temp/index5")
+                decrypt(url2.replace("_bb", "_pf_bb"), "temp/index6")
+            except IOError:
+                pass
+            stylesheet = "QLabel#lhLabel{border-image: url('temp/index5');}" + \
+                         "QLabel#lhLabel::hover{border-image: url('temp/index6');}"
+            self.cuisineLable2.setStyleSheet(stylesheet)
+            self.sltabwidget.addTab(self.cuisineLable2, 'Special')
+
+        ismarried = [2, 15, 35]
+        if int(slnumb) in ismarried:
+            self.cuisineLable3 = QtGui.QLabel()
+            self.cuisineLable3.setObjectName("lhLabel")
+            url1 = info[0][0]
+            url2 = info[0][1]
+            try:
+                decrypt(url1.replace("_n", "_jh_n"), "temp/index3")
+                decrypt(url2.replace("_bb", "_jh_bb"), "temp/index4")
+            except IOError:
+                pass
+            stylesheet = "QLabel#lhLabel{border-image: url('temp/index3');}" + \
+                         "QLabel#lhLabel::hover{border-image: url('temp/index4');}"
+            self.cuisineLable3.setStyleSheet(stylesheet)
+            self.sltabwidget.addTab(self.cuisineLable3, 'Married')
 
         # 右边窗体
         self.attributeList = QtGui.QTableWidget(23, 4)
@@ -1398,6 +1436,8 @@ class MainProject(QtGui.QMainWindow):
         self.attributeList.setItem(14, 0, self.newItem)
 
         self.wigetIndex = [self.detailWidget]
+        # os.remove("temp/index1.png")
+        # os.remove("temp/index2.png")
 
     def slDetailEdit(self, attr, info, row, column):
         """食灵详情数据填充"""
@@ -1460,7 +1500,10 @@ class ToolFunction:
         for dirpath, dirnames, filenames in os.walk(path):
             for filename in filenames:
                 fullpath = os.path.join(dirpath, filename)
-                os.remove(fullpath)
+                if ".txt" in fullpath:
+                    pass
+                else:
+                    os.remove(fullpath)
 
 
 def decrypt(images_path, imgurl):
